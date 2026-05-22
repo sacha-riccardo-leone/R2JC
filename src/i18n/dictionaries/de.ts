@@ -162,6 +162,55 @@ const de: Dictionary = {
     ],
   },
 
+  ed03: {
+    eyebrow: "Nächste Ausgabe · Biel/Bienne 2026",
+    title: "Ausgabe 03",
+    dateLine: "14. — 16. November 2026",
+    venue: "Biel/Bienne, Schweiz",
+    countdown: {
+      label: "Bis zur Eröffnung",
+      days: "Tage",
+      today: "Heute",
+      past: "Die Ausgabe hat stattgefunden.",
+    },
+    addToCalendar: "Zum Kalender hinzufügen",
+    about: {
+      eyebrow: "Demnächst",
+      title: "Sechzehn Kreative. Drei Disziplinen. Eine Schwelle.",
+      body: "Für ihre dritte Begegnung versammelt R2JC sechzehn aufstrebende Kreative in Biel/Bienne. Drei Abende. Mode, Fotografie, Performance, Sound, Art Direction. Ein Ort, gewählt für seine Stille und seine Aufmerksamkeit.",
+    },
+    lineup: {
+      eyebrow: "Die Kreativen",
+      title: "Lineup",
+      intro:
+        "Die sechzehn Kreativen werden ab Frühjahr 2026 schrittweise bekanntgegeben. Folgen Sie @r2jc.officiel, um nichts zu verpassen.",
+      tba: "Bald bekannt",
+    },
+    venueSection: {
+      eyebrow: "Der Ort",
+      title: "Biel/Bienne",
+      body: "Im Herzen des Juras gelegen, ist Biel/Bienne die zweisprachigste Stadt der Schweiz. Erreichbar mit dem Zug aus Zürich (75 Min), Bern (25 Min), Genf (90 Min) und Basel (75 Min). Die genaue Adresse wird den Teilnehmenden einen Monat vor der Veranstaltung mitgeteilt.",
+      sbb: "Route auf SBB planen",
+    },
+    rsvp: {
+      eyebrow: "Reservation",
+      title: "Eröffnungsabend",
+      body: "Der Eintritt zum Eröffnungsabend am 14. November ist nur mit Reservation möglich. Die Plätze sind begrenzt.",
+      cta: "Platz reservieren",
+    },
+    partners: {
+      eyebrow: "Partner",
+      title: "Mit der Unterstützung von",
+      body: "Ausgabe 03 wird durch unsere institutionellen, kulturellen und lokalen Partner ermöglicht.",
+      link: "Alle Sponsoren ansehen →",
+    },
+    bottom: {
+      apply: { label: "Designer", cta: "Für die Ausgabe bewerben" },
+      press: { label: "Presse", cta: "Akkreditierung anfragen" },
+      sponsor: { label: "Partner", cta: "Partner werden" },
+    },
+  },
+
   presse: {
     eyebrow: "Presse & Medien",
     title: "Presse",

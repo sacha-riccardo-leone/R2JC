@@ -53,6 +53,24 @@ export type Dictionary = {
     ctaEyebrow: string;
     items: Array<{ q: string; a: string }>;
   };
+  ed03: {
+    eyebrow: string;
+    title: string;
+    dateLine: string;
+    venue: string;
+    countdown: { label: string; days: string; today: string; past: string };
+    addToCalendar: string;
+    about: { eyebrow: string; title: string; body: string };
+    lineup: { eyebrow: string; title: string; intro: string; tba: string };
+    venueSection: { eyebrow: string; title: string; body: string; sbb: string };
+    rsvp: { eyebrow: string; title: string; body: string; cta: string };
+    partners: { eyebrow: string; title: string; body: string; link: string };
+    bottom: {
+      apply: { label: string; cta: string };
+      press: { label: string; cta: string };
+      sponsor: { label: string; cta: string };
+    };
+  };
   presse: {
     eyebrow: string;
     title: string;
@@ -292,6 +310,55 @@ const fr: Dictionary = {
         a: "Suivez-nous sur Instagram {instagram}, inscrivez-vous à notre newsletter et consultez régulièrement notre site web pour les dernières mises à jour.",
       },
     ],
+  },
+
+  ed03: {
+    eyebrow: "Prochaine édition · Bienne 2026",
+    title: "Édition 03",
+    dateLine: "14 — 16 novembre 2026",
+    venue: "Bienne, Suisse",
+    countdown: {
+      label: "Avant l'ouverture",
+      days: "jours",
+      today: "Aujourd'hui",
+      past: "L'édition a eu lieu.",
+    },
+    addToCalendar: "Ajouter au calendrier",
+    about: {
+      eyebrow: "À venir",
+      title: "Seize créateurs. Trois disciplines. Un seuil.",
+      body: "Pour sa troisième rencontre, R2JC réunit seize créateurs émergents à Bienne. Trois soirs. Mode, photographie, performance, son, direction artistique. Un lieu choisi pour son silence et son écoute.",
+    },
+    lineup: {
+      eyebrow: "Les créateurs",
+      title: "Lineup",
+      intro:
+        "Les seize créateurs seront annoncés progressivement à partir du printemps 2026. Suivez @r2jc.officiel pour ne rien manquer.",
+      tba: "À venir",
+    },
+    venueSection: {
+      eyebrow: "Le lieu",
+      title: "Bienne",
+      body: "Au cœur de l'arc jurassien, Bienne est la ville la plus bilingue de Suisse. Accessible en train depuis Zurich (75 min), Berne (25 min), Genève (90 min) et Bâle (75 min). L'adresse exacte du lieu sera communiquée aux participants un mois avant l'événement.",
+      sbb: "Voir l'itinéraire sur CFF",
+    },
+    rsvp: {
+      eyebrow: "Réservation",
+      title: "Soirée d'ouverture",
+      body: "L'entrée à la soirée d'ouverture du 14 novembre se fait sur réservation. Les places sont limitées.",
+      cta: "Réserver une place",
+    },
+    partners: {
+      eyebrow: "Partenaires",
+      title: "Avec le soutien de",
+      body: "L'Édition 03 est rendue possible grâce à nos partenaires institutionnels, culturels et locaux.",
+      link: "Voir tous les sponsors →",
+    },
+    bottom: {
+      apply: { label: "Designers", cta: "Postuler à l'édition" },
+      press: { label: "Presse", cta: "Demander une accréditation" },
+      sponsor: { label: "Partenaires", cta: "Devenir partenaire" },
+    },
   },
 
   presse: {

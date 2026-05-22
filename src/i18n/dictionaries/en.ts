@@ -162,6 +162,55 @@ const en: Dictionary = {
     ],
   },
 
+  ed03: {
+    eyebrow: "Next edition · Biel/Bienne 2026",
+    title: "Edition 03",
+    dateLine: "14 — 16 November 2026",
+    venue: "Biel/Bienne, Switzerland",
+    countdown: {
+      label: "Until doors open",
+      days: "days",
+      today: "Today",
+      past: "The edition has taken place.",
+    },
+    addToCalendar: "Add to calendar",
+    about: {
+      eyebrow: "Coming up",
+      title: "Sixteen creators. Three disciplines. One threshold.",
+      body: "For its third encounter, R2JC brings together sixteen emerging creators in Biel/Bienne. Three nights. Fashion, photography, performance, sound, art direction. A venue chosen for its silence and its attention.",
+    },
+    lineup: {
+      eyebrow: "The creators",
+      title: "Lineup",
+      intro:
+        "The sixteen creators will be announced gradually from spring 2026. Follow @r2jc.officiel so you don't miss it.",
+      tba: "TBA",
+    },
+    venueSection: {
+      eyebrow: "The venue",
+      title: "Biel/Bienne",
+      body: "In the heart of the Jura arc, Biel/Bienne is the most bilingual city in Switzerland. Reachable by train from Zurich (75 min), Bern (25 min), Geneva (90 min) and Basel (75 min). The exact venue address will be sent to attendees one month before the event.",
+      sbb: "Plan your route on SBB",
+    },
+    rsvp: {
+      eyebrow: "Reservation",
+      title: "Opening night",
+      body: "Entry to the opening night on 14 November is by reservation only. Seats are limited.",
+      cta: "Reserve a seat",
+    },
+    partners: {
+      eyebrow: "Partners",
+      title: "Supported by",
+      body: "Edition 03 is made possible by our institutional, cultural and local partners.",
+      link: "See all sponsors →",
+    },
+    bottom: {
+      apply: { label: "Designers", cta: "Apply to the edition" },
+      press: { label: "Press", cta: "Request accreditation" },
+      sponsor: { label: "Partners", cta: "Become a partner" },
+    },
+  },
+
   presse: {
     eyebrow: "Press & media",
     title: "Press",

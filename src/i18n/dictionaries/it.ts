@@ -162,6 +162,55 @@ const it: Dictionary = {
     ],
   },
 
+  ed03: {
+    eyebrow: "Prossima edizione · Bienna 2026",
+    title: "Edizione 03",
+    dateLine: "14 — 16 novembre 2026",
+    venue: "Bienna, Svizzera",
+    countdown: {
+      label: "All'apertura",
+      days: "giorni",
+      today: "Oggi",
+      past: "L'edizione si è svolta.",
+    },
+    addToCalendar: "Aggiungi al calendario",
+    about: {
+      eyebrow: "Prossimamente",
+      title: "Sedici creatori. Tre discipline. Una soglia.",
+      body: "Per il suo terzo incontro, R2JC riunisce sedici creatori emergenti a Bienna. Tre serate. Moda, fotografia, performance, suono, direzione artistica. Un luogo scelto per il suo silenzio e la sua attenzione.",
+    },
+    lineup: {
+      eyebrow: "I creatori",
+      title: "Lineup",
+      intro:
+        "I sedici creatori saranno annunciati gradualmente a partire dalla primavera 2026. Segui @r2jc.officiel per non perdere nulla.",
+      tba: "Da annunciare",
+    },
+    venueSection: {
+      eyebrow: "Il luogo",
+      title: "Bienna",
+      body: "Nel cuore dell'arco giurassiano, Bienna è la città più bilingue della Svizzera. Raggiungibile in treno da Zurigo (75 min), Berna (25 min), Ginevra (90 min) e Basilea (75 min). L'indirizzo esatto del luogo sarà comunicato ai partecipanti un mese prima dell'evento.",
+      sbb: "Pianifica il percorso su FFS",
+    },
+    rsvp: {
+      eyebrow: "Prenotazione",
+      title: "Serata di apertura",
+      body: "L'ingresso alla serata di apertura del 14 novembre è su prenotazione. I posti sono limitati.",
+      cta: "Prenota un posto",
+    },
+    partners: {
+      eyebrow: "Partner",
+      title: "Con il sostegno di",
+      body: "L'Edizione 03 è resa possibile grazie ai nostri partner istituzionali, culturali e locali.",
+      link: "Vedi tutti gli sponsor →",
+    },
+    bottom: {
+      apply: { label: "Designer", cta: "Candidati per l'edizione" },
+      press: { label: "Stampa", cta: "Richiedi accredito" },
+      sponsor: { label: "Partner", cta: "Diventa partner" },
+    },
+  },
+
   presse: {
     eyebrow: "Stampa & media",
     title: "Stampa",

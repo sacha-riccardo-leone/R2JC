@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { existsSync } from "fs";
 import { join } from "path";
 import { MediaZone } from "@/components/MediaZone";
@@ -30,6 +31,26 @@ export default async function Editions() {
             <span className="font-semibold">{t.editions.titleAccent}</span>
           </h1>
         </div>
+      </section>
+
+      {/* Next edition banner — points to /editions/03 */}
+      <section className="bg-noir text-blanc py-10 md:py-12 border-b border-blanc/15">
+        <Link
+          href="/editions/03"
+          className="group max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4"
+        >
+          <div className="flex items-baseline gap-6">
+            <span className="font-mono text-[10px] uppercase tracking-wider-2 opacity-60">
+              {t.ed03.eyebrow}
+            </span>
+            <span className="font-display text-xl md:text-2xl font-medium group-hover:text-silver transition-colors duration-300">
+              {t.ed03.title} · {t.ed03.dateLine}
+            </span>
+          </div>
+          <span className="font-mono text-[11px] uppercase tracking-wider-2 group-hover:text-silver transition-colors">
+            {t.ed03.about.eyebrow} →
+          </span>
+        </Link>
       </section>
 
       {/* Ed 02 intro */}
