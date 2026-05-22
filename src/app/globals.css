@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────
+   R2JC — base layer
+   The page is paper. Type is ink. Motion is restrained.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --color-ink: #0a0a0b;
+  --color-bone: #f2eee6;
+  --color-plaster: #c8c2b6;
+  --color-steel: #1f2326;
+  --color-cinabre: #d63a1a;
+
+  /* Smooth scroll baseline; Lenis takes over on the client. */
+  --scroll-progress: 0;
+}
+
+html {
+  background: var(--color-ink);
+  color: var(--color-bone);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  font-feature-settings: "ss01", "ss02", "kern", "liga";
+  overflow-x: hidden;
+}
+
+/* A subtle paper grain on bone-colored surfaces.
+   Imperceptible at first glance — felt, not seen. */
+.paper {
+  background-color: var(--color-bone);
+  color: var(--color-ink);
+  background-image:
+    radial-gradient(
+      rgba(10, 10, 11, 0.018) 1px,
+      transparent 1px
+    );
+  background-size: 3px 3px;
+}
+
+/* Section divider — a single hairline. The brand's connective tissue. */
+.hairline {
+  height: 1px;
+  background: currentColor;
+  opacity: 0.4;
+  transform-origin: left center;
+}
+
+/* Numbered chapter glyph */
+.glyph::before {
+  content: "※";
+  margin-right: 0.6em;
+  opacity: 0.55;
+}
+
+/* Custom cursor target zones */
+[data-cursor="view"] { cursor: none; }
+
+/* Scrollbar — quiet, ink on bone */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(242, 238, 230, 0.15);
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(242, 238, 230, 0.3); }
+
+/* Selection — heat */
+::selection {
+  background: var(--color-cinabre);
+  color: var(--color-bone);
+}
+
+/* Reduced motion — respect it absolutely */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
