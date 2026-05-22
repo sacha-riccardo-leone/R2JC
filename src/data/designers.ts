@@ -22,6 +22,8 @@ export type Designer = {
   email?: string;
   /** Instagram handle without the leading @ (e.g. "bicheparis") */
   instagram?: string;
+  /** Full website URL including protocol (e.g. "https://www.denervaud.co") */
+  website?: string;
   /** Portrait of the designer, under /public */
   portrait: string;
   /** Optional object-position for the portrait crop (e.g. "top", "50% 20%"). Default: center. */
@@ -66,6 +68,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
       it: "Il mio marchio incarna la mia personalità e riflette la mia visione del mondo. Il mio obiettivo è condividere il mio universo unico e il mio modo singolare di percepire la realtà. In costante ricerca di singolarità e innovazione, Denervaud è il frutto di una passione profonda e di un lavoro instancabile, simbolo di una creatività audace e senza compromessi.",
     },
     email: "tim.denervaud@icloud.com",
+    website: "https://www.denervaud.co",
     portrait: "/media/designers/tim-denervaud.jpg",
     logo: "/media/designers/denervaudlogo.png",
     looks: ["IMG_2102.jpeg", "IMG_2091.jpeg", "IMG_1941.jpeg", "IMG_1928.jpeg", "IMG_2015.jpeg", "IMG_2133.jpeg"],

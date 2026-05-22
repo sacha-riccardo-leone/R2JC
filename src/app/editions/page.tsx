@@ -131,7 +131,7 @@ export default async function Editions() {
                           {d.bio[locale]}
                         </p>
                       )}
-                      {(d.instagram || d.email) && (
+                      {(d.instagram || d.website || d.email) && (
                         <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 items-baseline">
                           {d.instagram && (
                             <a
@@ -141,6 +141,16 @@ export default async function Editions() {
                               className="inline-block font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
                             >
                               @{d.instagram} ↗
+                            </a>
+                          )}
+                          {d.website && (
+                            <a
+                              href={d.website}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
+                            >
+                              {d.website.replace(/^https?:\/\//, "")} ↗
                             </a>
                           )}
                           {d.email && (
