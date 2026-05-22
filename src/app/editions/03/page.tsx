@@ -301,25 +301,27 @@ export default async function Edition03() {
 
       {/* ── BOTTOM CTAs — three doors ─────────────────────────── */}
       <section className="bg-noir text-blanc py-20 md:py-28">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-3 gap-px bg-blanc/15">
-          {[
-            { label: e.bottom.apply.label,   cta: e.bottom.apply.cta,   href: "/postuler" },
-            { label: e.bottom.press.label,   cta: e.bottom.press.cta,   href: "/presse" },
-            { label: e.bottom.sponsor.label, cta: e.bottom.sponsor.cta, href: "mailto:Info@r2jc.ch?subject=Partenariat%20R2JC%20—%20Édition%2003" },
-          ].map((door, i) => (
-            <Link
-              key={i}
-              href={door.href}
-              className="group bg-noir px-8 py-12 md:py-16 text-center hover:bg-graphite transition-colors duration-500"
-            >
-              <p className="font-mono text-[10px] uppercase tracking-wider-2 opacity-50 mb-4">
-                {door.label}
-              </p>
-              <p className="font-display text-xl md:text-2xl font-medium group-hover:text-silver transition-colors duration-500">
-                {door.cta} →
-              </p>
-            </Link>
-          ))}
+        <div className="max-w-6xl mx-auto px-6 md:px-10">
+          <div className="grid md:grid-cols-3 gap-px bg-blanc/15">
+            {[
+              { label: e.bottom.apply.label,   cta: e.bottom.apply.cta,   href: "/postuler" },
+              { label: e.bottom.press.label,   cta: e.bottom.press.cta,   href: "/presse" },
+              { label: e.bottom.sponsor.label, cta: e.bottom.sponsor.cta, href: "mailto:Info@r2jc.ch?subject=Partenariat%20R2JC%20—%20Édition%2003" },
+            ].map((door, i) => (
+              <Link
+                key={i}
+                href={door.href}
+                className="group bg-noir px-8 py-12 md:py-16 text-center hover:bg-graphite transition-colors duration-500"
+              >
+                <p className="font-mono text-[10px] uppercase tracking-wider-2 opacity-50 mb-4">
+                  {door.label}
+                </p>
+                <p className="font-display text-xl md:text-2xl font-medium group-hover:text-silver transition-colors duration-500">
+                  {door.cta} →
+                </p>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>
