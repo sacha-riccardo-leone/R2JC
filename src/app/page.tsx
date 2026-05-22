@@ -135,22 +135,22 @@ export default function Home() {
               {
                 id: "PRESS-telebielingue",
                 label: "TeleBielingue",
-                file: "/media/press/telebielingue.svg",
+                file: "/media/sponsors/TeleBielingue.svg",
               },
               {
                 id: "PRESS-le-journal-du-jura",
                 label: "Le Journal du Jura",
-                file: "/media/press/le-journal-du-jura.svg",
+                file: "/media/sponsors/journalJura.png",
               },
               {
                 id: "PRESS-a-jour",
                 label: "À Jour",
-                file: "/media/press/a-jour.svg",
+                file: "/media/sponsors/rot_ajour_claim_RZ.webp",
               },
               {
                 id: "PRESS-le-quotidien",
                 label: "Le Quotidien",
-                file: "/media/press/le-quotidien.svg",
+                file: "/media/sponsors/lequotidien.png",
               },
             ].map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
@@ -162,6 +162,8 @@ export default function Home() {
                   tone="dark"
                   label={p.label}
                   brief={`Drop the logo at ${p.file}`}
+                  src={p.file}
+                  alt={p.label}
                   className="hover:opacity-70 transition-opacity duration-500"
                 />
               </Reveal>

@@ -10,43 +10,43 @@ const SPONSOR_ROWS: { row: string; sponsors: { id: string; label: string; file: 
   {
     row: "Partenaires principaux",
     sponsors: [
-      { id: "SPONSOR-so-sushi",  label: "Sō Sushi",                          file: "/media/sponsors/so-sushi.svg" },
-      { id: "SPONSOR-jura-ch",   label: "République et Canton du Jura",      file: "/media/sponsors/jura-ch.svg" },
-      { id: "SPONSOR-swisslos",  label: "Swisslos — Culture Canton de Berne", file: "/media/sponsors/swisslos.svg" },
-      { id: "SPONSOR-oak",       label: "OAK",                                file: "/media/sponsors/oak.svg" },
+      { id: "SPONSOR-so-sushi",  label: "Sō Sushi",                           file: "/media/sponsors/sosushi.png" },
+      { id: "SPONSOR-jura-ch",   label: "République et Canton du Jura",       file: "/media/sponsors/Jura-Logo.svg.png" },
+      { id: "SPONSOR-swisslos",  label: "Swisslos — Culture Canton de Berne", file: "/media/sponsors/swisslos.png" },
+      { id: "SPONSOR-oak",       label: "OAK",                                file: "/media/sponsors/oak-removebg-preview.png" },
     ],
   },
   {
     row: "Partenaires locaux",
     sponsors: [
-      { id: "SPONSOR-p-beuret",         label: "P. Beuret",         file: "/media/sponsors/p-beuret.svg" },
-      { id: "SPONSOR-bati-deco",        label: "Bâti-Déco Sàrl",    file: "/media/sponsors/bati-deco.svg" },
-      { id: "SPONSOR-qilomen",          label: "Qilomen",           file: "/media/sponsors/qilomen.svg" },
-      { id: "SPONSOR-crystal-services", label: "Crystal Services",  file: "/media/sponsors/crystal-services.svg" },
-      { id: "SPONSOR-nuance",           label: "Nuance",            file: "/media/sponsors/nuance.svg" },
-      { id: "SPONSOR-leal-sarl",        label: "LEAL Sàrl",         file: "/media/sponsors/leal-sarl.svg" },
+      { id: "SPONSOR-p-beuret",         label: "P. Beuret",         file: "/media/sponsors/Web%2B400x200.webp" },
+      { id: "SPONSOR-bati-deco",        label: "Bâti-Déco Sàrl",    file: "/media/sponsors/LOGO_BATI-DECO-removebg-preview.png" },
+      { id: "SPONSOR-qilomen",          label: "Qilomen",           file: "/media/sponsors/FiduciaireGilomen_New_Fond_Blanc.webp" },
+      { id: "SPONSOR-crystal-services", label: "Crystal Services",  file: "/media/sponsors/crystalservices-removebg-preview.png" },
+      { id: "SPONSOR-nuance",           label: "Nuance",            file: "/media/sponsors/logo_nuance_wordmark_byline_licht_ton_effekt.svg" },
+      { id: "SPONSOR-leal-sarl",        label: "LEAL Sàrl",         file: "/media/sponsors/lealsarl.png" },
     ],
   },
   {
     row: "Soutiens culturels & institutionnels",
     sponsors: [
-      { id: "SPONSOR-wankdorf-city",       label: "Wankdorf City Eventhall", file: "/media/sponsors/wankdorf-city.svg" },
-      { id: "SPONSOR-cjb",                 label: "CJB — Conseil du Jura bernois", file: "/media/sponsors/cjb.svg" },
-      { id: "SPONSOR-ne-ch",               label: "République et Canton de Neuchâtel", file: "/media/sponsors/ne-ch.svg" },
-      { id: "SPONSOR-la-grenouille",       label: "La Grenouille", file: "/media/sponsors/la-grenouille.svg" },
-      { id: "SPONSOR-raiffeisen",          label: "Raiffeisen",   file: "/media/sponsors/raiffeisen.svg" },
-      { id: "SPONSOR-cabinet-de-la-forge", label: "Cabinet de la Forge", file: "/media/sponsors/cabinet-de-la-forge.svg" },
+      { id: "SPONSOR-wankdorf-city",       label: "Wankdorf City Eventhall",            file: "/media/sponsors/LOGO_WANKDORF-CITY-EVETHALL-noir.png" },
+      { id: "SPONSOR-cjb",                 label: "CJB — Conseil du Jura bernois",      file: "/media/sponsors/LOGO_CJB-fond-transparent-2048x720.png" },
+      { id: "SPONSOR-ne-ch",               label: "République et Canton de Neuchâtel",  file: "/media/sponsors/nech.png" },
+      { id: "SPONSOR-la-grenouille",       label: "La Grenouille",                      file: "/media/sponsors/LA_GRENOUILLE_LOGO_AUBERGINE.png" },
+      { id: "SPONSOR-raiffeisen",          label: "Raiffeisen",                         file: "/media/sponsors/raiffeisen.png" },
+      { id: "SPONSOR-cabinet-de-la-forge", label: "Cabinet de la Forge",                file: "/media/sponsors/cabinetdelaforge.png" },
     ],
   },
   {
     row: "Soutiens régionaux",
     sponsors: [
-      { id: "SPONSOR-babette",         label: "Babette Switzerland", file: "/media/sponsors/babette.svg" },
-      { id: "SPONSOR-grand-chasseral", label: "Grand Chasseral",     file: "/media/sponsors/grand-chasseral.svg" },
-      { id: "SPONSOR-saint-imier",     label: "Saint-Imier",         file: "/media/sponsors/saint-imier.svg" },
-      { id: "SPONSOR-clientis",        label: "Clientis",            file: "/media/sponsors/clientis.svg" },
-      { id: "SPONSOR-portabri",        label: "Portabri SA",         file: "/media/sponsors/portabri.svg" },
-      { id: "SPONSOR-bh-immo",         label: "BH Immo SA",          file: "/media/sponsors/bh-immo.svg" },
+      { id: "SPONSOR-babette",         label: "Babette Switzerland", file: "/media/sponsors/babette.png" },
+      { id: "SPONSOR-grand-chasseral", label: "Grand Chasseral",     file: "/media/sponsors/logo-grand-chasseral.svg" },
+      { id: "SPONSOR-saint-imier",     label: "Saint-Imier",         file: "/media/sponsors/saint-imier.webp" },
+      { id: "SPONSOR-clientis",        label: "Clientis",            file: "/media/sponsors/LOGO_CLIENTIS-noir-2048x419.png" },
+      { id: "SPONSOR-portabri",        label: "Portabri SA",         file: "/media/sponsors/portabri_SA-removebg-preview.png" },
+      { id: "SPONSOR-bh-immo",         label: "BH Immo SA",          file: "/media/sponsors/Logo_BH-Immo-SA-removebg-preview.png" },
     ],
   },
 ];
@@ -123,7 +123,7 @@ export default function Sponsors() {
                   <div
                     key={s.id}
                     data-media-zone={s.id}
-                    className="bg-blanc"
+                    className="bg-blanc flex items-center justify-center p-6 md:p-8"
                   >
                     <MediaZone
                       id={s.id}
@@ -133,7 +133,9 @@ export default function Sponsors() {
                       tone="dark"
                       label={s.label}
                       brief={`Drop logo at ${s.file}`}
-                      className="hover:opacity-70 transition-opacity duration-500"
+                      src={s.file}
+                      alt={s.label}
+                      className="hover:opacity-70 transition-opacity duration-500 w-full"
                     />
                   </div>
                 ))}
