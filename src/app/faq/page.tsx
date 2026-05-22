@@ -1,26 +1,48 @@
-import { Accordion } from "@/components/Accordion";
+import { Accordion, type AccordionItem } from "@/components/Accordion";
 import { MediaZone } from "@/components/MediaZone";
-import { FAQ_ITEMS } from "@/data/faq";
+import { getDict } from "@/i18n/server";
 
 export const metadata = { title: "FAQ — R2JC" };
 
-export default function FAQ() {
+export default async function FAQ() {
+  const t = await getDict();
+
+  const items: AccordionItem[] = t.faq.items.map((item) => ({
+    q: item.q,
+    a: item.a.includes("{instagram}") ? (
+      <p>
+        {item.a.split("{instagram}")[0]}
+        <a
+          href="https://instagram.com/r2jc.officiel"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-silver"
+        >
+          @r2jc.officiel
+        </a>
+        {item.a.split("{instagram}")[1]}
+      </p>
+    ) : (
+      <p>{item.a}</p>
+    ),
+  }));
+
   return (
     <section className="bg-pearl text-noir min-h-screen pt-32 md:pt-40 pb-24">
       <div className="max-w-5xl mx-auto px-6 md:px-10">
         <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
-          FAQ
+          {t.faq.eyebrow}
         </p>
         <h1 className="font-display font-light text-display-md text-center mb-6 leading-[1.05]">
-          <span className="font-semibold">FAQ</span>
+          <span className="font-semibold">{t.faq.title}</span>
         </h1>
         <p className="font-display font-light text-xl md:text-3xl text-center mb-16 text-noir/70">
-          Toutes les réponses à vos questions
+          {t.faq.subtitle}
         </p>
 
         <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-start">
           <div className="md:col-span-7">
-            <Accordion items={FAQ_ITEMS} tone="dark" initialOpen={0} />
+            <Accordion items={items} tone="dark" initialOpen={0} />
           </div>
 
           <div className="md:col-span-5">
@@ -39,14 +61,14 @@ export default function FAQ() {
             <p className="mt-5 font-sans text-sm leading-snug text-noir/70">
               <span className="font-semibold text-noir">@sapmi</span>
               <br />
-              Designer 1ʳᵉ édition
+              {t.editions.e01.coverLabel}
             </p>
           </div>
         </div>
 
         <div className="mt-20 text-center border-t border-noir/15 pt-12">
           <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-3">
-            Une autre question&nbsp;?
+            {t.faq.ctaEyebrow}
           </p>
           <a
             href="mailto:Info@r2jc.ch"

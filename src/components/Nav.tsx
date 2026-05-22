@@ -2,19 +2,21 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-// Matches the live r2jc.ch primary navigation exactly.
-const ITEMS: { label: string; href: string }[] = [
-  { label: "Accueil", href: "/" },
-  { label: "Sponsors", href: "/sponsors" },
-  { label: "Éditions", href: "/editions" },
-  { label: "Contact", href: "/contact" },
-  { label: "FAQ", href: "/faq" },
-];
+import { useT } from "@/i18n";
+import { LanguageSwitcher } from "@/i18n/LanguageSwitcher";
 
 export function Nav() {
+  const { t } = useT();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  const items: { label: string; href: string }[] = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.sponsors, href: "/sponsors" },
+    { label: t.nav.editions, href: "/editions" },
+    { label: t.nav.contact, href: "/contact" },
+    { label: t.nav.faq, href: "/faq" },
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -40,8 +42,8 @@ export function Nav() {
           {/* R2JC logo mark — silver "2" on transparent */}
           <Link
             href="/"
-            className="inline-flex items-center gap-2 group"
-            aria-label="R2JC — Accueil"
+            className="inline-flex items-center gap-2 group shrink-0"
+            aria-label="R2JC"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -53,9 +55,9 @@ export function Nav() {
             <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
-          {/* Desktop nav — Montserrat 600 uppercase, matches live site */}
+          {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-2 font-display text-[13px] font-semibold uppercase tracking-nav">
-            {ITEMS.map((item) => (
+            {items.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -66,16 +68,22 @@ export function Nav() {
             ))}
           </nav>
 
-          {/* Mobile toggle */}
-          <button
-            type="button"
-            className="md:hidden font-display text-[13px] uppercase tracking-nav font-semibold"
-            onClick={() => setOpen((o) => !o)}
-            aria-expanded={open}
-            aria-label="Menu"
-          >
-            {open ? "Fermer" : "Menu"}
-          </button>
+          {/* Right cluster — language switcher (desktop) + mobile menu toggle */}
+          <div className="flex items-center gap-3">
+            <div className="hidden md:block">
+              <LanguageSwitcher variant="header" />
+            </div>
+
+            <button
+              type="button"
+              className="md:hidden font-display text-[13px] uppercase tracking-nav font-semibold"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-label="Menu"
+            >
+              {open ? t.nav.close : t.nav.menu}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -88,7 +96,7 @@ export function Nav() {
         }`}
       >
         <nav className="flex flex-col justify-center h-full px-6 gap-4">
-          {ITEMS.map((item) => (
+          {items.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -98,6 +106,9 @@ export function Nav() {
               {item.label}
             </Link>
           ))}
+          <div className="mt-10 pt-6 border-t border-blanc/15">
+            <LanguageSwitcher variant="mobile" />
+          </div>
         </nav>
       </div>
     </>

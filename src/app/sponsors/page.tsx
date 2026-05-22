@@ -1,14 +1,13 @@
 import { MediaZone } from "@/components/MediaZone";
+import { getDict } from "@/i18n/server";
 
 export const metadata = { title: "Sponsors — R2JC" };
 
-/**
- * Sponsor roster — preserves the visual grouping of the live r2jc.ch page.
- * Each ID matches a filename in /public/media/sponsors/.
- */
-const SPONSOR_ROWS: { row: string; sponsors: { id: string; label: string; file: string }[] }[] = [
+type SponsorEntry = { id: string; label: string; file: string };
+
+const SPONSOR_ROWS: { rowKey: "principaux" | "locaux" | "culturels" | "regionaux"; sponsors: SponsorEntry[] }[] = [
   {
-    row: "Partenaires principaux",
+    rowKey: "principaux",
     sponsors: [
       { id: "SPONSOR-so-sushi",  label: "Sō Sushi",                           file: "/media/sponsors/sosushi.png" },
       { id: "SPONSOR-jura-ch",   label: "République et Canton du Jura",       file: "/media/sponsors/Jura-Logo.svg.png" },
@@ -17,7 +16,7 @@ const SPONSOR_ROWS: { row: string; sponsors: { id: string; label: string; file: 
     ],
   },
   {
-    row: "Partenaires locaux",
+    rowKey: "locaux",
     sponsors: [
       { id: "SPONSOR-p-beuret",         label: "P. Beuret",         file: "/media/sponsors/Web%2B400x200.webp" },
       { id: "SPONSOR-bati-deco",        label: "Bâti-Déco Sàrl",    file: "/media/sponsors/LOGO_BATI-DECO-removebg-preview.png" },
@@ -28,18 +27,18 @@ const SPONSOR_ROWS: { row: string; sponsors: { id: string; label: string; file: 
     ],
   },
   {
-    row: "Soutiens culturels & institutionnels",
+    rowKey: "culturels",
     sponsors: [
-      { id: "SPONSOR-wankdorf-city",       label: "Wankdorf City Eventhall",            file: "/media/sponsors/LOGO_WANKDORF-CITY-EVETHALL-noir.png" },
-      { id: "SPONSOR-cjb",                 label: "CJB — Conseil du Jura bernois",      file: "/media/sponsors/LOGO_CJB-fond-transparent-2048x720.png" },
-      { id: "SPONSOR-ne-ch",               label: "République et Canton de Neuchâtel",  file: "/media/sponsors/nech.png" },
-      { id: "SPONSOR-la-grenouille",       label: "La Grenouille",                      file: "/media/sponsors/LA_GRENOUILLE_LOGO_AUBERGINE.png" },
-      { id: "SPONSOR-raiffeisen",          label: "Raiffeisen",                         file: "/media/sponsors/raiffeisen.png" },
-      { id: "SPONSOR-cabinet-de-la-forge", label: "Cabinet de la Forge",                file: "/media/sponsors/cabinetdelaforge.png" },
+      { id: "SPONSOR-wankdorf-city",       label: "Wankdorf City Eventhall",           file: "/media/sponsors/LOGO_WANKDORF-CITY-EVETHALL-noir.png" },
+      { id: "SPONSOR-cjb",                 label: "CJB — Conseil du Jura bernois",     file: "/media/sponsors/LOGO_CJB-fond-transparent-2048x720.png" },
+      { id: "SPONSOR-ne-ch",               label: "République et Canton de Neuchâtel", file: "/media/sponsors/nech.png" },
+      { id: "SPONSOR-la-grenouille",       label: "La Grenouille",                     file: "/media/sponsors/LA_GRENOUILLE_LOGO_AUBERGINE.png" },
+      { id: "SPONSOR-raiffeisen",          label: "Raiffeisen",                        file: "/media/sponsors/raiffeisen.png" },
+      { id: "SPONSOR-cabinet-de-la-forge", label: "Cabinet de la Forge",               file: "/media/sponsors/cabinetdelaforge.png" },
     ],
   },
   {
-    row: "Soutiens régionaux",
+    rowKey: "regionaux",
     sponsors: [
       { id: "SPONSOR-babette",         label: "Babette Switzerland", file: "/media/sponsors/babette.png" },
       { id: "SPONSOR-grand-chasseral", label: "Grand Chasseral",     file: "/media/sponsors/logo-grand-chasseral.svg" },
@@ -51,64 +50,37 @@ const SPONSOR_ROWS: { row: string; sponsors: { id: string; label: string; file: 
   },
 ];
 
-export default function Sponsors() {
+export default async function Sponsors() {
+  const t = await getDict();
+
   return (
     <section className="bg-pearl text-noir min-h-screen pt-32 md:pt-40 pb-24">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
         <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
-          Sponsors
+          {t.sponsors.eyebrow}
         </p>
         <h1 className="font-display font-light text-display-md text-center mb-6 leading-[1.05]">
-          Ils nous font <span className="font-semibold">confiance</span>
+          {t.sponsors.titlePre}{" "}
+          <span className="font-semibold">{t.sponsors.titleAccent}</span>
         </h1>
 
-        {/* Remerciements — exact copy from r2jc.ch/sponsors/ */}
         <div className="max-w-3xl mx-auto mt-16 md:mt-20 mb-20 md:mb-24">
           <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
-            Remerciements
+            {t.sponsors.remerciementsEyebrow}
           </p>
           <div className="space-y-6 font-sans text-base md:text-lg leading-relaxed text-noir/85">
-            <p>
-              Nous tenons à exprimer notre profonde gratitude à nos sponsors,
-              qui jouent un rôle essentiel dans la réussite de R2JC, un
-              collectif dédié à la promotion des designers suisses à travers
-              des défilés à la fois innovants et uniques.
-            </p>
-            <p>
-              R2JC, c&rsquo;est bien plus qu&rsquo;un collectif&nbsp;: c&rsquo;est
-              un espace où la créativité suisse s&rsquo;exprime pleinement, où
-              les talents locaux sont célébrés, et où chaque défilé devient
-              une expérience singulière, mêlant audace, originalité et
-              passion. Grâce à votre soutien, nous avons pu transformer cette
-              vision en réalité en offrant une plateforme exceptionnelle aux
-              créateurs pour repousser les limites de la mode et valoriser
-              leur savoir-faire.
-            </p>
-            <p>
-              Votre engagement à nos côtés dépasse largement le simple appui
-              financier. Vous êtes des partenaires, des alliés partageant
-              notre mission&nbsp;: encourager l&rsquo;excellence, soutenir
-              l&rsquo;artisanat local et promouvoir l&rsquo;innovation.
-              Ensemble, nous redéfinissons les standards de la mode et
-              contribuons à faire briller la scène suisse à l&rsquo;échelle
-              nationale et internationale.
-            </p>
-            <p>
-              Nous sommes fiers de collaborer avec vous et profondément
-              reconnaissants de la confiance que vous nous accordez.
-              Ensemble, nous continuons à construire un avenir où chaque
-              designer trouve sa place et où chaque défilé raconte une
-              histoire unique.
-            </p>
+            <p>{t.sponsors.remerciementsP1}</p>
+            <p>{t.sponsors.remerciementsP2}</p>
+            <p>{t.sponsors.remerciementsP3}</p>
+            <p>{t.sponsors.remerciementsP4}</p>
           </div>
         </div>
 
-        {/* Logo grids — one row per partner tier */}
         <div className="space-y-16 md:space-y-20">
           {SPONSOR_ROWS.map((row) => (
-            <div key={row.row}>
+            <div key={row.rowKey}>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
-                {row.row}
+                {t.sponsors.rows[row.rowKey]}
               </p>
               <div
                 className="grid gap-px bg-noir/10"
@@ -144,14 +116,12 @@ export default function Sponsors() {
           ))}
         </div>
 
-        {/* Devenir partenaire CTA */}
         <div className="bg-noir text-blanc p-10 md:p-16 text-center mt-20">
           <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4">
-            Devenir partenaire
+            {t.sponsors.ctaEyebrow}
           </p>
           <h2 className="font-display font-light text-2xl md:text-4xl mb-6 max-w-2xl mx-auto leading-tight">
-            Soutenir R2JC, c&rsquo;est associer son nom à la prochaine
-            génération créative suisse.
+            {t.sponsors.ctaTitle}
           </h2>
           <a
             href="mailto:Info@r2jc.ch?subject=Partenariat%20R2JC"

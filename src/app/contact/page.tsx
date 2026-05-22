@@ -1,31 +1,29 @@
+import { getDict } from "@/i18n/server";
+
 export const metadata = { title: "Contact — R2JC" };
 
-export default function Contact() {
+export default async function Contact() {
+  const t = await getDict();
+
   return (
     <section className="bg-pearl text-noir min-h-screen pt-32 md:pt-40 pb-24">
       <div className="max-w-5xl mx-auto px-6 md:px-10">
         <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
-          Contact
+          {t.contact.eyebrow}
         </p>
         <h1 className="font-display font-light text-display-md text-center mb-10 leading-[1.05]">
-          <span className="font-semibold">Contactez-nous</span>
+          <span className="font-semibold">{t.contact.title}</span>
         </h1>
 
-        {/* Intro copy — verbatim from r2jc.ch/contact-2/ */}
         <p className="max-w-2xl mx-auto text-center font-sans text-base md:text-lg text-noir/80 leading-relaxed mb-20">
-          Besoin d&rsquo;aide ou d&rsquo;informations supplémentaires&nbsp;?
-          Nous sommes là pour répondre à vos questions. N&rsquo;hésitez pas
-          à nous écrire en remplissant le formulaire ou en utilisant nos
-          coordonnées ci-dessous. Nous vous répondrons dans les plus brefs
-          délais.
+          {t.contact.intro}
         </p>
 
         <div className="grid md:grid-cols-2 gap-12 md:gap-20">
-          {/* Coordonnées — real address from r2jc.ch */}
           <div className="space-y-10">
             <div>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-3">
-                Adresse
+                {t.contact.labels.address}
               </p>
               <p className="font-display text-xl md:text-2xl font-medium leading-tight">
                 Rue Agassiz 10
@@ -37,7 +35,7 @@ export default function Contact() {
             </div>
             <div>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-2">
-                Courriel
+                {t.contact.labels.email}
               </p>
               <a
                 href="mailto:Info@r2jc.ch"
@@ -48,7 +46,7 @@ export default function Contact() {
             </div>
             <div>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-2">
-                Téléphone
+                {t.contact.labels.phone}
               </p>
               <a
                 href="tel:+41765142303"
@@ -59,7 +57,7 @@ export default function Contact() {
             </div>
             <div>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-3">
-                Suivre
+                {t.contact.labels.follow}
               </p>
               <ul className="space-y-1 font-sans text-base">
                 <li>
@@ -99,7 +97,7 @@ export default function Contact() {
           <form className="space-y-6">
             <div>
               <label className="block font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-2">
-                Votre nom
+                {t.contact.form.name}
               </label>
               <input
                 type="text"
@@ -109,7 +107,7 @@ export default function Contact() {
             </div>
             <div>
               <label className="block font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-2">
-                Votre adresse courriel
+                {t.contact.form.email}
               </label>
               <input
                 type="email"
@@ -119,7 +117,7 @@ export default function Contact() {
             </div>
             <div>
               <label className="block font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-2">
-                Objet
+                {t.contact.form.subject}
               </label>
               <input
                 type="text"
@@ -128,7 +126,7 @@ export default function Contact() {
             </div>
             <div>
               <label className="block font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-2">
-                Votre message
+                {t.contact.form.message}
               </label>
               <textarea
                 required
@@ -140,7 +138,7 @@ export default function Contact() {
               type="submit"
               className="bg-noir text-blanc px-8 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-silver transition-colors duration-500"
             >
-              Envoyer →
+              {t.contact.form.submit}
             </button>
           </form>
         </div>

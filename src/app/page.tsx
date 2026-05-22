@@ -2,27 +2,37 @@ import Link from "next/link";
 import { MediaZone } from "@/components/MediaZone";
 import { Reveal } from "@/components/Reveal";
 import { HeroVideo } from "@/components/HeroVideo";
-import { Accordion } from "@/components/Accordion";
-import { FAQ_ITEMS } from "@/data/faq";
+import { Accordion, type AccordionItem } from "@/components/Accordion";
+import { getDict } from "@/i18n/server";
 
-/**
- * R2JC Homepage — verbatim content parity with r2jc.ch/accueil, restructured
- * around an elevated visual flow.
- *
- * Sections (matching the live page top-to-bottom):
- *   I.   Hero            — YouTube ambient + animated "découverts" zoom
- *   II.  L'histoire      — Two paragraphs of brand copy (exact)
- *   III. Ils parlent     — Press logos (Télé Bilingue, JdJ, À Jour, Le Quotidien)
- *   IV.  Édition 02      — Video left + heading right
- *   V.   FAQ + @sapmi    — Full accordion left + portrait right (matches live)
- *   Footer               — Three columns: Règles · Réseaux · Contact
- */
-export default function Home() {
+export default async function Home() {
+  const t = await getDict();
+
+  // Build FAQ items from the dictionary, weaving in the @r2jc.officiel link
+  // on the last answer where the {instagram} placeholder appears.
+  const faqItems: AccordionItem[] = t.faq.items.map((item) => ({
+    q: item.q,
+    a: item.a.includes("{instagram}") ? (
+      <p>
+        {item.a.split("{instagram}")[0]}
+        <a
+          href="https://instagram.com/r2jc.officiel"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-silver"
+        >
+          @r2jc.officiel
+        </a>
+        {item.a.split("{instagram}")[1]}
+      </p>
+    ) : (
+      <p>{item.a}</p>
+    ),
+  }));
+
   return (
     <>
-      {/* ──────────────────────────────────────────────────────────────
-          I — HERO
-          ────────────────────────────────────────────────────────────── */}
+      {/* ── I — HERO ───────────────────────────────────────────────── */}
       <section className="relative min-h-screen bg-noir text-blanc overflow-hidden flex items-center">
         <HeroVideo />
         <div
@@ -33,17 +43,18 @@ export default function Home() {
         <div className="relative z-10 w-full px-6 md:px-10 text-center">
           <Reveal delay={150}>
             <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-70 mb-8">
-              R2JC · Rencontre de Jeunes Créateurs · Suisse
+              {t.home.eyebrow}
             </p>
           </Reveal>
 
-          {/* The signature R2JC headline — "découverts" animates with a zoom loop */}
           <Reveal delay={350}>
             <h1 className="font-display font-light text-display-md max-w-5xl mx-auto leading-[1.1]">
-              <span className="block">Une scène aux designers</span>
+              <span className="block">{t.home.taglineLine1}</span>
               <span className="block">
-                qui méritent d&rsquo;être{" "}
-                <span className="zoom-word font-bold italic">découverts</span>
+                {t.home.taglineLine2pre}{" "}
+                <span className="zoom-word font-bold italic">
+                  {t.home.taglineZoom}
+                </span>
               </span>
             </h1>
           </Reveal>
@@ -54,13 +65,13 @@ export default function Home() {
                 href="/editions"
                 className="inline-block bg-blanc text-noir px-8 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-silver hover:text-blanc transition-colors duration-500"
               >
-                Voir les éditions
+                {t.home.ctaEditions}
               </Link>
               <Link
                 href="#histoire"
                 className="inline-block border border-blanc/60 text-blanc px-8 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-blanc hover:text-noir transition-colors duration-500"
               >
-                Découvrir le collectif
+                {t.home.ctaDiscover}
               </Link>
             </div>
           </Reveal>
@@ -69,89 +80,54 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 px-6 md:px-10 pb-6 z-10">
           <div className="hairline bg-blanc mb-3" />
           <div className="flex justify-between font-mono text-[10px] uppercase tracking-wider-2 opacity-60">
-            <span>Défiler</span>
-            <span>Édition 03 · 2026</span>
+            <span>{t.common.scroll}</span>
+            <span>{t.common.edition03}</span>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          II — L'HISTOIRE DE R2JC
-          Exact copy from r2jc.ch
-          ────────────────────────────────────────────────────────────── */}
+      {/* ── II — L'HISTOIRE ────────────────────────────────────────── */}
       <section id="histoire" className="bg-pearl text-noir py-28 md:py-40">
         <div className="max-w-6xl mx-auto px-6 md:px-10">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
-              Notre histoire
+              {t.home.histoire.eyebrow}
             </p>
           </Reveal>
-
           <Reveal delay={120}>
             <h2 className="font-display font-light text-display-md text-center mb-20 leading-[1.05]">
-              L&rsquo;histoire de <span className="font-semibold">R2JC</span>
+              {t.home.histoire.titlePre}{" "}
+              <span className="font-semibold">{t.home.histoire.titleAccent}</span>
             </h2>
           </Reveal>
 
           <div className="max-w-3xl mx-auto space-y-6 font-sans text-base md:text-lg leading-relaxed text-noir/85">
             <Reveal>
-              <p>
-                Tout débute avec la volonté de créer des défilés qui
-                transcendent la simple présentation de vêtements. Notre
-                collectif a été formé pour développer le marché de la mode
-                en Suisse. Nous estimons qu&rsquo;il existe énormément de
-                talents cachés qui méritent d&rsquo;être valorisés et reconnus.
-                C&rsquo;est pourquoi nous avons l&rsquo;ambition d&rsquo;ouvrir
-                des opportunités et de faire déboucher des carrières.
-              </p>
+              <p>{t.home.histoire.p1}</p>
             </Reveal>
             <Reveal delay={120}>
-              <p>
-                La mode dépasse largement le simple choix de vêtements.
-                C&rsquo;est une manière artistique de refléter notre vie,
-                notre identité et le monde qui nous entoure. Ici, nous ne
-                parlons pas de designers renommés ou de collections
-                Haute couture, mais de passionnés qui s&rsquo;expriment
-                avec cœur et authenticité.
-              </p>
+              <p>{t.home.histoire.p2}</p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          III — ILS PARLENT DE NOUS
-          ────────────────────────────────────────────────────────────── */}
+      {/* ── III — ILS PARLENT DE NOUS ─────────────────────────────── */}
       <section className="bg-blanc text-noir py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6 md:px-10">
           <Reveal>
             <h2 className="font-display font-light text-3xl md:text-5xl text-center mb-16 md:mb-20">
-              Ils parlent de <span className="font-semibold">nous</span>
+              {t.home.presse.titlePre}{" "}
+              <span className="font-semibold">{t.home.presse.titleAccent}</span>
             </h2>
           </Reveal>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 items-center">
             {[
-              {
-                id: "PRESS-telebielingue",
-                label: "TeleBielingue",
-                file: "/media/sponsors/TeleBielingue.svg",
-              },
-              {
-                id: "PRESS-le-journal-du-jura",
-                label: "Le Journal du Jura",
-                file: "/media/sponsors/journalJura.png",
-              },
-              {
-                id: "PRESS-a-jour",
-                label: "À Jour",
-                file: "/media/sponsors/rot_ajour_claim_RZ.webp",
-              },
-              {
-                id: "PRESS-le-quotidien",
-                label: "Le Quotidien",
-                file: "/media/sponsors/lequotidien.png",
-              },
+              { id: "PRESS-telebielingue", label: "TeleBielingue", file: "/media/sponsors/TeleBielingue.svg" },
+              { id: "PRESS-le-journal-du-jura", label: "Le Journal du Jura", file: "/media/sponsors/journalJura.png" },
+              { id: "PRESS-a-jour", label: "À Jour", file: "/media/sponsors/rot_ajour_claim_RZ.webp" },
+              { id: "PRESS-le-quotidien", label: "Le Quotidien", file: "/media/sponsors/lequotidien.png" },
             ].map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
                 <MediaZone
@@ -172,9 +148,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          IV — ÉDITION 02 — FEATURED VIDEO
-          ────────────────────────────────────────────────────────────── */}
+      {/* ── IV — ÉDITION 02 ───────────────────────────────────────── */}
       <section className="bg-noir text-blanc py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="md:col-span-7">
@@ -195,14 +169,14 @@ export default function Home() {
           <div className="md:col-span-5">
             <Reveal delay={150}>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6">
-                Édition 02 · 2024
+                {t.home.ed02.eyebrow}
               </p>
             </Reveal>
             <Reveal delay={250}>
               <h2 className="font-display font-light text-3xl md:text-5xl leading-[1.15] mb-8">
-                La vidéo complète de la{" "}
-                <span className="font-semibold">2ᵉ édition</span> est
-                désormais disponible sur notre chaîne YouTube&nbsp;!
+                {t.home.ed02.headingPre}{" "}
+                <span className="font-semibold">{t.home.ed02.headingAccent}</span>{" "}
+                {t.home.ed02.headingPost}
               </h2>
             </Reveal>
             <Reveal delay={400}>
@@ -213,13 +187,13 @@ export default function Home() {
                   rel="noopener noreferrer"
                   className="inline-block bg-silver text-blanc px-6 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-blanc hover:text-noir transition-colors duration-500"
                 >
-                  Regarder sur YouTube →
+                  {t.home.ed02.ctaYoutube}
                 </a>
                 <Link
                   href="/editions"
                   className="inline-block border border-blanc/40 text-blanc px-6 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-blanc hover:text-noir transition-colors duration-500"
                 >
-                  Toutes les éditions
+                  {t.home.ed02.ctaAll}
                 </Link>
               </div>
             </Reveal>
@@ -227,33 +201,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          V — FAQ + @SAPMI PORTRAIT
-          Matches the live r2jc.ch home: 2-column accordion + portrait
-          ────────────────────────────────────────────────────────────── */}
+      {/* ── V — FAQ + @SAPMI PORTRAIT ─────────────────────────────── */}
       <section className="bg-pearl text-noir py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6 md:px-10">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4 text-center">
-              Questions fréquentes
+              {t.home.faq.eyebrow}
             </p>
           </Reveal>
           <Reveal delay={120}>
             <h2 className="font-display font-light text-3xl md:text-5xl text-center mb-16">
-              Pour mieux nous{" "}
-              <span className="font-semibold">connaître</span>
+              {t.home.faq.titlePre}{" "}
+              <span className="font-semibold">{t.home.faq.titleAccent}</span>
             </h2>
           </Reveal>
 
           <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
             <Reveal>
-              <Accordion items={FAQ_ITEMS} tone="dark" initialOpen={0} />
+              <Accordion items={faqItems} tone="dark" initialOpen={0} />
               <div className="mt-10 text-center md:text-left">
                 <Link
                   href="/faq"
                   className="inline-block bg-noir text-blanc px-7 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-silver transition-colors duration-500"
                 >
-                  Toutes les questions
+                  {t.home.faq.ctaAll}
                 </Link>
               </div>
             </Reveal>
@@ -274,21 +245,20 @@ export default function Home() {
               <p className="mt-5 font-sans text-sm leading-snug text-noir/70">
                 <span className="font-semibold text-noir">@sapmi</span>
                 <br />
-                Designer 1ʳᵉ édition
+                {t.editions.cardLabel.split("·")[1]?.trim() ?? "Designer"} —{" "}
+                {t.editions.e01.coverLabel}
               </p>
             </Reveal>
           </div>
         </div>
       </section>
 
-      {/* ──────────────────────────────────────────────────────────────
-          FOOTER — three columns, matching r2jc.ch
-          ────────────────────────────────────────────────────────────── */}
+      {/* ── FOOTER ────────────────────────────────────────────────── */}
       <footer className="bg-noir text-mist">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <h4 className="font-display text-blanc font-medium text-[15px] mb-4">
-              Règles et Politiques
+              {t.footer.rules}
             </h4>
             <ul className="space-y-2 font-sans text-sm text-mist/80">
               <li>
@@ -296,7 +266,7 @@ export default function Home() {
                   href="/politique-de-confidentialite"
                   className="hover:text-blanc transition-colors"
                 >
-                  Politique de confidentialité
+                  {t.footer.privacy}
                 </Link>
               </li>
               <li>
@@ -304,7 +274,7 @@ export default function Home() {
                   href="/conditions-generales-de-ventes"
                   className="hover:text-blanc transition-colors"
                 >
-                  Conditions générales de ventes
+                  {t.footer.terms}
                 </Link>
               </li>
             </ul>
@@ -312,7 +282,7 @@ export default function Home() {
 
           <div>
             <h4 className="font-display text-blanc font-medium text-[15px] mb-4">
-              Réseaux sociaux
+              {t.footer.social}
             </h4>
             <ul className="space-y-2 font-sans text-sm text-mist/80">
               <li>
@@ -350,7 +320,7 @@ export default function Home() {
 
           <div>
             <h4 className="font-display text-blanc font-medium text-[15px] mb-4">
-              Contact
+              {t.footer.contact}
             </h4>
             <ul className="space-y-2 font-sans text-sm text-mist/80">
               <li>
@@ -367,7 +337,7 @@ export default function Home() {
         </div>
 
         <div className="border-t border-graphite px-6 md:px-10 py-5 text-center font-sans text-[12px] text-mist/50">
-          © R2JC · Tous droits réservés
+          {t.footer.rights}
         </div>
       </footer>
     </>

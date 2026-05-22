@@ -3,63 +3,51 @@ import { join } from "path";
 import { MediaZone } from "@/components/MediaZone";
 import { Reveal } from "@/components/Reveal";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
+import { getDict } from "@/i18n/server";
 
 export const metadata = { title: "Éditions — R2JC" };
 
-/**
- * Resolve a `/public/...` URL to an absolute filesystem path and check
- * whether the file exists at build time. Lets us only pass `src` to
- * MediaZone when the portrait is actually on disk — every other slot
- * gracefully shows the typographic placeholder, no broken-image icons.
- */
 const PUBLIC_DIR = join(process.cwd(), "public");
 const fileExists = (publicPath: string) =>
   existsSync(
     join(PUBLIC_DIR, decodeURIComponent(publicPath.replace(/^\//, "")))
   );
 
-export default function Editions() {
+export default async function Editions() {
+  const t = await getDict();
+
   return (
     <>
       {/* Hero */}
       <section className="bg-pearl text-noir pt-32 md:pt-40 pb-20">
         <div className="max-w-6xl mx-auto px-6 md:px-10 text-center">
           <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6">
-            Éditions
+            {t.editions.eyebrow}
           </p>
           <h1 className="font-display font-light text-display-md leading-[1.05]">
-            <span className="font-semibold">Editions</span>
+            <span className="font-semibold">{t.editions.titleAccent}</span>
           </h1>
         </div>
       </section>
 
-      {/* 2ème édition — intro */}
+      {/* Ed 02 intro */}
       <section className="bg-pearl text-noir py-20 md:py-28">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <Reveal>
             <h2 className="font-display font-light text-3xl md:text-5xl leading-tight mb-10 text-center">
-              2ème édition de <span className="font-semibold">R2JC</span>
+              {t.editions.e02.titlePre}{" "}
+              <span className="font-semibold">{t.editions.e02.titleAccent}</span>
             </h2>
           </Reveal>
           <Reveal delay={120}>
             <p className="font-sans text-base md:text-lg leading-relaxed text-noir/85 text-center max-w-prose mx-auto">
-              Pour cette édition, nous avons choisi un espace bien plus
-              grand, répondant à la demande croissante et permettant
-              d&rsquo;accueillir un public encore plus vaste. L&rsquo;édition
-              2025 s&rsquo;est démarquée par une diversité élargie, tant au
-              niveau des créateurs que des collections présentées. Nous
-              avons eu le plaisir de mettre en lumière une palette encore
-              plus variée de talents. Redécouvrez dès maintenant les
-              designers qui ont marqué cette édition&nbsp;!
+              {t.editions.e02.intro}
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Designers — 16 profiles, each in its own white editorial card.
-          All cards share an identical max width (max-w-7xl) and use a fixed
-          4/8 grid split so the portrait never collides with the text — no
-          aspect-ratio vs grid-stretch fight. */}
+      {/* Designer cards */}
       <section className="bg-pearl text-noir pb-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10 space-y-12 md:space-y-16">
           {DESIGNERS_EDITION_02.map((d, i) => {
@@ -72,7 +60,6 @@ export default function Editions() {
                       reversed ? "md:[direction:rtl]" : ""
                     }`}
                   >
-                    {/* Portrait — natural 4:5 aspect, no stretching */}
                     <div className="md:col-span-4 md:[direction:ltr]">
                       <MediaZone
                         id={`ED02-PORTRAIT-${d.slug}`}
@@ -89,10 +76,9 @@ export default function Editions() {
                       />
                     </div>
 
-                    {/* Text — generous padding, text flows freely beside portrait */}
                     <div className="md:col-span-8 md:[direction:ltr] p-8 md:p-12 lg:p-14 flex flex-col">
                       <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4">
-                        Édition 02 · Designer
+                        {t.editions.cardLabel}
                       </p>
                       <h3 className="font-display font-light text-3xl md:text-5xl leading-tight">
                         <span className="font-semibold">{d.name}</span>
@@ -105,7 +91,7 @@ export default function Editions() {
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={d.logo}
-                          alt={`${d.name} — logo de marque`}
+                          alt={`${d.name} — logo`}
                           className="h-20 md:h-28 w-auto max-w-[280px] mt-8 object-contain object-left"
                         />
                       )}
@@ -132,18 +118,18 @@ export default function Editions() {
         </div>
       </section>
 
-      {/* 1ère édition retrospective */}
+      {/* Ed 01 retrospective */}
       <section className="bg-noir text-blanc py-24 md:py-32">
         <div className="max-w-4xl mx-auto px-6 md:px-10 text-center">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6">
-              Retour en arrière
+              {t.editions.e01.eyebrow}
             </p>
           </Reveal>
           <Reveal delay={120}>
             <h2 className="font-display font-light text-3xl md:text-5xl leading-tight mb-10">
-              Revenons sur notre{" "}
-              <span className="font-semibold">1ère édition</span>
+              {t.editions.e01.titlePre}{" "}
+              <span className="font-semibold">{t.editions.e01.titleAccent}</span>
             </h2>
           </Reveal>
           <Reveal delay={250}>
@@ -154,16 +140,14 @@ export default function Editions() {
                 ratio="4/5"
                 priority="P1"
                 tone="light"
-                label="Édition 01 — 2023"
+                label={t.editions.e01.coverLabel}
                 brief="Drop at /media/editions/edition-01-cover.jpg"
               />
             </div>
           </Reveal>
           <Reveal delay={400}>
             <p className="mt-10 font-sans text-base md:text-lg leading-relaxed text-mist/80 max-w-prose mx-auto">
-              La première rencontre — où tout a commencé. @sapmi et les
-              autres pionniers ont posé les bases d&rsquo;une scène à
-              révéler.
+              {t.editions.e01.caption}
             </p>
           </Reveal>
         </div>
