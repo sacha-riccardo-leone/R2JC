@@ -176,21 +176,23 @@ export default function Home() {
           IV — ÉDITION 02 — FEATURED VIDEO
           ────────────────────────────────────────────────────────────── */}
       <section className="bg-noir text-blanc py-24 md:py-32">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-12 md:gap-20 items-center">
-          <Reveal>
-            <MediaZone
-              id="ED-VID-02"
-              kind="video"
-              ratio="4/5"
-              priority="P0"
-              tone="light"
-              label="Édition 02 — Recap"
-              brief="Self-hosted 30s loop from t=36:06 of the YouTube recap."
-              src="/media/editions/edition-02-recap.mp4"
-            />
-          </Reveal>
+        <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-16 items-center">
+          <div className="md:col-span-7">
+            <Reveal>
+              <MediaZone
+                id="ED-VID-02"
+                kind="video"
+                ratio="16/9"
+                priority="P0"
+                tone="light"
+                label="Édition 02 — Recap"
+                brief="Self-hosted 30s loop from t=36:06 of the YouTube recap."
+                src="/media/editions/edition-02-recap.mp4"
+              />
+            </Reveal>
+          </div>
 
-          <div>
+          <div className="md:col-span-5">
             <Reveal delay={150}>
               <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6">
                 Édition 02 · 2024
