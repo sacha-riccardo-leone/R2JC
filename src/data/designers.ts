@@ -5,15 +5,14 @@
  * the brand presentation in the visitor's chosen language.
  * Portrait and logo paths point to files under /public/media/designers/.
  *
- * For designers whose bio is not yet supplied, all four locales are empty strings —
- * the page just skips rendering the bio paragraph for them.
+ * For a future designer whose bio is not yet supplied, set all four locales
+ * to empty strings — the editions page just skips rendering the bio paragraph
+ * when the bio for the current locale is empty.
  */
 
 import type { Locale } from "@/i18n/locales";
 
 export type LocalizedBio = Record<Locale, string>;
-
-const EMPTY_BIO: LocalizedBio = { fr: "", en: "", de: "", it: "" };
 
 export type Designer = {
   slug: string;
