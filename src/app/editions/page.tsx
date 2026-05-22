@@ -48,36 +48,65 @@ export default async function Editions() {
         </div>
       </section>
 
-      {/* Designer cards */}
+      {/* Designer cards — "Specimen Plate" treatment
+          Every portrait sits in an identical framed plate: thin black border,
+          oversized monospace index number overhanging top-left, fine hairline
+          caption strip below carrying brand + edition. All portraits always
+          positioned in the same column (left) for total visual unification. */}
       <section className="bg-pearl text-noir pb-24">
         <div className="max-w-7xl mx-auto px-6 md:px-10 space-y-12 md:space-y-16">
           {DESIGNERS_EDITION_02.map((d, i) => {
-            const reversed = i % 2 === 1;
+            const indexNum = String(i + 1).padStart(2, "0");
+            const total = String(DESIGNERS_EDITION_02.length).padStart(2, "0");
+
             return (
               <Reveal key={d.slug}>
                 <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial">
-                  <div
-                    className={`grid md:grid-cols-12 items-start ${
-                      reversed ? "md:[direction:rtl]" : ""
-                    }`}
-                  >
-                    <div className="md:col-span-4 md:[direction:ltr]">
-                      <MediaZone
-                        id={`ED02-PORTRAIT-${d.slug}`}
-                        kind="image"
-                        ratio="4/5"
-                        priority="P0"
-                        tone="dark"
-                        fit="cover"
-                        focus={d.portraitFocus}
-                        label={d.name}
-                        brief={`Portrait — drop at ${d.portrait}`}
-                        src={fileExists(d.portrait) ? d.portrait : undefined}
-                        alt={`${d.name} — ${d.brand}`}
-                      />
+                  <div className="grid md:grid-cols-12 items-start">
+                    {/* Specimen plate — fixed structure across every card */}
+                    <div className="md:col-span-5 p-8 md:p-10 lg:p-12 relative">
+                      {/* Oversized index number, overhangs the frame */}
+                      <div className="absolute top-4 left-4 md:top-6 md:left-6 z-10 pointer-events-none">
+                        <div className="flex items-baseline gap-2 leading-none">
+                          <span className="font-mono font-bold text-5xl md:text-6xl text-noir tabular-nums">
+                            {indexNum}
+                          </span>
+                          <span className="font-mono text-[10px] uppercase tracking-wider-2 text-noir/40 tabular-nums">
+                            / {total}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* The framed image — fixed 4:5 with a thin sharp border */}
+                      <div className="border-[1.5px] border-noir mt-12 md:mt-14 relative">
+                        <MediaZone
+                          id={`ED02-PORTRAIT-${d.slug}`}
+                          kind="image"
+                          ratio="4/5"
+                          priority="P0"
+                          tone="dark"
+                          fit="cover"
+                          focus={d.portraitFocus}
+                          label={d.name}
+                          brief={`Portrait — drop at ${d.portrait}`}
+                          src={fileExists(d.portrait) ? d.portrait : undefined}
+                          alt={`${d.name} — ${d.brand}`}
+                        />
+                      </div>
+
+                      {/* Caption strip — hairline + monospace metadata */}
+                      <div className="mt-4 pt-3 border-t border-noir/30">
+                        <div className="flex justify-between items-baseline font-mono text-[10px] uppercase tracking-wider-2 text-noir/70">
+                          <span className="truncate pr-3">{d.brand}</span>
+                          <span className="shrink-0 text-noir/50">
+                            {t.editions.e02.titleAccent} · 02
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="md:col-span-8 md:[direction:ltr] p-8 md:p-12 lg:p-14 flex flex-col">
+                    {/* Text column */}
+                    <div className="md:col-span-7 p-8 md:p-12 lg:p-14 flex flex-col">
                       <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4">
                         {t.editions.cardLabel}
                       </p>
