@@ -18,7 +18,7 @@ const SPONSOR_ROWS: { rowKey: "principaux" | "locaux" | "culturels" | "regionaux
   {
     rowKey: "locaux",
     sponsors: [
-      { id: "SPONSOR-p-beuret",         label: "P. Beuret",         file: "/media/sponsors/Web%2B400x200.webp" },
+      { id: "SPONSOR-p-beuret",         label: "P. Beuret",         file: "/media/sponsors/pbeuret.png" },
       { id: "SPONSOR-bati-deco",        label: "Bâti-Déco Sàrl",    file: "/media/sponsors/LOGO_BATI-DECO-removebg-preview.png" },
       { id: "SPONSOR-qilomen",          label: "Qilomen",           file: "/media/sponsors/FiduciaireGilomen_New_Fond_Blanc.webp" },
       { id: "SPONSOR-crystal-services", label: "Crystal Services",  file: "/media/sponsors/crystalservices-removebg-preview.png" },
