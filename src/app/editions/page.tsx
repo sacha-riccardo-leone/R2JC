@@ -1,8 +1,20 @@
+import { existsSync } from "fs";
+import { join } from "path";
 import { MediaZone } from "@/components/MediaZone";
 import { Reveal } from "@/components/Reveal";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
 
 export const metadata = { title: "Éditions — R2JC" };
+
+/**
+ * Resolve a `/public/...` URL to an absolute filesystem path and check
+ * whether the file exists at build time. Lets us only pass `src` to
+ * MediaZone when the portrait is actually on disk — every other slot
+ * gracefully shows the typographic placeholder, no broken-image icons.
+ */
+const PUBLIC_DIR = join(process.cwd(), "public");
+const fileExists = (publicPath: string) =>
+  existsSync(join(PUBLIC_DIR, publicPath.replace(/^\//, "")));
 
 export default function Editions() {
   return (
@@ -62,9 +74,11 @@ export default function Editions() {
                       ratio="4/5"
                       priority="P0"
                       tone="dark"
+                      fit="cover"
                       label={d.name}
                       brief={`Portrait — drop at ${d.portrait}`}
-                      src={undefined}
+                      src={fileExists(d.portrait) ? d.portrait : undefined}
+                      alt={`${d.name} — ${d.brand}`}
                     />
                   </Reveal>
                 </div>
