@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://r2jc.ch"),
   icons: {
     icon: [
-      { url: "/logo/r2jcLogo.png", sizes: "any" },
+      { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
     ],
     apple: "/logo/r2jcLogo.png",
   },
