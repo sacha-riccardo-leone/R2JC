@@ -37,13 +37,20 @@ export function Nav() {
         }`}
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-4 md:py-5">
-          {/* Logo wordmark — matches their 100px max-width logo placement */}
+          {/* R2JC logo mark — silver "2" on transparent */}
           <Link
             href="/"
-            className="font-display font-bold text-base md:text-lg tracking-nav"
+            className="inline-flex items-center gap-2 group"
             aria-label="R2JC — Accueil"
           >
-            R2JC
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/logo/r2jcLogo.png"
+              alt="R2JC"
+              className="h-7 md:h-8 w-auto select-none group-hover:opacity-80 transition-opacity duration-300"
+              draggable={false}
+            />
+            <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
           {/* Desktop nav — Montserrat 600 uppercase, matches live site */}

@@ -35,6 +35,12 @@ export const metadata: Metadata = {
   description:
     "Une scène aux designers qui méritent d'être découverts. R2JC est un collectif suisse qui valorise les jeunes créateurs.",
   metadataBase: new URL("https://r2jc.ch"),
+  icons: {
+    icon: [
+      { url: "/logo/r2jcLogo.png", sizes: "any" },
+    ],
+    apple: "/logo/r2jcLogo.png",
+  },
   openGraph: {
     title: "R2JC — Rencontre de Jeunes Créateurs",
     description: "Une scène aux designers qui méritent d'être découverts.",
