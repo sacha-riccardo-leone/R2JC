@@ -30,8 +30,11 @@ export default function FAQ() {
               ratio="4/5"
               priority="P0"
               tone="dark"
+              fit="cover"
               label="@sapmi"
-              brief="Portrait — Designer 1ʳᵉ édition. Drop file at /media/home/sapmi-portrait.jpg"
+              brief="Portrait — Designer 1ʳᵉ édition"
+              src="/media/home/sapmi_portrait.jpg"
+              alt="@sapmi — Designer 1ère édition R2JC"
             />
             <p className="mt-5 font-sans text-sm leading-snug text-noir/70">
               <span className="font-semibold text-noir">@sapmi</span>

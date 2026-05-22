@@ -38,6 +38,8 @@ export type MediaZoneProps = {
   style?: CSSProperties;
   /** Visual tone of the placeholder ("light" on dark sections, "dark" on light) */
   tone?: "auto" | "light" | "dark";
+  /** object-fit mode. Defaults: "contain" for images (logos), "cover" for videos */
+  fit?: "cover" | "contain";
 };
 
 export function MediaZone({
@@ -53,8 +55,13 @@ export function MediaZone({
   className = "",
   style,
   tone = "auto",
+  fit,
 }: MediaZoneProps) {
   const aspectStyle: CSSProperties = { aspectRatio: ratio, ...style };
+  const fitClass =
+    (fit ?? (kind === "video" ? "cover" : "contain")) === "cover"
+      ? "object-cover"
+      : "object-contain";
 
   // Asset present — render it.
   if (src) {
@@ -75,14 +82,14 @@ export function MediaZone({
             disablePictureInPicture
             controlsList="nodownload noplaybackrate nofullscreen noremoteplayback"
             tabIndex={-1}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className={`absolute inset-0 w-full h-full ${fitClass} pointer-events-none`}
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={src}
             alt={alt ?? label ?? brief}
-            className="absolute inset-0 w-full h-full object-contain"
+            className={`absolute inset-0 w-full h-full ${fitClass}`}
           />
         )}
       </figure>
