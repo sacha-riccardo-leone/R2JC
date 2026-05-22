@@ -57,13 +57,14 @@ export function Nav() {
             <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-2 font-display text-[13px] font-semibold uppercase tracking-nav">
+          {/* Desktop nav — fills the space between logo and language switcher,
+              items distributed evenly across the available width */}
+          <nav className="hidden md:flex flex-1 items-center justify-around mx-8 lg:mx-12 font-display text-[13px] font-semibold uppercase tracking-nav">
             {items.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="px-3 py-2 hover:text-silver transition-colors duration-300"
+                className="py-2 hover:text-silver transition-colors duration-300 whitespace-nowrap"
               >
                 {item.label}
               </Link>
