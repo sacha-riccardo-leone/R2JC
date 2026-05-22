@@ -131,13 +131,27 @@ export default async function Editions() {
                           {d.bio[locale]}
                         </p>
                       )}
-                      {d.email && (
-                        <a
-                          href={`mailto:${d.email}`}
-                          className="inline-block self-start mt-8 font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
-                        >
-                          {d.email} →
-                        </a>
+                      {(d.instagram || d.email) && (
+                        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 items-baseline">
+                          {d.instagram && (
+                            <a
+                              href={`https://instagram.com/${d.instagram}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-block font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
+                            >
+                              @{d.instagram} ↗
+                            </a>
+                          )}
+                          {d.email && (
+                            <a
+                              href={`mailto:${d.email}`}
+                              className="inline-block font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
+                            >
+                              {d.email} →
+                            </a>
+                          )}
+                        </div>
                       )}
                     </div>
                   </div>
