@@ -61,11 +61,28 @@ export function PostulerForm() {
   const inputClass =
     "w-full bg-transparent border-b border-noir/30 py-2 font-sans text-base focus:outline-none focus:border-noir transition-colors";
   const labelClass =
-    "block font-mono text-[11px] uppercase tracking-wider-2 opacity-70 mb-2";
+    "block font-mono text-[11px] uppercase tracking-wider-2 text-noir/55 mb-2";
   const hintClass =
     "mt-1 font-mono text-[10px] uppercase tracking-wider-2 text-noir/40";
-  const sectionLabel =
-    "font-mono text-[11px] uppercase tracking-wider-2 text-noir/60 mb-6 pb-3 border-b border-noir/15";
+
+  /**
+   * Section header with a clear visual break:
+   *   - Big display title (font-display, ~3xl) so it can't be mistaken for a field label
+   *   - Tiny mono "01 / 02 / 03 / 04" prefix above for navigation
+   *   - Hairline UNDER the title (clearly belongs to the title, not to the first field)
+   */
+  function SectionHeader({ index, label }: { index: string; label: string }) {
+    return (
+      <legend className="block w-full mb-10">
+        <div className="font-mono text-[10px] uppercase tracking-wider-2 text-noir/40 tabular-nums mb-3">
+          {index} / 04
+        </div>
+        <div className="font-display font-medium text-2xl md:text-3xl text-noir leading-tight pb-4 border-b border-noir/25">
+          {label}
+        </div>
+      </legend>
+    );
+  }
 
   if (submitted) {
     return (
@@ -98,9 +115,7 @@ export function PostulerForm() {
     >
       {/* Section 1 — About */}
       <fieldset>
-        <legend className={sectionLabel + " block w-full"}>
-          ※ {p.sections.about}
-        </legend>
+        <SectionHeader index="01" label={p.sections.about} />
         <div className="space-y-8">
           <div>
             <label className={labelClass}>{p.labels.fullName}</label>
@@ -123,9 +138,7 @@ export function PostulerForm() {
 
       {/* Section 2 — Practice */}
       <fieldset>
-        <legend className={sectionLabel + " block w-full"}>
-          ※ {p.sections.practice}
-        </legend>
+        <SectionHeader index="02" label={p.sections.practice} />
         <div className="space-y-8">
           <div>
             <label className={labelClass}>{p.labels.discipline}</label>
@@ -161,9 +174,7 @@ export function PostulerForm() {
 
       {/* Section 3 — Work */}
       <fieldset>
-        <legend className={sectionLabel + " block w-full"}>
-          ※ {p.sections.work}
-        </legend>
+        <SectionHeader index="03" label={p.sections.work} />
         <div className="space-y-8">
           <div>
             <label className={labelClass}>{p.labels.q2}</label>
@@ -190,9 +201,7 @@ export function PostulerForm() {
 
       {/* Section 4 — Vision */}
       <fieldset>
-        <legend className={sectionLabel + " block w-full"}>
-          ※ {p.sections.vision}
-        </legend>
+        <SectionHeader index="04" label={p.sections.vision} />
         <div>
           <label className={labelClass}>{p.labels.q3}</label>
           <textarea
