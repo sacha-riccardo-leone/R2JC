@@ -2,16 +2,20 @@ import Link from "next/link";
 import { MediaZone } from "@/components/MediaZone";
 import { Reveal } from "@/components/Reveal";
 import { HeroVideo } from "@/components/HeroVideo";
+import { Accordion } from "@/components/Accordion";
+import { FAQ_ITEMS } from "@/data/faq";
 
 /**
- * R2JC Homepage — structured around the live r2jc.ch flow, elevated.
+ * R2JC Homepage — verbatim content parity with r2jc.ch/accueil, restructured
+ * around an elevated visual flow.
  *
- * I.   Hero          — YouTube ambient + signature animated "découverts" zoom
- * II.  L'histoire    — Their actual brand story, in their voice
- * III. Ils parlent   — Press logos (Télé Bilingue, Le Journal du Jura, À Jour, Le Quotidien)
- * IV.  Édition 02    — Featured video + heading + designer credit
- * V.   FAQ teaser    — Five real questions, accordion-styled
- * Footer             — Three-column: Règles · Réseaux · Contact
+ * Sections (matching the live page top-to-bottom):
+ *   I.   Hero            — YouTube ambient + animated "découverts" zoom
+ *   II.  L'histoire      — Two paragraphs of brand copy (exact)
+ *   III. Ils parlent     — Press logos (Télé Bilingue, JdJ, À Jour, Le Quotidien)
+ *   IV.  Édition 02      — Video left + heading right
+ *   V.   FAQ + @sapmi    — Full accordion left + portrait right (matches live)
+ *   Footer               — Three columns: Règles · Réseaux · Contact
  */
 export default function Home() {
   return (
@@ -62,7 +66,6 @@ export default function Home() {
           </Reveal>
         </div>
 
-        {/* Hairline divider at the bottom of the hero — their visual signature */}
         <div className="absolute bottom-0 left-0 right-0 px-6 md:px-10 pb-6 z-10">
           <div className="hairline bg-blanc mb-3" />
           <div className="flex justify-between font-mono text-[10px] uppercase tracking-wider-2 opacity-60">
@@ -74,12 +77,9 @@ export default function Home() {
 
       {/* ──────────────────────────────────────────────────────────────
           II — L'HISTOIRE DE R2JC
-          Their actual copy, set in a refined editorial grid.
+          Exact copy from r2jc.ch
           ────────────────────────────────────────────────────────────── */}
-      <section
-        id="histoire"
-        className="bg-pearl text-noir py-28 md:py-40"
-      >
+      <section id="histoire" className="bg-pearl text-noir py-28 md:py-40">
         <div className="max-w-6xl mx-auto px-6 md:px-10">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6 text-center">
@@ -93,49 +93,34 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-start">
-            <div className="md:col-span-7 space-y-6 font-sans text-base md:text-lg leading-relaxed text-noir/85">
-              <Reveal>
-                <p>
-                  Tout débute avec la volonté de créer des défilés qui
-                  transcendent la simple présentation de vêtements. Notre
-                  collectif a été formé pour développer le marché de la mode
-                  en Suisse. Nous estimons qu&rsquo;il existe énormément de
-                  talents cachés qui méritent d&rsquo;être valorisés et reconnus.
-                  C&rsquo;est pourquoi nous avons l&rsquo;ambition d&rsquo;ouvrir
-                  des opportunités et de faire déboucher des carrières.
-                </p>
-              </Reveal>
-              <Reveal delay={120}>
-                <p>
-                  La mode dépasse largement le simple choix de vêtements.
-                  C&rsquo;est une manière artistique de refléter notre vie,
-                  notre identité et le monde qui nous entoure. Ici, nous ne
-                  parlons pas de designers renommés ou de collections
-                  Haute couture, mais de passionnés qui s&rsquo;expriment
-                  avec cœur et authenticité.
-                </p>
-              </Reveal>
-            </div>
-
-            <div className="md:col-span-5">
-              <Reveal delay={200}>
-                <MediaZone
-                  id="HOME-I1"
-                  kind="image"
-                  ratio="4/5"
-                  priority="P1"
-                  brief="Editorial portrait — moment from Édition 01 or 02. Available on the live site at /wp-content/uploads/2024/12/IMG_3001.jpg"
-                />
-              </Reveal>
-            </div>
+          <div className="max-w-3xl mx-auto space-y-6 font-sans text-base md:text-lg leading-relaxed text-noir/85">
+            <Reveal>
+              <p>
+                Tout débute avec la volonté de créer des défilés qui
+                transcendent la simple présentation de vêtements. Notre
+                collectif a été formé pour développer le marché de la mode
+                en Suisse. Nous estimons qu&rsquo;il existe énormément de
+                talents cachés qui méritent d&rsquo;être valorisés et reconnus.
+                C&rsquo;est pourquoi nous avons l&rsquo;ambition d&rsquo;ouvrir
+                des opportunités et de faire déboucher des carrières.
+              </p>
+            </Reveal>
+            <Reveal delay={120}>
+              <p>
+                La mode dépasse largement le simple choix de vêtements.
+                C&rsquo;est une manière artistique de refléter notre vie,
+                notre identité et le monde qui nous entoure. Ici, nous ne
+                parlons pas de designers renommés ou de collections
+                Haute couture, mais de passionnés qui s&rsquo;expriment
+                avec cœur et authenticité.
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────────
           III — ILS PARLENT DE NOUS
-          Press logos: Télé Bilingue · Le Journal du Jura · À Jour · Le Quotidien
           ────────────────────────────────────────────────────────────── */}
       <section className="bg-blanc text-noir py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6 md:px-10">
@@ -145,22 +130,40 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-noir/10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 items-center">
             {[
-              { id: "PRESS-LOGO-telebilingue", name: "Télé Bilingue" },
-              { id: "PRESS-LOGO-journaldujura", name: "Le Journal du Jura" },
-              { id: "PRESS-LOGO-ajour",        name: "À Jour" },
-              { id: "PRESS-LOGO-lequotidien",  name: "Le Quotidien" },
+              {
+                id: "PRESS-telebielingue",
+                label: "TeleBielingue",
+                file: "/media/press/telebielingue.svg",
+              },
+              {
+                id: "PRESS-le-journal-du-jura",
+                label: "Le Journal du Jura",
+                file: "/media/press/le-journal-du-jura.svg",
+              },
+              {
+                id: "PRESS-a-jour",
+                label: "À Jour",
+                file: "/media/press/a-jour.svg",
+              },
+              {
+                id: "PRESS-le-quotidien",
+                label: "Le Quotidien",
+                file: "/media/press/le-quotidien.svg",
+              },
             ].map((p, i) => (
               <Reveal key={p.id} delay={i * 80}>
-                <div
-                  data-media-zone={p.id}
-                  className="bg-blanc aspect-[4/3] flex items-center justify-center p-8 hover:bg-pearl/40 transition-colors duration-500"
-                >
-                  <span className="font-display font-medium text-sm md:text-base text-center text-noir/70">
-                    {p.name}
-                  </span>
-                </div>
+                <MediaZone
+                  id={p.id}
+                  kind="image"
+                  ratio="3/2"
+                  priority="P0"
+                  tone="dark"
+                  label={p.label}
+                  brief={`Drop the logo at ${p.file}`}
+                  className="hover:opacity-70 transition-opacity duration-500"
+                />
               </Reveal>
             ))}
           </div>
@@ -169,7 +172,6 @@ export default function Home() {
 
       {/* ──────────────────────────────────────────────────────────────
           IV — ÉDITION 02 — FEATURED VIDEO
-          Mirrors the live site's video-on-left, copy-on-right composition.
           ────────────────────────────────────────────────────────────── */}
       <section className="bg-noir text-blanc py-24 md:py-32">
         <div className="max-w-6xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-12 md:gap-20 items-center">
@@ -179,7 +181,9 @@ export default function Home() {
               kind="video"
               ratio="4/5"
               priority="P0"
-              brief="Édition 02 recap video — already published on YouTube (@r2jc.officiel). Self-host MP4 or embed for the final build."
+              tone="light"
+              label="Édition 02 — Recap"
+              brief="Already on YouTube (@r2jc.officiel). Self-host MP4 at /media/editions/edition-02-recap.mp4 for control."
             />
           </Reveal>
 
@@ -214,22 +218,16 @@ export default function Home() {
                 </Link>
               </div>
             </Reveal>
-            <Reveal delay={550}>
-              <p className="mt-12 font-sans text-sm text-mist/70">
-                <span className="font-semibold text-blanc">@sapmi</span>
-                <br />
-                Designer 1ʳᵉ édition
-              </p>
-            </Reveal>
           </div>
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────────
-          V — FAQ TEASER
+          V — FAQ + @SAPMI PORTRAIT
+          Matches the live r2jc.ch home: 2-column accordion + portrait
           ────────────────────────────────────────────────────────────── */}
       <section className="bg-pearl text-noir py-24 md:py-32">
-        <div className="max-w-4xl mx-auto px-6 md:px-10">
+        <div className="max-w-6xl mx-auto px-6 md:px-10">
           <Reveal>
             <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4 text-center">
               Questions fréquentes
@@ -242,43 +240,41 @@ export default function Home() {
             </h2>
           </Reveal>
 
-          <ul className="border-t border-noir/15">
-            {[
-              "Qui sommes-nous ?",
-              "Que veut dire R2JC ?",
-              "Comment puis-je participer à vos événements ?",
-              "Puis-je acheter des pièces uniques présentées par un designer ?",
-              "Comment puis-je rester à jour avec vos nouveautés ?",
-            ].map((q, i) => (
-              <li key={i} className="border-b border-noir/15">
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+            <Reveal>
+              <Accordion items={FAQ_ITEMS} tone="dark" initialOpen={0} />
+              <div className="mt-10 text-center md:text-left">
                 <Link
                   href="/faq"
-                  className="flex justify-between items-center py-6 group hover:text-silver transition-colors duration-300"
+                  className="inline-block bg-noir text-blanc px-7 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-silver transition-colors duration-500"
                 >
-                  <span className="font-display font-medium text-lg md:text-xl pr-4">
-                    {q}
-                  </span>
-                  <span className="font-mono text-xs opacity-50 group-hover:opacity-100 transition-opacity">
-                    →
-                  </span>
+                  Toutes les questions
                 </Link>
-              </li>
-            ))}
-          </ul>
+              </div>
+            </Reveal>
 
-          <div className="mt-12 text-center">
-            <Link
-              href="/faq"
-              className="inline-block bg-noir text-blanc px-8 py-3 rounded font-sans text-sm tracking-[0.02em] hover:bg-silver transition-colors duration-500"
-            >
-              Voir toutes les questions
-            </Link>
+            <Reveal delay={200}>
+              <MediaZone
+                id="HOME-SAPMI"
+                kind="image"
+                ratio="4/5"
+                priority="P0"
+                tone="dark"
+                label="@sapmi"
+                brief="Portrait — Designer 1ʳᵉ édition. Drop file at /media/home/sapmi-portrait.jpg"
+              />
+              <p className="mt-5 font-sans text-sm leading-snug text-noir/70">
+                <span className="font-semibold text-noir">@sapmi</span>
+                <br />
+                Designer 1ʳᵉ édition
+              </p>
+            </Reveal>
           </div>
         </div>
       </section>
 
       {/* ──────────────────────────────────────────────────────────────
-          FOOTER — three columns, matching the live r2jc.ch footer
+          FOOTER — three columns, matching r2jc.ch
           ────────────────────────────────────────────────────────────── */}
       <footer className="bg-noir text-mist">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20 grid grid-cols-1 md:grid-cols-3 gap-12">
