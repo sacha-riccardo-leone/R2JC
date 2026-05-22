@@ -1,89 +1,50 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 /**
- * HeroVideo — YouTube ambient background.
+ * HeroVideo — self-hosted ambient background, native HTML5 video.
  *
- * Bulletproofing against YouTube's initial chrome flash:
+ * Why not YouTube embed: YouTube's iframe re-renders its chrome briefly
+ * whenever the player re-attaches (tab switch + return, network hiccup,
+ * pause/resume). With `controls=0` we ask YouTube to hide its UI, but the
+ * UI still flashes during state transitions because the iframe initializes
+ * with default chrome before the param is applied.
  *
- *   1. The iframe is scaled up 135% inside an overflow-hidden container.
- *      Any control bar / title bar / "Watch on YouTube" pill that YouTube
- *      tries to render falls outside the visible crop.
+ * Native <video> without a `controls` attribute renders ZERO browser UI in
+ * every state. No play button, no scrubber, no skip arrows, no fullscreen
+ * icon, no Picture-in-Picture button. Browsers handle autoplay pause-on-blur
+ * and resume-on-focus invisibly. This is the only way to guarantee chrome
+ * cannot appear under any condition.
  *
- *   2. A black mask sits on top of the iframe with full opacity for the
- *      first ~1400ms, then fades to transparent. This hides the loading
- *      state entirely so the viewer never sees a play button, skip arrows,
- *      or any YouTube chrome.
+ * Expected file: /public/media/home/hero-ambient.mp4
  *
- *   3. pointer-events: none on every layer — the video is purely decorative,
- *      cannot be paused, scrubbed, or interacted with.
- *
- *   4. All YT player params disabled: controls, showinfo, modestbranding,
- *      iv_load_policy, fs, cc_load_policy, disablekb, autohide, rel.
- *
- * The live r2jc.ch source uses video ID Ia4MtzLbaZg with t=1065..1090.
+ * If the file is missing the component renders nothing and the parent
+ * section's `bg-noir` background shows through — the hero stays cinematic
+ * black with the headline doing the work. No broken-image icon, no flash.
  */
 export function HeroVideo() {
-  const videoId = "Ia4MtzLbaZg";
-  const start = 1065;
-  const end = 1090;
+  const [available, setAvailable] = useState(true);
 
-  const [unmasked, setUnmasked] = useState(false);
-
-  useEffect(() => {
-    // Give YouTube time to initialize fully before revealing.
-    // 1400ms covers the chrome flash window observed on slow first paint.
-    const t = setTimeout(() => setUnmasked(true), 1400);
-    return () => clearTimeout(t);
-  }, []);
-
-  const params = new URLSearchParams({
-    autoplay: "1",
-    mute: "1",
-    loop: "1",
-    playlist: videoId, // required for loop to work on single-video embeds
-    start: String(start),
-    end: String(end),
-    controls: "0",
-    showinfo: "0",
-    rel: "0",
-    modestbranding: "1",
-    playsinline: "1",
-    disablekb: "1",
-    iv_load_policy: "3",
-    fs: "0",
-    cc_load_policy: "0",
-    autohide: "1",
-  }).toString();
+  if (!available) return null;
 
   return (
     <div
       aria-hidden
       className="absolute inset-0 overflow-hidden pointer-events-none"
     >
-      {/* Iframe scaled 135% so any YouTube chrome falls outside the crop */}
-      <iframe
-        title="R2JC ambient hero"
-        src={`https://www.youtube-nocookie.com/embed/${videoId}?${params}`}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
-        style={{
-          width: "135vw",
-          height: "135vh",
-          minWidth: "calc(135vh * 16 / 9)",
-          minHeight: "calc(135vw * 9 / 16)",
-        }}
-        frameBorder={0}
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowFullScreen={false}
+      <video
+        src="/media/home/hero-ambient.mp4"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        disablePictureInPicture
+        controlsList="nodownload noplaybackrate nofullscreen noremoteplayback"
+        onError={() => setAvailable(false)}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 min-w-full min-h-full w-auto h-auto object-cover pointer-events-none"
         tabIndex={-1}
-      />
-
-      {/* Black mask — hides every initial-load artifact, then fades away */}
-      <div
-        className={`absolute inset-0 bg-noir transition-opacity duration-700 ease-editorial ${
-          unmasked ? "opacity-0" : "opacity-100"
-        }`}
       />
     </div>
   );
