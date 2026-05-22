@@ -26,6 +26,12 @@ export type Designer = {
   portraitFocus?: string;
   /** Brand logo (optional), under /public */
   logo?: string;
+  /**
+   * Runway / show looks for this designer. Filenames only — the editions page
+   * prefixes them with /media/editions-archive/. Order = presentation order.
+   * Derived from r2jc.ch/editions/ HTML structure (no per-file renaming needed).
+   */
+  looks: string[];
   edition: "01" | "02";
 };
 
@@ -43,6 +49,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     email: "soalca.c@gmail.com",
     portrait: "/media/designers/corinne-soalca.jpg",
     logo: "/media/designers/lumeatribelogo.jpg",
+    looks: ["IMG_2383.jpeg", "IMG_2259.jpeg", "IMG_2171.jpeg", "IMG_2233.jpeg", "IMG_2225.jpeg", "IMG_2192.jpeg"],
     edition: "02",
   },
   {
@@ -58,6 +65,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     email: "tim.denervaud@icloud.com",
     portrait: "/media/designers/tim-denervaud.jpg",
     logo: "/media/designers/denervaudlogo.png",
+    looks: ["IMG_2102.jpeg", "IMG_2091.jpeg", "IMG_1941.jpeg", "IMG_1928.jpeg", "IMG_2015.jpeg", "IMG_2133.jpeg"],
     edition: "02",
   },
   {
@@ -74,6 +82,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     portrait: "/media/designers/pauline.jpg",
     portraitFocus: "top",
     logo: "/media/designers/bichelogo.png",
+    looks: ["IMG_2468.jpeg", "IMG_2401.jpeg", "IMG_2411.jpeg", "IMG_2392.jpeg", "IMG_2491.jpeg", "IMG_2459.jpeg"],
     edition: "02",
   },
   {
@@ -89,6 +98,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     email: "oraw.official.creative@gmail.com",
     portrait: "/media/designers/juanEsteban.jpeg",
     logo: "/media/designers/orawlogo.png",
+    looks: ["IMG_2284.jpeg", "IMG_2477.jpeg", "IMG_2332.jpeg", "IMG_2342.jpeg", "IMG_1968.jpeg", "IMG_2294.jpeg"],
     edition: "02",
   },
   {
@@ -104,6 +114,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     email: "rougeclara25@gmail.com",
     portrait: "/media/designers/clararougeportrait.jpg",
     logo: "/media/designers/clararougelogo.png",
+    looks: ["IMG_1728.jpeg", "IMG_1688.jpeg", "IMG_1801.jpeg", "IMG_1695.jpeg", "IMG_1752.jpeg", "IMG_1744.jpeg"],
     edition: "02",
   },
   {
@@ -118,6 +129,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/cancellousteam.png",
     logo: "/media/designers/cancellousteamlogo.png",
+    looks: ["IMG_1592.jpeg", "IMG_1671.jpeg", "IMG_1712.jpeg", "IMG_1600-2.jpeg", "IMG_1680.jpeg", "IMG_1720.jpeg"],
     edition: "02",
   },
   {
@@ -132,6 +144,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/loup.jpg",
     logo: "/media/designers/straylogo-loup.jpg",
+    looks: ["IMG_2115.jpeg", "IMG_1991.jpeg", "IMG_2209.jpeg", "IMG_2216.jpeg"],
     edition: "02",
   },
   {
@@ -146,6 +159,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/byebaptportrait.jpeg",
     logo: "/media/designers/byebaptlogo.jpeg",
+    looks: ["IMG_1623-2.jpeg", "IMG_1769-1.jpeg", "IMG_1793.jpeg", "IMG_1784.jpeg", "IMG_1761.jpeg", "IMG_1776.jpeg"],
     edition: "02",
   },
   {
@@ -160,6 +174,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/katiadequattro.jpg",
     logo: "/media/designers/24klogo-katia.jpeg",
+    looks: ["IMG_2251.jpeg", "IMG_2277.jpeg", "IMG_2269.jpeg", "IMG_2322.jpeg", "IMG_2450.jpeg", "IMG_2310.jpeg"],
     edition: "02",
   },
   {
@@ -174,6 +189,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/raphaelkolly.jpg",
     logo: "/media/designers/plutonicostudios-raphael.png",
+    looks: ["IMG_1862.jpeg", "IMG_1903.jpeg", "IMG_1893.jpeg", "IMG_1873.jpeg", "IMG_1851.jpeg", "IMG_1883.jpeg"],
     edition: "02",
   },
   {
@@ -188,6 +204,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/zoéperrinjaquet.jpg",
     logo: "/media/designers/zoélogo.jpg",
+    looks: ["IMG_1703.jpeg", "IMG_1655.jpeg", "IMG_1638.jpeg", "IMG_1840.jpeg", "IMG_1664.jpeg", "IMG_1646.jpeg"],
     edition: "02",
   },
   {
@@ -202,6 +219,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/juliagauthierportrait.jpg",
     logo: "/media/designers/juliaguathierlogo.png",
+    looks: ["IMG_1952.jpeg", "IMG_2353.jpeg", "IMG_2201.jpeg", "IMG_2420.jpeg", "IMG_2001.jpeg", "IMG_2366.jpeg"],
     edition: "02",
   },
   {
@@ -216,6 +234,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/LoricBernardPortrait.png",
     logo: "/media/designers/loricbernardLogo.png",
+    looks: ["IMG_1736.jpeg", "IMG_1809.jpeg", "IMG_2374.jpeg", "IMG_1833.jpeg", "IMG_1824.jpeg", "IMG_1817.jpeg"],
     edition: "02",
   },
   {
@@ -230,6 +249,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/Alsionportrait.jpeg",
     logo: "/media/designers/Alybrend-Alisonlogo.jpeg",
+    looks: ["IMG_2152.jpeg", "IMG_2160.jpeg", "IMG_2430.jpeg", "IMG_2439.jpeg", "IMG_2080.jpeg", "IMG_2067.jpeg"],
     edition: "02",
   },
   {
@@ -244,6 +264,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     },
     portrait: "/media/designers/tchango%20etshotineportrait.jpg",
     logo: "/media/designers/tchangoetshotinelogo.png",
+    looks: ["IMG_2182.jpeg", "IMG_2302.jpeg", "IMG_2243.jpeg", "IMG_1916.jpeg"],
     edition: "02",
   },
   {
@@ -259,6 +280,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     portrait: "/media/designers/bastienfluckigerportrait.jpeg",
     portraitFocus: "top",
     logo: "/media/designers/rosemary-bastienlogo.png",
+    looks: ["IMG_2026.jpeg", "IMG_2045.jpeg", "IMG_2038.jpeg", "IMG_2142.jpeg", "IMG_1612.jpeg", "IMG_2056.jpeg"],
     edition: "02",
   },
 ];

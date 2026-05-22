@@ -61,7 +61,7 @@ export default async function Editions() {
 
             return (
               <Reveal key={d.slug}>
-                <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial">
+                <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial overflow-hidden">
                   <div className="grid md:grid-cols-12 items-start">
                     {/* Specimen plate — fixed structure across every card */}
                     <div className="md:col-span-5 p-8 md:p-10 lg:p-12 relative">
@@ -140,6 +140,41 @@ export default async function Editions() {
                       )}
                     </div>
                   </div>
+
+                  {/* Runway looks — grid of show photography below the bio */}
+                  {d.looks.length > 0 && (
+                    <div className="border-t border-noir/10 px-8 md:px-10 lg:px-12 py-8 md:py-10">
+                      <div className="flex justify-between items-baseline mb-5 font-mono text-[10px] uppercase tracking-wider-2 text-noir/60">
+                        <span>
+                          Looks 01 — {String(d.looks.length).padStart(2, "0")}
+                        </span>
+                        <span className="text-noir/40">{d.brand}</span>
+                      </div>
+                      <div
+                        className="grid gap-3 md:gap-4"
+                        style={{
+                          gridTemplateColumns: `repeat(auto-fill, minmax(140px, 1fr))`,
+                        }}
+                      >
+                        {d.looks.map((look, idx) => (
+                          <figure key={look} className="group">
+                            <div className="border border-noir/80 overflow-hidden bg-pearl">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={`/media/editions-archive/${look}`}
+                                alt={`${d.name} — Look ${idx + 1}`}
+                                loading="lazy"
+                                className="block w-full aspect-[4/5] object-cover transition-transform duration-700 ease-editorial group-hover:scale-105"
+                              />
+                            </div>
+                            <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-wider-2 text-noir/50 tabular-nums">
+                              Look {String(idx + 1).padStart(2, "0")}
+                            </figcaption>
+                          </figure>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </article>
               </Reveal>
             );
