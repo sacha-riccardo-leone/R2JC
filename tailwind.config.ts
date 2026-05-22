@@ -1,81 +1,96 @@
 import type { Config } from "tailwindcss";
 
 /**
- * R2JC design tokens.
- * Two voices: a display serif and a mechanical grotesque.
- * Palette restraint is the luxury — one heat moment, the rest is ink and bone.
+ * R2JC design tokens — aligned with the existing r2jc.ch artistic direction.
+ *
+ * Palette: black + silver + warm gray + white. No accent color.
+ * The "heat" comes from typographic weight contrast and the signature
+ * animated-zoom hero word, not from color.
+ *
+ * Typography: Montserrat (display/nav) + Poppins (body) + Roboto (utility).
+ * Same Google fonts the live site uses, with stronger hierarchy.
  */
 const config: Config = {
   content: ["./src/**/*.{ts,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
-        ink: "#0A0A0B",
-        bone: "#F2EEE6",
-        plaster: "#C8C2B6",
-        steel: "#1F2326",
-        cinabre: "#D63A1A",
+        noir: "#000000",       // headers, hero text, footer background
+        silver: "#919296",     // primary gray — buttons, secondary text
+        pearl: "#C3C3C3",      // body background, warm light gray
+        mist: "#E5E5E5",       // light text on dark, dividers on dark
+        graphite: "#2A373C",   // their dark divider color
+        blanc: "#FFFFFF",      // pure white
       },
       fontFamily: {
-        // Self-hosted later; for the prototype we use the next-best web stacks.
         display: [
           "var(--font-display)",
-          "Times New Roman",
-          "ui-serif",
-          "Georgia",
-          "serif",
+          "Montserrat",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
         ],
         sans: [
           "var(--font-sans)",
-          "Inter",
+          "Poppins",
           "ui-sans-serif",
           "system-ui",
           "sans-serif",
         ],
         mono: [
           "var(--font-mono)",
+          "Roboto Mono",
           "ui-monospace",
           "SFMono-Regular",
-          "Menlo",
           "monospace",
         ],
       },
       fontSize: {
-        // Editorial scale — overshoots default Tailwind for hero typography.
-        "display-sm": ["clamp(3.5rem, 8vw, 6rem)", { lineHeight: "0.9", letterSpacing: "-0.02em" }],
-        "display-md": ["clamp(5rem, 12vw, 10rem)", { lineHeight: "0.85", letterSpacing: "-0.02em" }],
-        "display-lg": ["clamp(7rem, 18vw, 16rem)", { lineHeight: "0.82", letterSpacing: "-0.03em" }],
-        "display-xl": ["clamp(10rem, 22vw, 22rem)", { lineHeight: "0.8", letterSpacing: "-0.04em" }],
+        // Display scale, weight-led not size-led to feel Swiss-modernist.
+        "display-sm": ["clamp(2.5rem, 5vw, 4rem)",   { lineHeight: "1.05", letterSpacing: "-0.01em" }],
+        "display-md": ["clamp(3.5rem, 8vw, 6.5rem)", { lineHeight: "1.02", letterSpacing: "-0.015em" }],
+        "display-lg": ["clamp(5rem, 12vw, 10rem)",   { lineHeight: "0.98", letterSpacing: "-0.02em" }],
+        "display-xl": ["clamp(6rem, 16vw, 14rem)",   { lineHeight: "0.95", letterSpacing: "-0.025em" }],
       },
       letterSpacing: {
+        // Matches their Montserrat nav: 0.6px tracking on uppercase 15px ≈ 0.04em
+        nav: "0.04em",
         "wider-2": "0.12em",
         "wider-3": "0.18em",
       },
       maxWidth: {
-        "prose-edition": "56ch",
+        prose: "62ch",
       },
       transitionTimingFunction: {
         editorial: "cubic-bezier(0.22, 1, 0.36, 1)",
         curtain: "cubic-bezier(0.65, 0, 0.35, 1)",
       },
       keyframes: {
-        "rise-in": {
-          from: { opacity: "0", transform: "translateY(40px)" },
-          to: { opacity: "1", transform: "translateY(0)" },
+        // R2JC signature — recreates Royal Elementor's wpr-fancy-text-zoom
+        "zoom-in-out": {
+          "0%":   { opacity: "0", transform: "scale(0)" },
+          "20%":  { opacity: "1", transform: "scale(1)" },
+          "80%":  { opacity: "1", transform: "scale(1)" },
+          "100%": { opacity: "0", transform: "scale(1.6)" },
         },
-        "wipe-in": {
-          from: { clipPath: "inset(0 100% 0 0)" },
-          to: { clipPath: "inset(0 0 0 0)" },
+        "rise-in": {
+          from: { opacity: "0", transform: "translateY(30px)" },
+          to:   { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-up": {
+          from: { opacity: "0", transform: "translateY(12px)" },
+          to:   { opacity: "1", transform: "translateY(0)" },
         },
         "breathe": {
           "0%, 100%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.005)" },
+          "50%":      { transform: "scale(1.005)" },
         },
       },
       animation: {
-        "rise-in": "rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both",
-        "wipe-in": "wipe-in 1200ms cubic-bezier(0.65, 0, 0.35, 1) both",
-        "breathe": "breathe 4s ease-in-out infinite",
+        "zoom-in-out": "zoom-in-out 3200ms cubic-bezier(0.22, 1, 0.36, 1) infinite",
+        "rise-in":     "rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "fade-up":     "fade-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both",
+        "breathe":     "breathe 4s ease-in-out infinite",
       },
     },
   },

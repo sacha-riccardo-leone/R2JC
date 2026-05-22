@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+// Matches the live r2jc.ch primary navigation exactly.
 const ITEMS: { label: string; href: string }[] = [
-  { label: "Manifeste", href: "/manifeste" },
+  { label: "Accueil", href: "/" },
+  { label: "Sponsors", href: "/sponsors" },
   { label: "Éditions", href: "/editions" },
-  { label: "Créateurs", href: "/createurs" },
-  { label: "Participer", href: "/participer" },
-  { label: "Presse", href: "/presse" },
   { label: "Contact", href: "/contact" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export function Nav() {
@@ -30,36 +30,47 @@ export function Nav() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-colors duration-500 ease-editorial ${
-          scrolled ? "bg-ink/70 backdrop-blur-md" : "bg-transparent"
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ease-editorial ${
+          scrolled
+            ? "bg-noir/85 backdrop-blur-md text-blanc"
+            : "bg-noir text-blanc"
         }`}
       >
-        <div className="flex items-center justify-between px-6 md:px-10 py-5 md:py-6">
+        <div className="flex items-center justify-between px-6 md:px-10 py-4 md:py-5">
+          {/* Logo wordmark — matches their 100px max-width logo placement */}
           <Link
             href="/"
-            className="font-mono text-xs tracking-wider-2 uppercase"
+            className="font-display font-bold text-base md:text-lg tracking-nav"
             aria-label="R2JC — Accueil"
           >
-            R2JC <span className="opacity-50">— Rencontre de Jeunes Créateurs</span>
+            R2JC
           </Link>
 
-          <nav className="hidden md:flex items-center gap-6 font-mono text-[11px] uppercase tracking-wider-2">
-            {ITEMS.map((item, i) => (
-              <span key={item.href} className="flex items-center gap-6">
-                <Link
-                  href={item.href}
-                  className="hover:text-cinabre transition-colors duration-300"
-                >
-                  {item.label}
-                </Link>
-                {i < ITEMS.length - 1 && <span className="opacity-40">·</span>}
-              </span>
+          {/* Desktop nav — Montserrat 600 uppercase, matches live site */}
+          <nav className="hidden md:flex items-center gap-2 font-display text-[13px] font-semibold uppercase tracking-nav">
+            {ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="px-3 py-2 hover:text-silver transition-colors duration-300"
+              >
+                {item.label}
+              </Link>
             ))}
           </nav>
 
+          {/* Éditions CTA button — silver pill, matches the live header CTA */}
+          <Link
+            href="/editions"
+            className="hidden md:inline-block bg-silver text-blanc px-5 py-2 rounded font-sans text-[13px] tracking-[0.02em] hover:bg-blanc hover:text-noir transition-colors duration-500"
+          >
+            Éditions
+          </Link>
+
+          {/* Mobile toggle */}
           <button
             type="button"
-            className="md:hidden font-mono text-xs uppercase tracking-wider-2"
+            className="md:hidden font-display text-[13px] uppercase tracking-nav font-semibold"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
             aria-label="Menu"
@@ -71,19 +82,19 @@ export function Nav() {
 
       {/* Mobile full-screen menu */}
       <div
-        className={`fixed inset-0 z-30 bg-ink transition-opacity duration-500 ease-editorial md:hidden ${
+        className={`fixed inset-0 z-30 bg-noir text-blanc transition-opacity duration-500 ease-editorial md:hidden ${
           open
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <nav className="flex flex-col justify-center h-full px-6 gap-6">
+        <nav className="flex flex-col justify-center h-full px-6 gap-4">
           {ITEMS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="font-display text-6xl text-bone hover:text-cinabre transition-colors duration-300"
+              className="font-display font-semibold text-4xl uppercase tracking-nav hover:text-silver transition-colors duration-300"
             >
               {item.label}
             </Link>

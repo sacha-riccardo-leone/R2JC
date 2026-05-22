@@ -1,31 +1,31 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
+import { Montserrat, Poppins, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
 
 /**
- * Type pairing — provisional, web-stack approximations of the recommended
- * Set B (Migra + Neue Haas Grotesk + ABC Diatype Mono). To be replaced with
- * self-hosted woff2 once licenses are acquired.
+ * Type pairing — matches the live r2jc.ch font stack (Montserrat + Poppins)
+ * with Roboto Mono for editorial captions and metadata.
  */
-const display = Instrument_Serif({
+const display = Montserrat({
   subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-display",
   display: "swap",
 });
 
-const sans = Inter({
+const sans = Poppins({
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const mono = JetBrains_Mono({
+const mono = Roboto_Mono({
   subsets: ["latin"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
@@ -33,11 +33,11 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "R2JC — Rencontre de Jeunes Créateurs",
   description:
-    "Une plateforme suisse pour les créateurs émergents. Mode, art, identité, culture. Édition 03 — Bienne, automne 2026.",
+    "Une scène aux designers qui méritent d'être découverts. R2JC est un collectif suisse qui valorise les jeunes créateurs.",
   metadataBase: new URL("https://r2jc.ch"),
   openGraph: {
     title: "R2JC — Rencontre de Jeunes Créateurs",
-    description: "Ceux que l'on découvre avant les autres.",
+    description: "Une scène aux designers qui méritent d'être découverts.",
     url: "https://r2jc.ch",
     siteName: "R2JC",
     locale: "fr_CH",
@@ -46,12 +46,12 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "R2JC",
-    description: "Ceux que l'on découvre avant les autres.",
+    description: "Une scène aux designers qui méritent d'être découverts.",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A0A0B",
+  themeColor: "#000000",
   width: "device-width",
   initialScale: 1,
 };
@@ -64,7 +64,7 @@ export default function RootLayout({
       lang="fr"
       className={`${display.variable} ${sans.variable} ${mono.variable}`}
     >
-      <body className="font-sans bg-ink text-bone">
+      <body className="font-sans bg-pearl text-noir">
         <SmoothScroll />
         <ScrollProgress />
         <Nav />

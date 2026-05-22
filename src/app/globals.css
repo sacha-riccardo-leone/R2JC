@@ -4,23 +4,22 @@
 
 /* ─────────────────────────────────────────────────────────────
    R2JC — base layer
-   The page is paper. Type is ink. Motion is restrained.
+   Stays in the live r2jc.ch artistic direction:
+   black / silver / warm gray / white, sans-serif throughout.
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  --color-ink: #0a0a0b;
-  --color-bone: #f2eee6;
-  --color-plaster: #c8c2b6;
-  --color-steel: #1f2326;
-  --color-cinabre: #d63a1a;
-
-  /* Smooth scroll baseline; Lenis takes over on the client. */
-  --scroll-progress: 0;
+  --color-noir: #000000;
+  --color-silver: #919296;
+  --color-pearl: #C3C3C3;
+  --color-mist: #E5E5E5;
+  --color-graphite: #2A373C;
+  --color-blanc: #FFFFFF;
 }
 
 html {
-  background: var(--color-ink);
-  color: var(--color-bone);
+  background: var(--color-pearl);
+  color: var(--color-noir);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -28,54 +27,38 @@ html {
 
 body {
   min-height: 100vh;
-  font-feature-settings: "ss01", "ss02", "kern", "liga";
+  font-feature-settings: "kern", "liga";
   overflow-x: hidden;
 }
 
-/* A subtle paper grain on bone-colored surfaces.
-   Imperceptible at first glance — felt, not seen. */
-.paper {
-  background-color: var(--color-bone);
-  color: var(--color-ink);
-  background-image:
-    radial-gradient(
-      rgba(10, 10, 11, 0.018) 1px,
-      transparent 1px
-    );
-  background-size: 3px 3px;
-}
-
-/* Section divider — a single hairline. The brand's connective tissue. */
+/* Section divider — the hairline */
 .hairline {
   height: 1px;
   background: currentColor;
-  opacity: 0.4;
+  opacity: 0.3;
   transform-origin: left center;
 }
 
-/* Numbered chapter glyph */
-.glyph::before {
-  content: "※";
-  margin-right: 0.6em;
-  opacity: 0.55;
+/* The animated-zoom hero word — R2JC's signature */
+.zoom-word {
+  display: inline-block;
+  animation: zoom-in-out 3200ms cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  transform-origin: center;
 }
 
-/* Custom cursor target zones */
-[data-cursor="view"] { cursor: none; }
-
-/* Scrollbar — quiet, ink on bone */
+/* Scrollbar — quiet */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(242, 238, 230, 0.15);
+  background: rgba(0, 0, 0, 0.2);
   border-radius: 0;
 }
-::-webkit-scrollbar-thumb:hover { background: rgba(242, 238, 230, 0.3); }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.4); }
 
-/* Selection — heat */
+/* Selection — neutral, in palette */
 ::selection {
-  background: var(--color-cinabre);
-  color: var(--color-bone);
+  background: var(--color-noir);
+  color: var(--color-blanc);
 }
 
 /* Reduced motion — respect it absolutely */
@@ -88,4 +71,5 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  .zoom-word { animation: none; }
 }

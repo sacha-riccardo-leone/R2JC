@@ -33,11 +33,11 @@ export function ScrollProgress() {
   return (
     <div
       aria-hidden
-      className="fixed top-0 left-0 right-0 z-50 h-px bg-bone/10 pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-50 h-px bg-blanc/10 pointer-events-none"
     >
       <div
         ref={ref}
-        className="h-full bg-cinabre origin-left"
+        className="h-full bg-blanc origin-left"
         style={{ transform: "scaleX(0)" }}
       />
     </div>
