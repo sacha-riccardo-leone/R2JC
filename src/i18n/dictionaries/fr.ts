@@ -18,7 +18,7 @@ export type Dictionary = {
     ed02: { eyebrow: string; headingPre: string; headingAccent: string; headingPost: string; ctaYoutube: string; ctaAll: string };
     faq: { eyebrow: string; titlePre: string; titleAccent: string; ctaAll: string };
   };
-  footer: { rules: string; privacy: string; terms: string; social: string; contact: string; rights: string };
+  footer: { rules: string; privacy: string; terms: string; social: string; contact: string; rights: string; siteBy: string };
   sponsors: {
     eyebrow: string;
     titlePre: string;
@@ -119,6 +119,7 @@ const fr: Dictionary = {
     social: "Réseaux sociaux",
     contact: "Contact",
     rights: "© R2JC · Tous droits réservés",
+    siteBy: "Site par",
   },
 
   sponsors: {

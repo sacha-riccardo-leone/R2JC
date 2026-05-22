@@ -336,8 +336,19 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="border-t border-graphite px-6 md:px-10 py-5 text-center font-sans text-[12px] text-mist/50">
-          {t.footer.rights}
+        <div className="border-t border-graphite px-6 md:px-10 py-5 flex flex-col md:flex-row md:justify-between md:items-center gap-2 text-center md:text-left font-sans text-[12px] text-mist/50">
+          <span>{t.footer.rights}</span>
+          <span>
+            {t.footer.siteBy}{" "}
+            <a
+              href="https://github.com/sacha-riccardo-leone"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-mist/70 hover:text-blanc underline-offset-4 hover:underline transition-colors"
+            >
+              Sacha Riccardo Leone
+            </a>
+          </span>
         </div>
       </footer>
     </>

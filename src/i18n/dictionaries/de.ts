@@ -64,6 +64,7 @@ const de: Dictionary = {
     social: "Soziale Netzwerke",
     contact: "Kontakt",
     rights: "© R2JC · Alle Rechte vorbehalten",
+    siteBy: "Website von",
   },
 
   sponsors: {

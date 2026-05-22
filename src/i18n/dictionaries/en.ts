@@ -64,6 +64,7 @@ const en: Dictionary = {
     social: "Social media",
     contact: "Contact",
     rights: "© R2JC · All rights reserved",
+    siteBy: "Site by",
   },
 
   sponsors: {
