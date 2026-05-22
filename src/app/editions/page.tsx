@@ -3,7 +3,7 @@ import { join } from "path";
 import { MediaZone } from "@/components/MediaZone";
 import { Reveal } from "@/components/Reveal";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
-import { getDict } from "@/i18n/server";
+import { getDict, getLocale } from "@/i18n/server";
 
 export const metadata = { title: "Éditions — R2JC" };
 
@@ -15,6 +15,7 @@ const fileExists = (publicPath: string) =>
 
 export default async function Editions() {
   const t = await getDict();
+  const locale = await getLocale();
 
   return (
     <>
@@ -96,9 +97,9 @@ export default async function Editions() {
                         />
                       )}
 
-                      {d.bio && (
+                      {d.bio[locale] && (
                         <p className="mt-8 font-sans text-base leading-relaxed text-noir/85 max-w-prose">
-                          {d.bio}
+                          {d.bio[locale]}
                         </p>
                       )}
                       {d.email && (
