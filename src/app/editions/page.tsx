@@ -56,21 +56,24 @@ export default function Editions() {
         </div>
       </section>
 
-      {/* Designers — 16 profiles, each in its own white editorial card */}
+      {/* Designers — 16 profiles, each in its own white editorial card.
+          All cards share an identical max width (max-w-7xl) and use a fixed
+          4/8 grid split so the portrait never collides with the text — no
+          aspect-ratio vs grid-stretch fight. */}
       <section className="bg-pearl text-noir pb-24">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 space-y-12 md:space-y-16">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 space-y-12 md:space-y-16">
           {DESIGNERS_EDITION_02.map((d, i) => {
             const reversed = i % 2 === 1;
             return (
               <Reveal key={d.slug}>
                 <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial">
                   <div
-                    className={`grid md:grid-cols-12 gap-0 md:gap-0 items-stretch ${
+                    className={`grid md:grid-cols-12 items-start ${
                       reversed ? "md:[direction:rtl]" : ""
                     }`}
                   >
-                    {/* Portrait — edge-to-edge inside the card */}
-                    <div className="md:col-span-5 md:[direction:ltr]">
+                    {/* Portrait — natural 4:5 aspect, no stretching */}
+                    <div className="md:col-span-4 md:[direction:ltr]">
                       <MediaZone
                         id={`ED02-PORTRAIT-${d.slug}`}
                         kind="image"
@@ -82,12 +85,11 @@ export default function Editions() {
                         brief={`Portrait — drop at ${d.portrait}`}
                         src={fileExists(d.portrait) ? d.portrait : undefined}
                         alt={`${d.name} — ${d.brand}`}
-                        className="h-full"
                       />
                     </div>
 
-                    {/* Text — generous padding inside the card */}
-                    <div className="md:col-span-7 md:[direction:ltr] p-8 md:p-12 lg:p-14 flex flex-col justify-center">
+                    {/* Text — generous padding, text flows freely beside portrait */}
+                    <div className="md:col-span-8 md:[direction:ltr] p-8 md:p-12 lg:p-14 flex flex-col">
                       <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4">
                         Édition 02 · Designer
                       </p>
