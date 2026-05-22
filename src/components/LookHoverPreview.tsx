@@ -1,25 +1,32 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 /**
  * LookHoverPreview — a runway-look thumbnail that summons a larger floating
  * "quicklook" preview while hovered.
  *
- * Sizing: 640 × 800 (4:5) — adaptive-clamped to the viewport so it never
- * overflows on shorter laptop screens.
+ * Sizing: 640 × 800 (4:5) — adaptive-clamped to viewport so it never overflows
+ * shorter laptop screens.
  *
  * Robustness notes:
- *   - The parent Reveal on the editions cards is set to `motion="fade"` (no
- *     translate), so this thumbnail never moves under a stationary cursor.
- *     That preserves the browser's mouseenter behavior — first hover always
- *     registers cleanly.
- *   - Preview is portaled to <body> to escape any ancestor `transform`
+ *   - Editions cards use Reveal motion="fade" (no transform), so thumbnails
+ *     stay still under the cursor and the browser fires mouseenter on first
+ *     try every time. (Browsers don't fire mouseenter when an element moves
+ *     under a stationary cursor.)
+ *   - Scroll events DO NOT close the preview. Lenis smooth-scroll emits
+ *     scroll events for several hundred ms after wheel input stops; closing
+ *     on scroll caused the preview to disappear immediately after opening
+ *     whenever you hovered shortly after scrolling. Instead, scroll events
+ *     *recompute* the preview's position so it stays anchored to the
+ *     thumbnail through any scrolling. mouseleave is the only thing that
+ *     closes the preview.
+ *   - Position recomputation on scroll is coalesced via requestAnimationFrame
+ *     so we never run the math twice per frame regardless of scroll volume.
+ *   - Portaled to <body> so the preview escapes any ancestor's transform
  *     containing block.
- *   - Disabled on touch devices via `(pointer: fine)` media query.
- *   - Closes on mouseleave AND on page scroll (so the fixed-positioned
- *     preview never disconnects from its thumbnail).
+ *   - No-ops on touch devices via (pointer: fine) media query.
  */
 export function LookHoverPreview({
   src,
@@ -39,6 +46,9 @@ export function LookHoverPreview({
   } | null>(null);
   const [mounted, setMounted] = useState(false);
 
+  const isHoveringRef = useRef(false);
+  const scrollRafRef = useRef<number | null>(null);
+
   const PREVIEW_W = 640;
   const PREVIEW_H = 800;
   const MARGIN = 32;
@@ -47,28 +57,13 @@ export function LookHoverPreview({
     setMounted(true);
   }, []);
 
-  useEffect(() => {
-    if (!pos) return;
-    const onScroll = () => setPos(null);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [pos]);
-
-  const open = () => {
-    if (!wrapperRef.current) return;
-    // No-op on touch
-    if (
-      typeof window !== "undefined" &&
-      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
-    ) {
-      return;
-    }
-
+  const computePos = useCallback(() => {
+    if (!wrapperRef.current) return null;
     const rect = wrapperRef.current.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    // Clamp preview to viewport (keeps 4:5 aspect ratio)
+    // Clamp to viewport (keeps 4:5 aspect ratio)
     const h = Math.min(PREVIEW_H, vh - 48);
     const w = Math.min(PREVIEW_W, (h * 4) / 5);
 
@@ -89,10 +84,59 @@ export function LookHoverPreview({
     let y = rect.top + rect.height / 2 - h / 2;
     y = Math.max(16, Math.min(y, vh - h - 32));
 
-    setPos({ x, y, w, h });
+    return { x, y, w, h };
+  }, []);
+
+  // Scroll → update position (do NOT close — Lenis smooth-scroll fires events
+  // for hundreds of ms after wheel input stops, which would race the open).
+  useEffect(() => {
+    const onScroll = () => {
+      if (!isHoveringRef.current) return;
+      if (scrollRafRef.current !== null) return;
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        const next = computePos();
+        if (next) {
+          setPos((prev) => {
+            if (
+              prev &&
+              Math.abs(prev.x - next.x) < 0.5 &&
+              Math.abs(prev.y - next.y) < 0.5
+            ) {
+              return prev;
+            }
+            return next;
+          });
+        }
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollRafRef.current !== null) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
+    };
+  }, [computePos]);
+
+  const open = () => {
+    // No-op on touch
+    if (
+      typeof window !== "undefined" &&
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      return;
+    }
+    isHoveringRef.current = true;
+    const next = computePos();
+    if (next) setPos(next);
   };
 
-  const close = () => setPos(null);
+  const close = () => {
+    isHoveringRef.current = false;
+    setPos(null);
+  };
 
   return (
     <figure
