@@ -61,7 +61,7 @@ export default async function Editions() {
             const total = String(DESIGNERS_EDITION_02.length).padStart(2, "0");
 
             return (
-              <Reveal key={d.slug}>
+              <Reveal key={d.slug} motion="fade">
                 <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial overflow-hidden">
                   <div className="grid md:grid-cols-12 items-start">
                     {/* Specimen plate — fixed structure across every card */}
