@@ -2,6 +2,7 @@ import { existsSync } from "fs";
 import { join } from "path";
 import { MediaZone } from "@/components/MediaZone";
 import { Reveal } from "@/components/Reveal";
+import { LookHoverPreview } from "@/components/LookHoverPreview";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
 import { getDict, getLocale } from "@/i18n/server";
 
@@ -157,20 +158,12 @@ export default async function Editions() {
                         }}
                       >
                         {d.looks.map((look, idx) => (
-                          <figure key={look} className="group">
-                            <div className="border border-noir/80 overflow-hidden bg-pearl">
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img
-                                src={`/media/editions-archive/${look}`}
-                                alt={`${d.name} — Look ${idx + 1}`}
-                                loading="lazy"
-                                className="block w-full aspect-[4/5] object-cover transition-transform duration-700 ease-editorial group-hover:scale-105"
-                              />
-                            </div>
-                            <figcaption className="mt-2 font-mono text-[10px] uppercase tracking-wider-2 text-noir/50 tabular-nums">
-                              Look {String(idx + 1).padStart(2, "0")}
-                            </figcaption>
-                          </figure>
+                          <LookHoverPreview
+                            key={look}
+                            src={`/media/editions-archive/${look}`}
+                            alt={`${d.name} — Look ${idx + 1}`}
+                            label={`Look ${String(idx + 1).padStart(2, "0")}`}
+                          />
                         ))}
                       </div>
                     </div>

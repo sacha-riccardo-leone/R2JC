@@ -85,12 +85,17 @@ const config: Config = {
           "0%, 100%": { transform: "scale(1)" },
           "50%":      { transform: "scale(1.005)" },
         },
+        "preview-in": {
+          from: { opacity: "0", transform: "scale(0.96) translateY(6px)" },
+          to:   { opacity: "1", transform: "scale(1) translateY(0)" },
+        },
       },
       animation: {
         "zoom-in-out": "zoom-in-out 3200ms cubic-bezier(0.22, 1, 0.36, 1) infinite",
         "rise-in":     "rise-in 900ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "fade-up":     "fade-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both",
         "breathe":     "breathe 4s ease-in-out infinite",
+        "preview-in":  "preview-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both",
       },
     },
   },
