@@ -66,14 +66,6 @@ export function Nav() {
             ))}
           </nav>
 
-          {/* Éditions CTA button — silver pill, matches the live header CTA */}
-          <Link
-            href="/editions"
-            className="hidden md:inline-block bg-silver text-blanc px-5 py-2 rounded font-sans text-[13px] tracking-[0.02em] hover:bg-blanc hover:text-noir transition-colors duration-500"
-          >
-            Éditions
-          </Link>
-
           {/* Mobile toggle */}
           <button
             type="button"

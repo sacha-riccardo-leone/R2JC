@@ -56,71 +56,74 @@ export default function Editions() {
         </div>
       </section>
 
-      {/* Designers — 16 profiles in alternating two-column layout */}
+      {/* Designers — 16 profiles, each in its own white editorial card */}
       <section className="bg-pearl text-noir pb-24">
-        <div className="max-w-6xl mx-auto px-6 md:px-10 space-y-24 md:space-y-32">
+        <div className="max-w-6xl mx-auto px-6 md:px-10 space-y-12 md:space-y-16">
           {DESIGNERS_EDITION_02.map((d, i) => {
             const reversed = i % 2 === 1;
             return (
-              <article
-                key={d.slug}
-                className={`grid md:grid-cols-12 gap-10 md:gap-16 items-center ${
-                  reversed ? "md:[direction:rtl]" : ""
-                }`}
-              >
-                <div className="md:col-span-5 md:[direction:ltr]">
-                  <Reveal>
-                    <MediaZone
-                      id={`ED02-PORTRAIT-${d.slug}`}
-                      kind="image"
-                      ratio="4/5"
-                      priority="P0"
-                      tone="dark"
-                      fit="cover"
-                      label={d.name}
-                      brief={`Portrait — drop at ${d.portrait}`}
-                      src={fileExists(d.portrait) ? d.portrait : undefined}
-                      alt={`${d.name} — ${d.brand}`}
-                    />
-                  </Reveal>
-                </div>
-                <div className="md:col-span-7 md:[direction:ltr]">
-                  <Reveal delay={150}>
-                    <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-3">
-                      Édition 02 · Designer
-                    </p>
-                    <h3 className="font-display font-light text-3xl md:text-5xl leading-tight">
-                      <span className="font-semibold">{d.name}</span>
-                    </h3>
-                    <p className="font-display italic text-xl md:text-2xl mt-2 text-noir/70">
-                      {d.brand}
-                    </p>
-
-                    {d.logo && fileExists(d.logo) && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={d.logo}
-                        alt={`${d.name} — logo de marque`}
-                        className="h-12 md:h-14 w-auto mt-6 object-contain"
+              <Reveal key={d.slug}>
+                <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial">
+                  <div
+                    className={`grid md:grid-cols-12 gap-0 md:gap-0 items-stretch ${
+                      reversed ? "md:[direction:rtl]" : ""
+                    }`}
+                  >
+                    {/* Portrait — edge-to-edge inside the card */}
+                    <div className="md:col-span-5 md:[direction:ltr]">
+                      <MediaZone
+                        id={`ED02-PORTRAIT-${d.slug}`}
+                        kind="image"
+                        ratio="4/5"
+                        priority="P0"
+                        tone="dark"
+                        fit="cover"
+                        label={d.name}
+                        brief={`Portrait — drop at ${d.portrait}`}
+                        src={fileExists(d.portrait) ? d.portrait : undefined}
+                        alt={`${d.name} — ${d.brand}`}
+                        className="h-full"
                       />
-                    )}
+                    </div>
 
-                    {d.bio && (
-                      <p className="mt-6 font-sans text-base leading-relaxed text-noir/85 max-w-prose">
-                        {d.bio}
+                    {/* Text — generous padding inside the card */}
+                    <div className="md:col-span-7 md:[direction:ltr] p-8 md:p-12 lg:p-14 flex flex-col justify-center">
+                      <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-4">
+                        Édition 02 · Designer
                       </p>
-                    )}
-                    {d.email && (
-                      <a
-                        href={`mailto:${d.email}`}
-                        className="inline-block mt-6 font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
-                      >
-                        {d.email} →
-                      </a>
-                    )}
-                  </Reveal>
-                </div>
-              </article>
+                      <h3 className="font-display font-light text-3xl md:text-5xl leading-tight">
+                        <span className="font-semibold">{d.name}</span>
+                      </h3>
+                      <p className="font-display italic text-xl md:text-2xl mt-2 text-noir/70">
+                        {d.brand}
+                      </p>
+
+                      {d.logo && fileExists(d.logo) && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={d.logo}
+                          alt={`${d.name} — logo de marque`}
+                          className="h-20 md:h-28 w-auto max-w-[280px] mt-8 object-contain object-left"
+                        />
+                      )}
+
+                      {d.bio && (
+                        <p className="mt-8 font-sans text-base leading-relaxed text-noir/85 max-w-prose">
+                          {d.bio}
+                        </p>
+                      )}
+                      {d.email && (
+                        <a
+                          href={`mailto:${d.email}`}
+                          className="inline-block self-start mt-8 font-mono text-[12px] tracking-[0.04em] border-b border-noir hover:text-silver hover:border-silver transition-colors"
+                        >
+                          {d.email} →
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
             );
           })}
         </div>
