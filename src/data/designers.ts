@@ -51,7 +51,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
       it: "Lumea Tribe trae la sua essenza dalla spiritualità, dallo sciamanesimo e dalla connessione con la natura che permea ogni aspetto delle sue collezioni. Realizzati artigianalmente con materiali di seconda mano, i suoi tessili e gioielli incarnano un savoir-faire autentico. Il brand preserva l'eredità del passato reinventando al contempo il presente con creazioni uniche e audaci.",
     },
     email: "soalca.c@gmail.com",
-    instagram: "corinne_slc",
+    instagram: "lumeatribe_",
     portrait: "/media/designers/corinne-soalca.jpg",
     logo: "/media/designers/lumeatribelogo.jpg",
     looks: ["IMG_2383.jpeg", "IMG_2259.jpeg", "IMG_2171.jpeg", "IMG_2233.jpeg", "IMG_2225.jpeg", "IMG_2192.jpeg"],
