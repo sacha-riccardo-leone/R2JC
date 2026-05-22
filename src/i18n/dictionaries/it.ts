@@ -9,6 +9,7 @@ const it: Dictionary = {
     faq: "FAQ",
     menu: "Menu",
     close: "Chiudi",
+    postuler: "Candidati",
   },
 
   common: {
@@ -158,6 +159,62 @@ const it: Dictionary = {
         a: "Seguici su Instagram {instagram}, iscriviti alla nostra newsletter e consulta regolarmente il nostro sito web per le ultime novità.",
       },
     ],
+  },
+
+  postuler: {
+    eyebrow: "Edizione 03 · Call aperta",
+    title: "Candidati",
+    intro:
+      "Per il prossimo incontro cerchiamo sedici creatori. Tre domande, nessun PDF, nessun modulo interminabile. Se il vostro lavoro ci tocca, vi rispondiamo entro dieci giorni.",
+    status: {
+      deadline: "Scadenza",
+      daysLeft: "giorni rimanenti",
+      lastDay: "Ultimo giorno",
+      promise: "Risposta entro dieci giorni.",
+    },
+    closed: {
+      title: "Le candidature per l'Edizione 03 sono chiuse.",
+      next: "La prossima finestra apre nella primavera 2026.",
+    },
+    sections: {
+      about: "Su di te",
+      practice: "La tua pratica",
+      work: "Il tuo lavoro",
+      vision: "La tua visione",
+    },
+    labels: {
+      fullName: "Nome completo",
+      email: "Indirizzo e-mail",
+      phone: "Telefono (opzionale)",
+      link: "Sito o Instagram (opzionale)",
+      discipline: "Disciplina",
+      q1: "Chi sei?",
+      q1Hint: "Massimo cinquecento parole.",
+      q2: "Cosa vuoi mostrare?",
+      q2Hint: "Descrivi il pezzo, la collezione o la performance.",
+      portfolio: "Link al tuo portfolio",
+      portfolioHint: "Sito web, Instagram, Drive — va bene tutto.",
+      q3: "Perché ora?",
+      q3Hint: "Massimo duecento parole.",
+    },
+    disciplines: {
+      mode: "Moda",
+      photography: "Fotografia",
+      performance: "Performance",
+      artDirection: "Direzione artistica",
+      sound: "Suono",
+      other: "Altro",
+    },
+    submit: "Invia la mia candidatura →",
+    success: {
+      title: "Ricevuto.",
+      body: "La tua candidatura si è aperta nel tuo client e-mail. Inviala — ti rispondiamo entro dieci giorni.",
+      again: "Invia un'altra candidatura",
+    },
+    bottom: {
+      eyebrow: "Una domanda prima di candidarti?",
+      line: "Scrivici direttamente.",
+    },
   },
 };
 

@@ -9,6 +9,7 @@ const en: Dictionary = {
     faq: "FAQ",
     menu: "Menu",
     close: "Close",
+    postuler: "Apply",
   },
 
   common: {
@@ -158,6 +159,62 @@ const en: Dictionary = {
         a: "Follow us on Instagram {instagram}, sign up for our newsletter, and check our website regularly for the latest updates.",
       },
     ],
+  },
+
+  postuler: {
+    eyebrow: "Edition 03 · Open call",
+    title: "Apply",
+    intro:
+      "For the next encounter, we're looking for sixteen creators. Three questions, no PDF, no endless form. If your work moves us, we write back within ten days.",
+    status: {
+      deadline: "Deadline",
+      daysLeft: "days left",
+      lastDay: "Last day",
+      promise: "Reply within ten days.",
+    },
+    closed: {
+      title: "Applications for Edition 03 are closed.",
+      next: "The next window opens spring 2026.",
+    },
+    sections: {
+      about: "About you",
+      practice: "Your practice",
+      work: "Your work",
+      vision: "Your vision",
+    },
+    labels: {
+      fullName: "Full name",
+      email: "Email address",
+      phone: "Phone (optional)",
+      link: "Website or Instagram (optional)",
+      discipline: "Discipline",
+      q1: "Who are you?",
+      q1Hint: "Five hundred words maximum.",
+      q2: "What do you want to show?",
+      q2Hint: "Describe the piece, collection, or performance.",
+      portfolio: "Link to your portfolio",
+      portfolioHint: "Website, Instagram, Drive — anything works.",
+      q3: "Why now?",
+      q3Hint: "Two hundred words maximum.",
+    },
+    disciplines: {
+      mode: "Fashion",
+      photography: "Photography",
+      performance: "Performance",
+      artDirection: "Art direction",
+      sound: "Sound",
+      other: "Other",
+    },
+    submit: "Send my application →",
+    success: {
+      title: "Received.",
+      body: "Your application has opened in your email client. Send it — we'll write back within ten days.",
+      again: "Send another application",
+    },
+    bottom: {
+      eyebrow: "A question before you apply?",
+      line: "Write to us directly.",
+    },
   },
 };
 

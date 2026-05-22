@@ -4,7 +4,7 @@
  */
 
 export type Dictionary = {
-  nav: { home: string; sponsors: string; editions: string; contact: string; faq: string; menu: string; close: string };
+  nav: { home: string; sponsors: string; editions: string; contact: string; faq: string; menu: string; close: string; postuler: string };
   common: { language: string; edition: string; designer: string; scroll: string; edition03: string };
   home: {
     eyebrow: string;
@@ -53,6 +53,38 @@ export type Dictionary = {
     ctaEyebrow: string;
     items: Array<{ q: string; a: string }>;
   };
+  postuler: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    status: {
+      deadline: string;
+      daysLeft: string;
+      lastDay: string;
+      promise: string;
+    };
+    closed: { title: string; next: string };
+    sections: { about: string; practice: string; work: string; vision: string };
+    labels: {
+      fullName: string;
+      email: string;
+      phone: string;
+      link: string;
+      discipline: string;
+      q1: string;
+      q1Hint: string;
+      q2: string;
+      q2Hint: string;
+      portfolio: string;
+      portfolioHint: string;
+      q3: string;
+      q3Hint: string;
+    };
+    disciplines: { mode: string; photography: string; performance: string; artDirection: string; sound: string; other: string };
+    submit: string;
+    success: { title: string; body: string; again: string };
+    bottom: { eyebrow: string; line: string };
+  };
 };
 
 const fr: Dictionary = {
@@ -64,6 +96,7 @@ const fr: Dictionary = {
     faq: "FAQ",
     menu: "Menu",
     close: "Fermer",
+    postuler: "Postuler",
   },
 
   common: {
@@ -214,6 +247,62 @@ const fr: Dictionary = {
         a: "Suivez-nous sur Instagram {instagram}, inscrivez-vous à notre newsletter et consultez régulièrement notre site web pour les dernières mises à jour.",
       },
     ],
+  },
+
+  postuler: {
+    eyebrow: "Édition 03 · Appel à candidatures",
+    title: "Postuler",
+    intro:
+      "Pour la prochaine rencontre, nous cherchons seize créateurs. Trois questions, aucun PDF, aucun formulaire interminable. Si votre travail nous touche, nous vous écrivons sous dix jours.",
+    status: {
+      deadline: "Délai jusqu'au",
+      daysLeft: "jours restants",
+      lastDay: "Dernier jour",
+      promise: "Réponse sous dix jours.",
+    },
+    closed: {
+      title: "L'appel à candidatures pour l'Édition 03 est clos.",
+      next: "La prochaine fenêtre ouvre au printemps 2026.",
+    },
+    sections: {
+      about: "À propos de vous",
+      practice: "Votre pratique",
+      work: "Votre travail",
+      vision: "Votre vision",
+    },
+    labels: {
+      fullName: "Nom complet",
+      email: "Adresse e-mail",
+      phone: "Téléphone (optionnel)",
+      link: "Site ou Instagram (optionnel)",
+      discipline: "Discipline",
+      q1: "Qui êtes-vous ?",
+      q1Hint: "Cinq cents mots maximum.",
+      q2: "Que voulez-vous montrer ?",
+      q2Hint: "Décrivez la pièce, la collection ou la performance.",
+      portfolio: "Lien vers votre portfolio",
+      portfolioHint: "Site web, Instagram, Drive — peu importe.",
+      q3: "Pourquoi maintenant ?",
+      q3Hint: "Deux cents mots maximum.",
+    },
+    disciplines: {
+      mode: "Mode",
+      photography: "Photographie",
+      performance: "Performance",
+      artDirection: "Direction artistique",
+      sound: "Son",
+      other: "Autre",
+    },
+    submit: "Envoyer ma candidature →",
+    success: {
+      title: "Reçu.",
+      body: "Votre candidature s'est ouverte dans votre client e-mail. Envoyez-la — nous vous écrivons sous dix jours.",
+      again: "Envoyer une autre candidature",
+    },
+    bottom: {
+      eyebrow: "Une question avant de postuler ?",
+      line: "Écrivez-nous directement.",
+    },
   },
 };
 

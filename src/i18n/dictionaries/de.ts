@@ -9,6 +9,7 @@ const de: Dictionary = {
     faq: "FAQ",
     menu: "Menü",
     close: "Schließen",
+    postuler: "Bewerben",
   },
 
   common: {
@@ -158,6 +159,62 @@ const de: Dictionary = {
         a: "Folgen Sie uns auf Instagram {instagram}, abonnieren Sie unseren Newsletter und besuchen Sie regelmäßig unsere Website für die neuesten Informationen.",
       },
     ],
+  },
+
+  postuler: {
+    eyebrow: "Ausgabe 03 · Bewerbungsaufruf",
+    title: "Bewerben",
+    intro:
+      "Für die nächste Begegnung suchen wir sechzehn Kreative. Drei Fragen, kein PDF, kein endloses Formular. Wenn uns Ihre Arbeit berührt, melden wir uns innerhalb von zehn Tagen.",
+    status: {
+      deadline: "Frist bis zum",
+      daysLeft: "Tage verbleibend",
+      lastDay: "Letzter Tag",
+      promise: "Antwort innerhalb von zehn Tagen.",
+    },
+    closed: {
+      title: "Die Bewerbungen für Ausgabe 03 sind geschlossen.",
+      next: "Das nächste Bewerbungsfenster öffnet im Frühjahr 2026.",
+    },
+    sections: {
+      about: "Über Sie",
+      practice: "Ihre Praxis",
+      work: "Ihre Arbeit",
+      vision: "Ihre Vision",
+    },
+    labels: {
+      fullName: "Vollständiger Name",
+      email: "E-Mail-Adresse",
+      phone: "Telefon (optional)",
+      link: "Website oder Instagram (optional)",
+      discipline: "Disziplin",
+      q1: "Wer sind Sie?",
+      q1Hint: "Maximal fünfhundert Wörter.",
+      q2: "Was möchten Sie zeigen?",
+      q2Hint: "Beschreiben Sie das Stück, die Kollektion oder die Performance.",
+      portfolio: "Link zu Ihrem Portfolio",
+      portfolioHint: "Website, Instagram, Drive — beliebig.",
+      q3: "Warum jetzt?",
+      q3Hint: "Maximal zweihundert Wörter.",
+    },
+    disciplines: {
+      mode: "Mode",
+      photography: "Fotografie",
+      performance: "Performance",
+      artDirection: "Art Direction",
+      sound: "Sound",
+      other: "Andere",
+    },
+    submit: "Bewerbung senden →",
+    success: {
+      title: "Erhalten.",
+      body: "Ihre Bewerbung wurde in Ihrem E-Mail-Programm geöffnet. Senden Sie sie ab — wir melden uns innerhalb von zehn Tagen.",
+      again: "Weitere Bewerbung senden",
+    },
+    bottom: {
+      eyebrow: "Eine Frage vor der Bewerbung?",
+      line: "Schreiben Sie uns direkt.",
+    },
   },
 };
 
