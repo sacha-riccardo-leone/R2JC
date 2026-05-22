@@ -77,7 +77,7 @@ export function PostulerForm() {
         <div className="font-mono text-[10px] uppercase tracking-wider-2 text-noir/40 tabular-nums mb-3">
           {index} / 04
         </div>
-        <div className="font-display font-medium text-2xl md:text-3xl text-noir leading-tight pb-4 border-b border-noir/25">
+        <div className="font-display font-medium text-2xl md:text-3xl text-noir leading-tight">
           {label}
         </div>
       </legend>

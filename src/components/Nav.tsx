@@ -15,6 +15,7 @@ export function Nav() {
     { label: t.nav.sponsors, href: "/sponsors" },
     { label: t.nav.editions, href: "/editions" },
     { label: t.nav.postuler, href: "/postuler" },
+    { label: t.nav.presse, href: "/presse" },
     { label: t.nav.contact, href: "/contact" },
     { label: t.nav.faq, href: "/faq" },
   ];

@@ -4,7 +4,7 @@
  */
 
 export type Dictionary = {
-  nav: { home: string; sponsors: string; editions: string; contact: string; faq: string; menu: string; close: string; postuler: string };
+  nav: { home: string; sponsors: string; editions: string; contact: string; faq: string; menu: string; close: string; postuler: string; presse: string };
   common: { language: string; edition: string; designer: string; scroll: string; edition03: string };
   home: {
     eyebrow: string;
@@ -53,6 +53,50 @@ export type Dictionary = {
     ctaEyebrow: string;
     items: Array<{ q: string; a: string }>;
   };
+  presse: {
+    eyebrow: string;
+    title: string;
+    intro: string;
+    statements: {
+      eyebrow: string;
+      title: string;
+      intro: string;
+      label25: string;
+      label50: string;
+      label150: string;
+      s25: string;
+      s50: string;
+      s150: string;
+      copy: string;
+      copied: string;
+    };
+    assets: {
+      eyebrow: string;
+      title: string;
+      intro: string;
+      logo: string;
+      download: string;
+    };
+    releases: {
+      eyebrow: string;
+      title: string;
+      soon: string;
+      download: string;
+      edition03: string;
+      edition02: string;
+      edition01: string;
+    };
+    accreditation: {
+      eyebrow: string;
+      title: string;
+      intro: string;
+      labels: { name: string; outlet: string; role: string; email: string; message: string };
+      submit: string;
+      success: { title: string; body: string; again: string };
+    };
+    coverage: { eyebrow: string; title: string };
+    contact: { eyebrow: string; line: string };
+  };
   postuler: {
     eyebrow: string;
     title: string;
@@ -97,6 +141,7 @@ const fr: Dictionary = {
     menu: "Menu",
     close: "Fermer",
     postuler: "Postuler",
+    presse: "Presse",
   },
 
   common: {
@@ -247,6 +292,71 @@ const fr: Dictionary = {
         a: "Suivez-nous sur Instagram {instagram}, inscrivez-vous à notre newsletter et consultez régulièrement notre site web pour les dernières mises à jour.",
       },
     ],
+  },
+
+  presse: {
+    eyebrow: "Presse & médias",
+    title: "Presse",
+    intro:
+      "Tout ce dont les journalistes ont besoin pour parler de R2JC : présentations prêtes à l'emploi, identité visuelle, communiqués et formulaire d'accréditation pour assister aux éditions.",
+    statements: {
+      eyebrow: "Présentations",
+      title: "Trois longueurs, prêtes à copier",
+      intro:
+        "Choisissez la version qui correspond à votre format. Cliquez pour copier.",
+      label25: "Courte — environ 25 mots",
+      label50: "Moyenne — environ 50 mots",
+      label150: "Longue — environ 150 mots",
+      s25: "R2JC — Rencontre de Jeunes Créateurs — révèle deux fois par an seize créateurs émergents en Suisse. Mode, photographie, performance, son. Édition 03 : automne 2026.",
+      s50: "R2JC est un collectif suisse qui développe la scène mode et arts visuels du pays en mettant en lumière, deux fois par an, seize créateurs émergents. Chaque rencontre transcende le simple défilé : c'est un seuil où des talents cachés deviennent publics, dans un lieu choisi pour son silence et son écoute.",
+      s150: "Fondé en 2023 et basé à Saint-Imier, R2JC — Rencontre de Jeunes Créateurs — est un collectif suisse qui développe la scène mode et arts visuels du pays. Deux fois par an, l'organisation rassemble seize créateurs émergents dans des disciplines variées — mode, photographie, performance, son, direction artistique — pour une rencontre qui transcende le simple défilé. R2JC ne s'intéresse pas aux designers consacrés ou aux maisons établies. Le collectif cherche les talents cachés : ceux qui s'expriment avec cœur et authenticité, qui méritent d'être valorisés et reconnus, et dont les premières opportunités peuvent déboucher sur de vraies carrières. Soutenu par une vingtaine de partenaires institutionnels, culturels et locaux, R2JC prépare son Édition 03, prévue à Bienne à l'automne 2026.",
+      copy: "Copier",
+      copied: "Copié",
+    },
+    assets: {
+      eyebrow: "Identité visuelle",
+      title: "Logo & fichiers officiels",
+      intro:
+        "Téléchargez le logo R2JC officiel pour vos publications, encarts ou articles.",
+      logo: "Logo R2JC",
+      download: "Télécharger",
+    },
+    releases: {
+      eyebrow: "Communiqués de presse",
+      title: "Téléchargements",
+      soon: "À venir",
+      download: "Télécharger PDF",
+      edition03: "Édition 03 — Bienne, automne 2026",
+      edition02: "Édition 02 — Bilan 2024",
+      edition01: "Édition 01 — Lancement 2023",
+    },
+    accreditation: {
+      eyebrow: "Accréditation presse",
+      title: "Demande d'accès",
+      intro:
+        "Pour assister à la prochaine édition, interviewer un créateur ou demander des visuels haute définition.",
+      labels: {
+        name: "Votre nom",
+        outlet: "Média / publication",
+        role: "Fonction",
+        email: "Adresse e-mail",
+        message: "Votre demande",
+      },
+      submit: "Envoyer la demande →",
+      success: {
+        title: "Reçu.",
+        body: "Votre demande s'est ouverte dans votre client e-mail. Envoyez-la — nous vous répondons sous cinq jours.",
+        again: "Envoyer une autre demande",
+      },
+    },
+    coverage: {
+      eyebrow: "Ils parlent de nous",
+      title: "Couverture médiatique",
+    },
+    contact: {
+      eyebrow: "Contact presse direct",
+      line: "Pour toute autre question, écrivez-nous.",
+    },
   },
 
   postuler: {

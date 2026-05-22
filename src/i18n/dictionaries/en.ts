@@ -10,6 +10,7 @@ const en: Dictionary = {
     menu: "Menu",
     close: "Close",
     postuler: "Apply",
+    presse: "Press",
   },
 
   common: {
@@ -159,6 +160,69 @@ const en: Dictionary = {
         a: "Follow us on Instagram {instagram}, sign up for our newsletter, and check our website regularly for the latest updates.",
       },
     ],
+  },
+
+  presse: {
+    eyebrow: "Press & media",
+    title: "Press",
+    intro:
+      "Everything journalists need to write about R2JC: ready-to-use boilerplate, brand assets, releases, and an accreditation form for upcoming editions.",
+    statements: {
+      eyebrow: "Boilerplate",
+      title: "Three lengths, ready to copy",
+      intro: "Pick the version that fits your format. Click to copy.",
+      label25: "Short — about 25 words",
+      label50: "Medium — about 50 words",
+      label150: "Long — about 150 words",
+      s25: "R2JC — Rencontre de Jeunes Créateurs — reveals sixteen emerging creators in Switzerland twice a year. Fashion, photography, performance, sound. Edition 03: autumn 2026.",
+      s50: "R2JC is a Swiss collective that develops the country's fashion and visual-arts scene by spotlighting sixteen emerging creators twice a year. Each encounter goes beyond a simple runway show — it's a threshold where hidden talents become public, in a venue chosen for its silence and attention.",
+      s150: "Founded in 2023 and based in Saint-Imier, R2JC — Rencontre de Jeunes Créateurs — is a Swiss collective that develops the country's fashion and visual-arts scene. Twice a year, the organisation brings together sixteen emerging creators across disciplines — fashion, photography, performance, sound, art direction — for an encounter that goes beyond a simple runway show. R2JC is not interested in established designers or major houses. The collective looks for hidden talents: those who express themselves with heart and authenticity, who deserve to be recognised, and whose first opportunities can lead to real careers. Backed by some twenty institutional, cultural and local partners, R2JC is preparing its Edition 03, set in Biel/Bienne in autumn 2026.",
+      copy: "Copy",
+      copied: "Copied",
+    },
+    assets: {
+      eyebrow: "Visual identity",
+      title: "Logo & official files",
+      intro: "Download the official R2JC logo for publications, layouts or articles.",
+      logo: "R2JC logo",
+      download: "Download",
+    },
+    releases: {
+      eyebrow: "Press releases",
+      title: "Downloads",
+      soon: "Coming soon",
+      download: "Download PDF",
+      edition03: "Edition 03 — Biel/Bienne, autumn 2026",
+      edition02: "Edition 02 — 2024 recap",
+      edition01: "Edition 01 — 2023 launch",
+    },
+    accreditation: {
+      eyebrow: "Press accreditation",
+      title: "Access request",
+      intro:
+        "To attend the next edition, interview a creator, or request high-resolution visuals.",
+      labels: {
+        name: "Your name",
+        outlet: "Outlet / publication",
+        role: "Role",
+        email: "Email address",
+        message: "Your request",
+      },
+      submit: "Send request →",
+      success: {
+        title: "Received.",
+        body: "Your request has opened in your email client. Send it — we reply within five days.",
+        again: "Send another request",
+      },
+    },
+    coverage: {
+      eyebrow: "They talk about us",
+      title: "Media coverage",
+    },
+    contact: {
+      eyebrow: "Direct press contact",
+      line: "For anything else, write to us.",
+    },
   },
 
   postuler: {

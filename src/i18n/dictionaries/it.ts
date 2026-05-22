@@ -10,6 +10,7 @@ const it: Dictionary = {
     menu: "Menu",
     close: "Chiudi",
     postuler: "Candidati",
+    presse: "Stampa",
   },
 
   common: {
@@ -159,6 +160,69 @@ const it: Dictionary = {
         a: "Seguici su Instagram {instagram}, iscriviti alla nostra newsletter e consulta regolarmente il nostro sito web per le ultime novità.",
       },
     ],
+  },
+
+  presse: {
+    eyebrow: "Stampa & media",
+    title: "Stampa",
+    intro:
+      "Tutto ciò di cui giornalisti e redazioni hanno bisogno per parlare di R2JC: testi pronti, identità visiva, comunicati e modulo di accreditamento per le prossime edizioni.",
+    statements: {
+      eyebrow: "Testi pronti",
+      title: "Tre lunghezze, pronte da copiare",
+      intro: "Scegli la versione adatta al tuo formato. Clicca per copiare.",
+      label25: "Breve — circa 25 parole",
+      label50: "Media — circa 50 parole",
+      label150: "Lunga — circa 150 parole",
+      s25: "R2JC — Rencontre de Jeunes Créateurs — svela due volte all'anno sedici creatori emergenti in Svizzera. Moda, fotografia, performance, suono. Edizione 03: autunno 2026.",
+      s50: "R2JC è un collettivo svizzero che sviluppa la scena moda e arti visive del paese mettendo in luce, due volte all'anno, sedici creatori emergenti. Ogni incontro va oltre la semplice sfilata: è una soglia in cui talenti nascosti diventano pubblici, in un luogo scelto per il suo silenzio e la sua attenzione.",
+      s150: "Fondato nel 2023 e con sede a Saint-Imier, R2JC — Rencontre de Jeunes Créateurs — è un collettivo svizzero che sviluppa la scena moda e arti visive del paese. Due volte all'anno l'organizzazione riunisce sedici creatori emergenti in discipline diverse — moda, fotografia, performance, suono, direzione artistica — per un incontro che va oltre la semplice sfilata. R2JC non si interessa ai designer affermati né alle grandi maison. Il collettivo cerca i talenti nascosti: chi si esprime con cuore e autenticità, chi merita di essere valorizzato e riconosciuto, e le cui prime opportunità possono trasformarsi in vere carriere. Sostenuto da una ventina di partner istituzionali, culturali e locali, R2JC prepara la sua Edizione 03, prevista a Bienna nell'autunno 2026.",
+      copy: "Copia",
+      copied: "Copiato",
+    },
+    assets: {
+      eyebrow: "Identità visiva",
+      title: "Logo & file ufficiali",
+      intro: "Scarica il logo R2JC ufficiale per pubblicazioni, inserti o articoli.",
+      logo: "Logo R2JC",
+      download: "Scarica",
+    },
+    releases: {
+      eyebrow: "Comunicati stampa",
+      title: "Download",
+      soon: "Prossimamente",
+      download: "Scarica PDF",
+      edition03: "Edizione 03 — Bienna, autunno 2026",
+      edition02: "Edizione 02 — Bilancio 2024",
+      edition01: "Edizione 01 — Lancio 2023",
+    },
+    accreditation: {
+      eyebrow: "Accredito stampa",
+      title: "Richiesta di accesso",
+      intro:
+        "Per assistere alla prossima edizione, intervistare un creatore o richiedere materiale ad alta risoluzione.",
+      labels: {
+        name: "Il tuo nome",
+        outlet: "Testata / pubblicazione",
+        role: "Ruolo",
+        email: "Indirizzo e-mail",
+        message: "La tua richiesta",
+      },
+      submit: "Invia la richiesta →",
+      success: {
+        title: "Ricevuto.",
+        body: "La tua richiesta si è aperta nel tuo client e-mail. Inviala — ti rispondiamo entro cinque giorni.",
+        again: "Invia un'altra richiesta",
+      },
+    },
+    coverage: {
+      eyebrow: "Parlano di noi",
+      title: "Rassegna stampa",
+    },
+    contact: {
+      eyebrow: "Contatto stampa diretto",
+      line: "Per qualsiasi altra cosa, scrivici.",
+    },
   },
 
   postuler: {

@@ -10,6 +10,7 @@ const de: Dictionary = {
     menu: "Menü",
     close: "Schließen",
     postuler: "Bewerben",
+    presse: "Presse",
   },
 
   common: {
@@ -159,6 +160,69 @@ const de: Dictionary = {
         a: "Folgen Sie uns auf Instagram {instagram}, abonnieren Sie unseren Newsletter und besuchen Sie regelmäßig unsere Website für die neuesten Informationen.",
       },
     ],
+  },
+
+  presse: {
+    eyebrow: "Presse & Medien",
+    title: "Presse",
+    intro:
+      "Alles, was Journalistinnen und Journalisten brauchen, um über R2JC zu schreiben: vorgefertigte Texte, visuelle Identität, Pressemitteilungen und ein Akkreditierungsformular für kommende Ausgaben.",
+    statements: {
+      eyebrow: "Pressetexte",
+      title: "Drei Längen, direkt zum Kopieren",
+      intro: "Wählen Sie die Version, die zu Ihrem Format passt. Klicken Sie zum Kopieren.",
+      label25: "Kurz — ca. 25 Wörter",
+      label50: "Mittel — ca. 50 Wörter",
+      label150: "Lang — ca. 150 Wörter",
+      s25: "R2JC — Rencontre de Jeunes Créateurs — präsentiert zweimal jährlich sechzehn aufstrebende Kreative aus der Schweiz. Mode, Fotografie, Performance, Sound. Ausgabe 03: Herbst 2026.",
+      s50: "R2JC ist ein Schweizer Kollektiv, das die Mode- und Kunstszene des Landes weiterentwickelt, indem es zweimal jährlich sechzehn aufstrebende Kreative ins Rampenlicht rückt. Jede Begegnung geht über die reine Modenschau hinaus — sie ist eine Schwelle, an der verborgene Talente öffentlich werden, in einem Ort, der für seine Stille und Aufmerksamkeit gewählt wurde.",
+      s150: "2023 gegründet und in Saint-Imier ansässig, ist R2JC — Rencontre de Jeunes Créateurs — ein Schweizer Kollektiv, das die Mode- und Kunstszene des Landes weiterentwickelt. Zweimal jährlich versammelt die Organisation sechzehn aufstrebende Kreative aus verschiedenen Disziplinen — Mode, Fotografie, Performance, Sound, Art Direction — für eine Begegnung, die weit über die reine Modenschau hinausgeht. R2JC interessiert sich nicht für etablierte Designer oder grosse Häuser. Das Kollektiv sucht verborgene Talente: Menschen, die sich mit Herz und Authentizität ausdrücken, die es verdienen, anerkannt zu werden, und deren erste Chancen zu echten Karrieren führen können. Mit Unterstützung von rund zwanzig institutionellen, kulturellen und lokalen Partnern bereitet R2JC seine Ausgabe 03 vor, geplant in Biel/Bienne im Herbst 2026.",
+      copy: "Kopieren",
+      copied: "Kopiert",
+    },
+    assets: {
+      eyebrow: "Visuelle Identität",
+      title: "Logo & offizielle Dateien",
+      intro: "Laden Sie das offizielle R2JC-Logo für Publikationen, Anzeigen oder Artikel herunter.",
+      logo: "R2JC-Logo",
+      download: "Herunterladen",
+    },
+    releases: {
+      eyebrow: "Pressemitteilungen",
+      title: "Downloads",
+      soon: "Demnächst",
+      download: "PDF herunterladen",
+      edition03: "Ausgabe 03 — Biel/Bienne, Herbst 2026",
+      edition02: "Ausgabe 02 — Rückblick 2024",
+      edition01: "Ausgabe 01 — Launch 2023",
+    },
+    accreditation: {
+      eyebrow: "Presseakkreditierung",
+      title: "Zugangsanfrage",
+      intro:
+        "Um an der nächsten Ausgabe teilzunehmen, eine kreative Person zu interviewen oder hochaufgelöste Bilder anzufragen.",
+      labels: {
+        name: "Ihr Name",
+        outlet: "Medium / Publikation",
+        role: "Funktion",
+        email: "E-Mail-Adresse",
+        message: "Ihre Anfrage",
+      },
+      submit: "Anfrage senden →",
+      success: {
+        title: "Erhalten.",
+        body: "Ihre Anfrage wurde in Ihrem E-Mail-Programm geöffnet. Senden Sie sie ab — wir antworten innerhalb von fünf Tagen.",
+        again: "Weitere Anfrage senden",
+      },
+    },
+    coverage: {
+      eyebrow: "Sie sprechen über uns",
+      title: "Medienberichterstattung",
+    },
+    contact: {
+      eyebrow: "Direkter Pressekontakt",
+      line: "Für alles andere schreiben Sie uns.",
+    },
   },
 
   postuler: {
