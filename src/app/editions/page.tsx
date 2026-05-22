@@ -81,6 +81,7 @@ export default function Editions() {
                         priority="P0"
                         tone="dark"
                         fit="cover"
+                        focus={d.portraitFocus}
                         label={d.name}
                         brief={`Portrait — drop at ${d.portrait}`}
                         src={fileExists(d.portrait) ? d.portrait : undefined}

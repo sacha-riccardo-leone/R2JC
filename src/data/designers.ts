@@ -12,6 +12,8 @@ export type Designer = {
   email?: string;
   /** Portrait of the designer, under /public */
   portrait: string;
+  /** Optional object-position for the portrait crop (e.g. "top", "50% 20%"). Default: center. */
+  portraitFocus?: string;
   /** Brand logo (optional), under /public */
   logo?: string;
   edition: "01" | "02";
@@ -165,6 +167,7 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     brand: "the daughters of eve",
     bio: "",
     portrait: "/media/designers/bastienfluckigerportrait.jpeg",
+    portraitFocus: "top", // keep the face in frame, crop the bottom
     logo: "/media/designers/rosemary-bastienlogo.png",
     edition: "02",
   },

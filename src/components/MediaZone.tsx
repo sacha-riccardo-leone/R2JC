@@ -40,6 +40,8 @@ export type MediaZoneProps = {
   tone?: "auto" | "light" | "dark";
   /** object-fit mode. Defaults: "contain" for images (logos), "cover" for videos */
   fit?: "cover" | "contain";
+  /** object-position when fit="cover" (e.g. "top", "center", "50% 20%"). Default: center. */
+  focus?: string;
 };
 
 export function MediaZone({
@@ -56,6 +58,7 @@ export function MediaZone({
   style,
   tone = "auto",
   fit,
+  focus,
 }: MediaZoneProps) {
   const aspectStyle: CSSProperties = { aspectRatio: ratio, ...style };
   const fitClass =
@@ -90,6 +93,7 @@ export function MediaZone({
             src={src}
             alt={alt ?? label ?? brief}
             className={`absolute inset-0 w-full h-full ${fitClass}`}
+            style={focus ? { objectPosition: focus } : undefined}
           />
         )}
       </figure>
