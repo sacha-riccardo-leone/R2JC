@@ -14,7 +14,9 @@ export const metadata = { title: "Éditions — R2JC" };
  */
 const PUBLIC_DIR = join(process.cwd(), "public");
 const fileExists = (publicPath: string) =>
-  existsSync(join(PUBLIC_DIR, publicPath.replace(/^\//, "")));
+  existsSync(
+    join(PUBLIC_DIR, decodeURIComponent(publicPath.replace(/^\//, "")))
+  );
 
 export default function Editions() {
   return (
@@ -93,6 +95,16 @@ export default function Editions() {
                     <p className="font-display italic text-xl md:text-2xl mt-2 text-noir/70">
                       {d.brand}
                     </p>
+
+                    {d.logo && fileExists(d.logo) && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={d.logo}
+                        alt={`${d.name} — logo de marque`}
+                        className="h-12 md:h-14 w-auto mt-6 object-contain"
+                      />
+                    )}
+
                     {d.bio && (
                       <p className="mt-6 font-sans text-base leading-relaxed text-noir/85 max-w-prose">
                         {d.bio}
