@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { getDict, getLocale } from "@/i18n/server";
 
-export const metadata = { title: "Édition 03 — Bienne, automne 2026 — R2JC" };
+export const metadata = { title: "Édition 03 — 12 septembre 2026 — R2JC" };
 
 /**
  * /editions/03 — landing page for the upcoming edition.
@@ -14,9 +14,11 @@ export const metadata = { title: "Édition 03 — Bienne, automne 2026 — R2JC"
  *   LINEUP_SLOTS: number of designer slots (16 by default). Fill in
  *     `lineup` with announced slugs from DESIGNERS_EDITION_03 once they exist.
  */
-const START_ISO = "2026-11-14T18:00:00+01:00";
-const END_ISO = "2026-11-16T23:00:00+01:00";
+const START_ISO = "2026-09-12T18:00:00+02:00";
+const END_ISO = "2026-09-12T23:00:00+02:00";
 const LINEUP_SLOTS = 16;
+/** Toggle to `true` once the venue is announced — re-enables the GPS line and SBB link. */
+const VENUE_KNOWN = false;
 
 // Press logos reused as the sponsor wall on this page
 const SPONSOR_LOGOS = [
@@ -197,11 +199,13 @@ export default async function Edition03() {
                 <span className="font-semibold">{e.venueSection.title}</span>
               </h2>
             </Reveal>
-            <Reveal delay={250}>
-              <p className="mt-6 font-mono text-[11px] uppercase tracking-wider-2 opacity-60">
-                47°08'13"N · 7°15'00"E
-              </p>
-            </Reveal>
+            {VENUE_KNOWN && (
+              <Reveal delay={250}>
+                <p className="mt-6 font-mono text-[11px] uppercase tracking-wider-2 opacity-60">
+                  47°08'13"N · 7°15'00"E
+                </p>
+              </Reveal>
+            )}
           </div>
           <div className="md:col-span-7">
             <Reveal delay={150}>
@@ -209,16 +213,18 @@ export default async function Edition03() {
                 {e.venueSection.body}
               </p>
             </Reveal>
-            <Reveal delay={300}>
-              <a
-                href={sbbHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block mt-8 font-mono text-[11px] uppercase tracking-wider-2 border-b border-blanc hover:text-silver hover:border-silver transition-colors"
-              >
-                {e.venueSection.sbb} ↗
-              </a>
-            </Reveal>
+            {VENUE_KNOWN && (
+              <Reveal delay={300}>
+                <a
+                  href={sbbHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block mt-8 font-mono text-[11px] uppercase tracking-wider-2 border-b border-blanc hover:text-silver hover:border-silver transition-colors"
+                >
+                  {e.venueSection.sbb} ↗
+                </a>
+              </Reveal>
+            )}
           </div>
         </div>
       </section>
@@ -243,7 +249,7 @@ export default async function Edition03() {
           </Reveal>
           <Reveal delay={400}>
             <a
-              href="mailto:Info@r2jc.ch?subject=Réservation%20—%20Édition%2003%20—%20Soirée%20d'ouverture%2014%20novembre%202026"
+              href="mailto:Info@r2jc.ch?subject=Réservation%20—%20Édition%2003%20—%2012%20septembre%202026"
               className="inline-block bg-noir text-blanc px-10 py-4 rounded font-sans text-sm tracking-[0.02em] hover:bg-silver transition-colors duration-500"
             >
               {e.rsvp.cta} →

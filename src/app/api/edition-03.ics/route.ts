@@ -19,13 +19,13 @@ function formatUtc(iso: string) {
 }
 
 const EVENT = {
-  start: "2026-11-14T18:00:00+01:00",
-  end: "2026-11-16T23:00:00+01:00",
+  start: "2026-09-12T18:00:00+02:00",
+  end: "2026-09-12T23:00:00+02:00",
   uid: "edition-03-2026@r2jc.ch",
   summary: "R2JC — Édition 03",
-  location: "Biel/Bienne, Suisse",
+  location: "Suisse — lieu à venir",
   description:
-    "Rencontre de Jeunes Créateurs — Édition 03. Seize créateurs émergents, trois soirs à Biel/Bienne. Plus d'informations : https://r2jc.ch/editions/03",
+    "Rencontre de Jeunes Créateurs — Édition 03. Seize créateurs émergents en Suisse. Le lieu sera annoncé prochainement. Plus d'informations : https://r2jc.ch/editions/03",
   url: "https://r2jc.ch/editions/03",
 };
 

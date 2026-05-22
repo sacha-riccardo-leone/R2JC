@@ -313,10 +313,10 @@ const fr: Dictionary = {
   },
 
   ed03: {
-    eyebrow: "Prochaine édition · Bienne 2026",
+    eyebrow: "Prochaine édition · Suisse · 12.09.2026",
     title: "Édition 03",
-    dateLine: "14 — 16 novembre 2026",
-    venue: "Bienne, Suisse",
+    dateLine: "12 septembre 2026",
+    venue: "Lieu à venir",
     countdown: {
       label: "Avant l'ouverture",
       days: "jours",
@@ -327,7 +327,7 @@ const fr: Dictionary = {
     about: {
       eyebrow: "À venir",
       title: "Seize créateurs. Trois disciplines. Un seuil.",
-      body: "Pour sa troisième rencontre, R2JC réunit seize créateurs émergents à Bienne. Trois soirs. Mode, photographie, performance, son, direction artistique. Un lieu choisi pour son silence et son écoute.",
+      body: "Pour sa troisième rencontre, R2JC réunit seize créateurs émergents le 12 septembre 2026. Mode, photographie, performance, son, direction artistique. Un lieu choisi pour son silence et son écoute.",
     },
     lineup: {
       eyebrow: "Les créateurs",
@@ -338,14 +338,14 @@ const fr: Dictionary = {
     },
     venueSection: {
       eyebrow: "Le lieu",
-      title: "Bienne",
-      body: "Au cœur de l'arc jurassien, Bienne est la ville la plus bilingue de Suisse. Accessible en train depuis Zurich (75 min), Berne (25 min), Genève (90 min) et Bâle (75 min). L'adresse exacte du lieu sera communiquée aux participants un mois avant l'événement.",
+      title: "À venir",
+      body: "Le lieu de l'Édition 03 sera annoncé prochainement. Suivez @r2jc.officiel pour être les premiers informés — l'adresse exacte sera communiquée aux participants peu avant l'événement.",
       sbb: "Voir l'itinéraire sur CFF",
     },
     rsvp: {
       eyebrow: "Réservation",
       title: "Soirée d'ouverture",
-      body: "L'entrée à la soirée d'ouverture du 14 novembre se fait sur réservation. Les places sont limitées.",
+      body: "L'entrée à la soirée du 12 septembre se fait sur réservation. Les places sont limitées.",
       cta: "Réserver une place",
     },
     partners: {
@@ -374,9 +374,9 @@ const fr: Dictionary = {
       label25: "Courte — environ 25 mots",
       label50: "Moyenne — environ 50 mots",
       label150: "Longue — environ 150 mots",
-      s25: "R2JC — Rencontre de Jeunes Créateurs — révèle deux fois par an seize créateurs émergents en Suisse. Mode, photographie, performance, son. Édition 03 : automne 2026.",
+      s25: "R2JC — Rencontre de Jeunes Créateurs — révèle deux fois par an seize créateurs émergents en Suisse. Mode, photographie, performance, son. Édition 03 : 12 septembre 2026.",
       s50: "R2JC est un collectif suisse qui développe la scène mode et arts visuels du pays en mettant en lumière, deux fois par an, seize créateurs émergents. Chaque rencontre transcende le simple défilé : c'est un seuil où des talents cachés deviennent publics, dans un lieu choisi pour son silence et son écoute.",
-      s150: "Fondé en 2023 et basé à Saint-Imier, R2JC — Rencontre de Jeunes Créateurs — est un collectif suisse qui développe la scène mode et arts visuels du pays. Deux fois par an, l'organisation rassemble seize créateurs émergents dans des disciplines variées — mode, photographie, performance, son, direction artistique — pour une rencontre qui transcende le simple défilé. R2JC ne s'intéresse pas aux designers consacrés ou aux maisons établies. Le collectif cherche les talents cachés : ceux qui s'expriment avec cœur et authenticité, qui méritent d'être valorisés et reconnus, et dont les premières opportunités peuvent déboucher sur de vraies carrières. Soutenu par une vingtaine de partenaires institutionnels, culturels et locaux, R2JC prépare son Édition 03, prévue à Bienne à l'automne 2026.",
+      s150: "Fondé en 2023 et basé à Saint-Imier, R2JC — Rencontre de Jeunes Créateurs — est un collectif suisse qui développe la scène mode et arts visuels du pays. Deux fois par an, l'organisation rassemble seize créateurs émergents dans des disciplines variées — mode, photographie, performance, son, direction artistique — pour une rencontre qui transcende le simple défilé. R2JC ne s'intéresse pas aux designers consacrés ou aux maisons établies. Le collectif cherche les talents cachés : ceux qui s'expriment avec cœur et authenticité, qui méritent d'être valorisés et reconnus, et dont les premières opportunités peuvent déboucher sur de vraies carrières. Soutenu par une vingtaine de partenaires institutionnels, culturels et locaux, R2JC prépare son Édition 03, prévue en Suisse le 12 septembre 2026.",
       copy: "Copier",
       copied: "Copié",
     },
@@ -393,7 +393,7 @@ const fr: Dictionary = {
       title: "Téléchargements",
       soon: "À venir",
       download: "Télécharger PDF",
-      edition03: "Édition 03 — Bienne, automne 2026",
+      edition03: "Édition 03 — 12 septembre 2026",
       edition02: "Édition 02 — Bilan 2024",
       edition01: "Édition 01 — Lancement 2023",
     },
