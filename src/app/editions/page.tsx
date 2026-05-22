@@ -96,9 +96,11 @@ export default async function Editions() {
 
                       {/* Caption strip — hairline + monospace metadata */}
                       <div className="mt-4 pt-3 border-t border-noir/30">
-                        <div className="flex justify-between items-baseline font-mono text-[10px] uppercase tracking-wider-2 text-noir/70">
-                          <span className="truncate pr-3">{d.brand}</span>
-                          <span className="shrink-0 text-noir/50">
+                        <div className="flex justify-between items-baseline font-mono uppercase tracking-wider-2">
+                          <span className="truncate pr-3 text-sm text-noir">
+                            {d.brand}
+                          </span>
+                          <span className="shrink-0 text-[10px] text-noir/50">
                             {t.editions.e02.titleAccent} · 02
                           </span>
                         </div>
@@ -113,9 +115,6 @@ export default async function Editions() {
                       <h3 className="font-display font-light text-3xl md:text-5xl leading-tight">
                         <span className="font-semibold">{d.name}</span>
                       </h3>
-                      <p className="font-display italic text-xl md:text-2xl mt-2 text-noir/70">
-                        {d.brand}
-                      </p>
 
                       {d.logo && fileExists(d.logo) && (
                         // eslint-disable-next-line @next/next/no-img-element
