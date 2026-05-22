@@ -71,7 +71,11 @@ export function MediaZone({
             muted
             loop
             playsInline
-            className="absolute inset-0 w-full h-full object-cover"
+            preload="auto"
+            disablePictureInPicture
+            controlsList="nodownload noplaybackrate nofullscreen noremoteplayback"
+            tabIndex={-1}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element

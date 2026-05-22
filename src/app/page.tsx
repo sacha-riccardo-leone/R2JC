@@ -185,7 +185,8 @@ export default function Home() {
               priority="P0"
               tone="light"
               label="Édition 02 — Recap"
-              brief="Already on YouTube (@r2jc.officiel). Self-host MP4 at /media/editions/edition-02-recap.mp4 for control."
+              brief="Self-hosted 30s loop from t=36:06 of the YouTube recap."
+              src="/media/editions/edition-02-recap.mp4"
             />
           </Reveal>
 
