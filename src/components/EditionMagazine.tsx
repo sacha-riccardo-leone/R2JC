@@ -75,9 +75,12 @@ export function EditionMagazine({
 
   const card = (
     <div className="group block w-full">
-      {/* FRAME AREA — empty cover sitting in front, pages fanning out behind */}
+      {/* FRAME AREA — empty cover sitting in front, pages fanning out behind.
+          `isolate` creates a local stacking context so the cover's z-index
+          can't escape and punch through the fixed burger-menu overlay (which
+          lives at z-30 on the document root). */}
       <div
-        className="relative w-full aspect-[3/4]"
+        className="relative isolate w-full aspect-[3/4]"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
@@ -124,8 +127,11 @@ export function EditionMagazine({
 
         {/* COVER — empty frame waiting for the official artwork.
             Renders the image when `coverSrc` is supplied; otherwise an empty
-            blanc panel with a thin noir border that reads as a placeholder. */}
-        <div className="absolute inset-0 z-[100] bg-blanc border border-noir/40 shadow-[0_16px_48px_-16px_rgba(0,0,0,0.35)] overflow-hidden">
+            blanc panel with a thin noir border that reads as a placeholder.
+            `z-10` only has to beat the fan pages (which top out at ~z-4);
+            the parent's `isolate` keeps this from leaking up the stacking
+            tree. */}
+        <div className="absolute inset-0 z-10 bg-blanc border border-noir/40 shadow-[0_16px_48px_-16px_rgba(0,0,0,0.35)] overflow-hidden">
           {coverSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
