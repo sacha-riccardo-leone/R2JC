@@ -64,7 +64,7 @@ function DropdownBanner({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <div className="border-b border-blanc/15">
+    <div className="bg-noir border-b border-blanc/15">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -95,14 +95,16 @@ function DropdownBanner({
       {/*
         Inline expander — the classic 0fr → 1fr grid-row trick gives a smooth
         height transition without measuring the content. The inner div needs
-        overflow-hidden so content is clipped during the animation.
+        overflow-hidden so content is clipped during the animation, AND min-h-0
+        so the grid track can actually collapse to 0 (default min-height: auto
+        on grid items would otherwise hold the row open at content min-content).
       */}
       <div
         className={`grid transition-[grid-template-rows] duration-700 ease-editorial ${
           open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >
-        <div className="overflow-hidden">{children}</div>
+        <div className="overflow-hidden min-h-0">{children}</div>
       </div>
     </div>
   );

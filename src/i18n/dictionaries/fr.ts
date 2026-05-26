@@ -317,7 +317,7 @@ const fr: Dictionary = {
   },
 
   ed03: {
-    eyebrow: "Prochaine édition · Suisse · 12.09.2026",
+    eyebrow: "Prochaine édition",
     title: "Édition 03",
     dateLine: "12 septembre 2026",
     venue: "Lieu à venir",

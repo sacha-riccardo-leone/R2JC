@@ -166,7 +166,7 @@ const it: Dictionary = {
   },
 
   ed03: {
-    eyebrow: "Prossima edizione · Svizzera · 12.09.2026",
+    eyebrow: "Prossima edizione",
     title: "Edizione 03",
     dateLine: "12 settembre 2026",
     venue: "Luogo da annunciare",
