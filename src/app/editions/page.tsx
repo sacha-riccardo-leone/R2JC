@@ -1,7 +1,6 @@
 import { existsSync } from "fs";
 import { join } from "path";
 import { MediaZone } from "@/components/MediaZone";
-import { Reveal } from "@/components/Reveal";
 import { LookHoverPreview } from "@/components/LookHoverPreview";
 import { EditionBanner } from "@/components/EditionBanner";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
@@ -49,14 +48,16 @@ export default async function Editions() {
         title={t.editions.e02.bannerTitle}
         ctaLabel={t.editions.expand}
       >
-        {/* Edition 02 — intro */}
+        {/* Edition 02 — intro
+            Note: no <Reveal> wrappers inside dropdown content. The dropdown's
+            own grid 0fr→1fr expansion IS the reveal — nesting 17 more
+            IntersectionObservers + opacity transitions in here was making the
+            grid animation stutter on click. */}
         <section className="bg-pearl text-noir py-20 md:py-24">
           <div className="max-w-4xl mx-auto px-6 md:px-10">
-            <Reveal motion="fade">
-              <p className="font-sans text-base md:text-lg leading-relaxed text-noir/85 text-center max-w-prose mx-auto">
-                {t.editions.e02.intro}
-              </p>
-            </Reveal>
+            <p className="font-sans text-base md:text-lg leading-relaxed text-noir/85 text-center max-w-prose mx-auto">
+              {t.editions.e02.intro}
+            </p>
           </div>
         </section>
 
@@ -68,8 +69,7 @@ export default async function Editions() {
               const total = String(DESIGNERS_EDITION_02.length).padStart(2, "0");
 
               return (
-                <Reveal key={d.slug} motion="fade">
-                  <article className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial overflow-hidden">
+                <article key={d.slug} className="bg-blanc shadow-[0_2px_24px_-8px_rgba(0,0,0,0.08)] hover:shadow-[0_8px_40px_-8px_rgba(0,0,0,0.18)] transition-shadow duration-700 ease-editorial overflow-hidden">
                     <div className="grid md:grid-cols-12 items-start">
                       {/* Specimen plate */}
                       <div className="md:col-span-5 p-8 md:p-10 lg:p-12 relative">
@@ -198,7 +198,6 @@ export default async function Editions() {
                       </div>
                     )}
                   </article>
-                </Reveal>
               );
             })}
           </div>
@@ -214,29 +213,23 @@ export default async function Editions() {
       >
         <section className="bg-noir text-blanc py-20 md:py-28">
           <div className="max-w-4xl mx-auto px-6 md:px-10 text-center">
-            <Reveal motion="fade">
-              <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6">
-                {t.editions.e01.eyebrow}
-              </p>
-            </Reveal>
-            <Reveal motion="fade">
-              <div className="max-w-md mx-auto">
-                <MediaZone
-                  id="ED01-COVER"
-                  kind="image"
-                  ratio="4/5"
-                  priority="P1"
-                  tone="light"
-                  label={t.editions.e01.coverLabel}
-                  brief="Drop at /media/editions/edition-01-cover.jpg"
-                />
-              </div>
-            </Reveal>
-            <Reveal motion="fade">
-              <p className="mt-10 font-sans text-base md:text-lg leading-relaxed text-mist/80 max-w-prose mx-auto">
-                {t.editions.e01.caption}
-              </p>
-            </Reveal>
+            <p className="font-mono text-[11px] uppercase tracking-wider-2 opacity-60 mb-6">
+              {t.editions.e01.eyebrow}
+            </p>
+            <div className="max-w-md mx-auto">
+              <MediaZone
+                id="ED01-COVER"
+                kind="image"
+                ratio="4/5"
+                priority="P1"
+                tone="light"
+                label={t.editions.e01.coverLabel}
+                brief="Drop at /media/editions/edition-01-cover.jpg"
+              />
+            </div>
+            <p className="mt-10 font-sans text-base md:text-lg leading-relaxed text-mist/80 max-w-prose mx-auto">
+              {t.editions.e01.caption}
+            </p>
           </div>
         </section>
       </EditionBanner>
