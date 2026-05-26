@@ -10,14 +10,25 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const items: { label: string; href: string }[] = [
-    { label: t.nav.home, href: "/" },
-    { label: t.nav.sponsors, href: "/sponsors" },
+  // 3 primary items shown inline in the desktop bar — the funnels you most
+  // want visitors to hit. Everything else lives in the +Menu takeover.
+  const primaryItems = [
     { label: t.nav.editions, href: "/editions" },
     { label: t.nav.postuler, href: "/postuler" },
-    { label: t.nav.presse, href: "/presse" },
-    { label: t.nav.contact, href: "/contact" },
-    { label: t.nav.faq, href: "/faq" },
+    { label: t.ed03.title,   href: "/editions/03" },
+  ];
+
+  // Full menu shown in the takeover — every route, including the primary ones
+  // (so visitors always have one place that has everything).
+  const menuItems = [
+    { label: t.nav.home,     href: "/" },
+    { label: t.nav.sponsors, href: "/sponsors" },
+    { label: t.nav.editions, href: "/editions" },
+    { label: t.ed03.title,   href: "/editions/03" },
+    { label: t.nav.postuler, href: "/postuler" },
+    { label: t.nav.presse,   href: "/presse" },
+    { label: t.nav.contact,  href: "/contact" },
+    { label: t.nav.faq,      href: "/faq" },
   ];
 
   useEffect(() => {
@@ -27,8 +38,19 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll while takeover is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+  }, [open]);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
   return (
@@ -41,7 +63,7 @@ export function Nav() {
         }`}
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-4 md:py-5">
-          {/* R2JC logo mark — silver "2" on transparent */}
+          {/* Logo */}
           <Link
             href="/"
             className="inline-flex items-center gap-2 group shrink-0"
@@ -57,59 +79,81 @@ export function Nav() {
             <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
-          {/* Desktop nav — fills the space between logo and language switcher,
-              items distributed evenly across the available width */}
-          <nav className="hidden md:flex flex-1 items-center justify-around mx-8 lg:mx-12 font-display text-[13px] font-semibold uppercase tracking-nav">
-            {items.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="py-2 hover:text-silver transition-colors duration-300 whitespace-nowrap"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Right cluster: primary items + language + menu trigger */}
+          <div className="flex items-center gap-5 md:gap-8">
+            {/* Primary items — desktop only, fade out when takeover is open */}
+            <nav
+              className={`hidden md:flex items-center gap-6 lg:gap-8 font-display text-[13px] font-semibold uppercase tracking-nav transition-opacity duration-300 ${
+                open ? "opacity-0 pointer-events-none" : "opacity-100"
+              }`}
+              aria-hidden={open}
+            >
+              {primaryItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="hover:text-silver transition-colors duration-300 whitespace-nowrap"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
 
-          {/* Right cluster — language switcher (desktop) + mobile menu toggle */}
-          <div className="flex items-center gap-3">
-            <div className="hidden md:block">
+            {/* Language switcher — desktop only, also fades when takeover is open */}
+            <div
+              className={`hidden md:block transition-opacity duration-300 ${
+                open ? "opacity-0 pointer-events-none" : "opacity-100"
+              }`}
+              aria-hidden={open}
+            >
               <LanguageSwitcher variant="header" />
             </div>
 
+            {/* Menu trigger — visible on every viewport, every state */}
             <button
               type="button"
-              className="md:hidden font-display text-[13px] uppercase tracking-nav font-semibold"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
-              aria-label="Menu"
+              aria-label={open ? t.nav.close : t.nav.menu}
+              className="font-display text-[13px] uppercase tracking-nav font-semibold hover:text-silver transition-colors duration-300 inline-flex items-center gap-2 whitespace-nowrap"
             >
-              {open ? t.nav.close : t.nav.menu}
+              <span className="opacity-60">{open ? "×" : "+"}</span>
+              <span>{open ? t.nav.close : t.nav.menu}</span>
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile full-screen menu */}
+      {/* ── FULL-SCREEN TAKEOVER ────────────────────────────────────────
+          Every route listed at editorial display scale, numbered like
+          a museum index. Same fade-in / fade-out the mobile menu used
+          before — now serves both desktop and mobile. */}
       <div
-        className={`fixed inset-0 z-30 bg-noir text-blanc transition-opacity duration-500 ease-editorial md:hidden ${
+        className={`fixed inset-0 z-30 bg-noir text-blanc transition-opacity duration-500 ease-editorial ${
           open
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         }`}
       >
-        <nav className="flex flex-col justify-center h-full px-6 gap-4">
-          {items.map((item) => (
+        <nav className="flex flex-col justify-center h-full max-w-6xl mx-auto px-6 md:px-16 lg:px-24 gap-3 md:gap-4">
+          {menuItems.map((item, i) => (
             <Link
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className="font-display font-semibold text-4xl uppercase tracking-nav hover:text-silver transition-colors duration-300"
+              className="group flex items-baseline gap-6 md:gap-12"
             >
-              {item.label}
+              <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-wider-2 text-blanc/40 tabular-nums shrink-0">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="font-display font-semibold text-3xl md:text-5xl lg:text-6xl uppercase tracking-nav group-hover:text-silver transition-colors duration-300 leading-none">
+                {item.label}
+              </span>
             </Link>
           ))}
-          <div className="mt-10 pt-6 border-t border-blanc/15">
+
+          {/* Language switcher inside takeover — mobile only (desktop has it in the header) */}
+          <div className="md:hidden mt-10 pt-6 border-t border-blanc/15">
             <LanguageSwitcher variant="mobile" />
           </div>
         </nav>

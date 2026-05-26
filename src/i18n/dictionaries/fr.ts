@@ -35,9 +35,10 @@ export type Dictionary = {
   editions: {
     eyebrow: string;
     titleAccent: string;
-    e02: { titlePre: string; titleAccent: string; intro: string };
+    expand: string;
+    e02: { titlePre: string; titleAccent: string; intro: string; bannerEyebrow: string };
     cardLabel: string;
-    e01: { eyebrow: string; titlePre: string; titleAccent: string; coverLabel: string; caption: string };
+    e01: { eyebrow: string; titlePre: string; titleAccent: string; coverLabel: string; caption: string; bannerEyebrow: string };
   };
   contact: {
     eyebrow: string;
@@ -245,15 +246,18 @@ const fr: Dictionary = {
   editions: {
     eyebrow: "Toutes les éditions",
     titleAccent: "Editions",
+    expand: "Voir",
     e02: {
       titlePre: "2ème édition de",
       titleAccent: "R2JC",
+      bannerEyebrow: "Édition 02 · 2024",
       intro:
         "Pour cette édition, nous avons choisi un espace bien plus grand, répondant à la demande croissante et permettant d'accueillir un public encore plus vaste. L'édition 2025 s'est démarquée par une diversité élargie, tant au niveau des créateurs que des collections présentées. Nous avons eu le plaisir de mettre en lumière une palette encore plus variée de talents. Redécouvrez dès maintenant les designers qui ont marqué cette édition !",
     },
     cardLabel: "Édition 02 · Designer",
     e01: {
       eyebrow: "Retour en arrière",
+      bannerEyebrow: "Édition 01 · 2023",
       titlePre: "Revenons sur notre",
       titleAccent: "1ère édition",
       coverLabel: "Édition 01 — 2023",
