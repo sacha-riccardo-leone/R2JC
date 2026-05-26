@@ -46,15 +46,6 @@ export function Nav() {
     return best;
   })();
 
-  const total = menuItems.length;
-  const totalStr = String(total).padStart(2, "0");
-  const indexStr =
-    currentIndex >= 0
-      ? String(currentIndex + 1).padStart(2, "0")
-      : "—";
-  const currentItem =
-    currentIndex >= 0 ? menuItems[currentIndex] : null;
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -114,46 +105,41 @@ export function Nav() {
               <LanguageSwitcher variant="header" />
             </div>
 
-            {/* Wayfinding trigger.
-                Closed → "XX / 08 · CURRENT-LABEL ↗"
-                Open   → "× FERMER"
-                The XX / 08 fraction tells visitors how big the site is and
-                where they are within it. */}
+            {/* Classic three-line burger that morphs into an X when open.
+                Three absolutely-positioned bars on a square button; CSS
+                transforms handle the open / closed states with a 500ms
+                editorial ease. */}
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-label={open ? t.nav.close : t.nav.menu}
-              className="inline-flex items-baseline gap-3 hover:text-silver transition-colors duration-300 whitespace-nowrap"
+              className="relative w-8 h-8 flex items-center justify-center hover:text-silver transition-colors duration-300"
             >
-              {open ? (
-                <>
-                  <span className="font-display text-base leading-none opacity-60">
-                    ×
-                  </span>
-                  <span className="font-display text-[13px] uppercase tracking-nav font-semibold">
-                    {t.nav.close}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span className="font-mono text-[11px] uppercase tracking-wider-2 tabular-nums text-blanc/50">
-                    {indexStr}
-                    <span className="opacity-50"> / {totalStr}</span>
-                  </span>
-                  {currentItem && (
-                    <>
-                      <span className="hidden sm:inline font-mono text-[11px] text-blanc/30">
-                        ·
-                      </span>
-                      <span className="hidden sm:inline font-display text-[13px] uppercase tracking-nav font-semibold">
-                        {currentItem.label}
-                      </span>
-                    </>
-                  )}
-                  <span className="font-mono text-[11px] opacity-60">↗</span>
-                </>
-              )}
+              <span
+                aria-hidden
+                className="absolute block w-6 h-[1.5px] bg-current transition-transform duration-500 ease-editorial"
+                style={{
+                  transform: open
+                    ? "translateY(0) rotate(45deg)"
+                    : "translateY(-7px) rotate(0deg)",
+                }}
+              />
+              <span
+                aria-hidden
+                className={`absolute block w-6 h-[1.5px] bg-current transition-opacity duration-300 ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                aria-hidden
+                className="absolute block w-6 h-[1.5px] bg-current transition-transform duration-500 ease-editorial"
+                style={{
+                  transform: open
+                    ? "translateY(0) rotate(-45deg)"
+                    : "translateY(7px) rotate(0deg)",
+                }}
+              />
             </button>
           </div>
         </div>
