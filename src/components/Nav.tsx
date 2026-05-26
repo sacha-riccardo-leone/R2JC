@@ -1,18 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useT } from "@/i18n";
 import { LanguageSwitcher } from "@/i18n/LanguageSwitcher";
 
 export function Nav() {
   const { t } = useT();
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Every route. The header carries no inline items — visitors click + Menu
-  // to reveal the full takeover. Keeps the brand frame quiet, lets typography
-  // do the work.
+  // Every route. Order matters — this is the museum-index order in the takeover
+  // and the basis for the "XX / 08" wayfinding trigger.
   const menuItems = [
     { label: t.nav.home,     href: "/" },
     { label: t.nav.sponsors, href: "/sponsors" },
@@ -23,6 +24,36 @@ export function Nav() {
     { label: t.nav.contact,  href: "/contact" },
     { label: t.nav.faq,      href: "/faq" },
   ];
+
+  // Find which item the visitor is currently viewing. Exact match wins; then
+  // longest prefix wins (so /editions/03 maps to "Édition 03", not "Éditions").
+  // Root "/" only matches exactly so it doesn't gobble every sub-route.
+  const currentIndex = (() => {
+    const exact = menuItems.findIndex((i) => i.href === pathname);
+    if (exact !== -1) return exact;
+    let best = -1;
+    let bestLen = 0;
+    menuItems.forEach((item, i) => {
+      if (item.href === "/") return;
+      if (
+        pathname.startsWith(item.href + "/") &&
+        item.href.length > bestLen
+      ) {
+        best = i;
+        bestLen = item.href.length;
+      }
+    });
+    return best;
+  })();
+
+  const total = menuItems.length;
+  const totalStr = String(total).padStart(2, "0");
+  const indexStr =
+    currentIndex >= 0
+      ? String(currentIndex + 1).padStart(2, "0")
+      : "—";
+  const currentItem =
+    currentIndex >= 0 ? menuItems[currentIndex] : null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -72,10 +103,8 @@ export function Nav() {
             <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
-          {/* Right cluster: language + menu trigger only */}
+          {/* Right cluster: language switcher + wayfinding menu trigger */}
           <div className="flex items-center gap-5 md:gap-8">
-            {/* Language switcher — desktop only (mobile finds it inside the takeover).
-                Fades out when the takeover is open. */}
             <div
               className={`hidden md:block transition-opacity duration-300 ${
                 open ? "opacity-0 pointer-events-none" : "opacity-100"
@@ -85,25 +114,55 @@ export function Nav() {
               <LanguageSwitcher variant="header" />
             </div>
 
-            {/* Menu trigger — visible on every viewport, every state */}
+            {/* Wayfinding trigger.
+                Closed → "XX / 08 · CURRENT-LABEL ↗"
+                Open   → "× FERMER"
+                The XX / 08 fraction tells visitors how big the site is and
+                where they are within it. */}
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-label={open ? t.nav.close : t.nav.menu}
-              className="font-display text-[13px] uppercase tracking-nav font-semibold hover:text-silver transition-colors duration-300 inline-flex items-center gap-2 whitespace-nowrap"
+              className="inline-flex items-baseline gap-3 hover:text-silver transition-colors duration-300 whitespace-nowrap"
             >
-              <span className="opacity-60">{open ? "×" : "+"}</span>
-              <span>{open ? t.nav.close : t.nav.menu}</span>
+              {open ? (
+                <>
+                  <span className="font-display text-base leading-none opacity-60">
+                    ×
+                  </span>
+                  <span className="font-display text-[13px] uppercase tracking-nav font-semibold">
+                    {t.nav.close}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="font-mono text-[11px] uppercase tracking-wider-2 tabular-nums text-blanc/50">
+                    {indexStr}
+                    <span className="opacity-50"> / {totalStr}</span>
+                  </span>
+                  {currentItem && (
+                    <>
+                      <span className="hidden sm:inline font-mono text-[11px] text-blanc/30">
+                        ·
+                      </span>
+                      <span className="hidden sm:inline font-display text-[13px] uppercase tracking-nav font-semibold">
+                        {currentItem.label}
+                      </span>
+                    </>
+                  )}
+                  <span className="font-mono text-[11px] opacity-60">↗</span>
+                </>
+              )}
             </button>
           </div>
         </div>
       </header>
 
       {/* ── FULL-SCREEN TAKEOVER ────────────────────────────────────────
-          Every route listed at editorial display scale, numbered like
-          a museum index. Same fade-in / fade-out the mobile menu used
-          before — now serves both desktop and mobile. */}
+          Same museum-index treatment as before — but the visitor's current
+          page is now highlighted: its index number flips from blanc/40 to
+          blanc, and a small leading bullet marks the row. */}
       <div
         className={`fixed inset-0 z-30 bg-noir text-blanc transition-opacity duration-500 ease-editorial ${
           open
@@ -112,21 +171,37 @@ export function Nav() {
         }`}
       >
         <nav className="flex flex-col justify-center h-full max-w-6xl mx-auto px-6 md:px-16 lg:px-24 gap-3 md:gap-4">
-          {menuItems.map((item, i) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="group flex items-baseline gap-6 md:gap-12"
-            >
-              <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-wider-2 text-blanc/40 tabular-nums shrink-0">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="font-display font-semibold text-3xl md:text-5xl lg:text-6xl uppercase tracking-nav group-hover:text-silver transition-colors duration-300 leading-none">
-                {item.label}
-              </span>
-            </Link>
-          ))}
+          {menuItems.map((item, i) => {
+            const isActive = i === currentIndex;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="group flex items-baseline gap-6 md:gap-12"
+                aria-current={isActive ? "page" : undefined}
+              >
+                <span
+                  className={`font-mono text-[10px] md:text-[11px] uppercase tracking-wider-2 tabular-nums shrink-0 transition-colors ${
+                    isActive ? "text-blanc" : "text-blanc/40"
+                  }`}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="font-display font-semibold text-3xl md:text-5xl lg:text-6xl uppercase tracking-nav transition-colors duration-300 leading-none flex items-baseline gap-3 md:gap-5 group-hover:text-silver">
+                  {isActive && (
+                    <span
+                      aria-hidden
+                      className="text-blanc/60 text-2xl md:text-4xl leading-none"
+                    >
+                      •
+                    </span>
+                  )}
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
 
           {/* Language switcher inside takeover — mobile only (desktop has it in the header) */}
           <div className="md:hidden mt-10 pt-6 border-t border-blanc/15">
