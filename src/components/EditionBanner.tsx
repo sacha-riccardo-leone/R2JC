@@ -6,39 +6,28 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 /**
  * EditionBanner — unified black-strip header used across /editions for each edition.
  *
- *   • variant="link"     → the whole row is a Link to a full landing page.
- *   • variant="dropdown" → the whole row is a <button> that toggles inline
- *                          expanding content with a height transition.
+ *   • variant="link"     → the row is a Link to a full landing page.
+ *   • variant="dropdown" → the row is a <button> that toggles inline-expanding
+ *                          content.
  *
- * Dropdown animation (works smoothly in BOTH directions, regardless of payload):
+ * Why JS-driven animation (not CSS transition):
+ *   CSS height transitions are unreliable for heavy content. The browser can:
+ *     • coalesce two style writes in the same tick and skip the from-frame
+ *     • drop the transition entirely if the next paint is too far off
+ *     • interrupt itself if React re-renders mid-transition
+ *   That's exactly what was making Édition 02 (130+ images, 96 client
+ *   components) appear to "open in a blink" while Édition 01 worked.
  *
- *   On every toggle:
- *     1. Read the element's current pixel height (offsetHeight) and write it back
- *        as an explicit inline `height: NNNpx`. This resolves "auto" and snaps
- *        out of any in-progress transition cleanly.
- *     2. requestAnimationFrame → the browser paints frame N with the snap
- *        committed (no coalescing possible).
- *     3. Inside the rAF callback, write the target height — `scrollHeight` for
- *        open, `0` for close. The CSS transition fires from snap → target on
- *        frame N+1 and runs at 60fps because the transition is pixel-to-pixel
- *        (paint-only, no per-frame layout pass).
- *     4. On `transitionend` (open direction), settle to `height: auto` so the
- *        panel can still grow if a lazy image inside loads late.
- *
- *   Why rAF instead of reading `offsetHeight` between style writes:
- *     `void el.offsetHeight` forces layout but the browser still treats both
- *     style writes (snap, then target) as a single style mutation cycle — the
- *     intermediate snap value never makes it onto a rendered frame, so the
- *     transition has nothing to interpolate FROM, and the change appears
- *     instant. rAF separates the two writes across two distinct frames, giving
- *     the transition a concrete starting point.
- *
- *   Cleanup: every effect run returns a cleanup that flips `cancelled` (so any
- *   pending rAF or transitionend callback becomes a no-op), cancels the rAF,
- *   and removes the transitionend listener. Without this, an old open-listener
- *   would fire on a subsequent close transition's transitionend event and
- *   reset height: auto — snapping the panel back open. That bug is gone.
+ *   So we drive the animation in JS. Every frame, we compute the correct
+ *   height for the elapsed time + easing curve and write it to el.style.height
+ *   directly. The browser has nothing to optimise — we're just setting a pixel
+ *   value 60 times per second. Same code path for both editions, identical
+ *   behaviour regardless of payload size.
  */
+
+const DURATION = 500;
+// ease-out cubic — same feel as cubic-bezier(0.22, 1, 0.36, 1)
+const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
 type CommonProps = {
   eyebrow: string;
@@ -85,57 +74,65 @@ function DropdownBanner({
 }: Omit<DropdownProps, "variant">) {
   const [open, setOpen] = useState(defaultOpen);
   const contentRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   const isInitial = useRef(true);
 
   useEffect(() => {
     const el = contentRef.current;
     if (!el) return;
 
-    // First mount: sync the inline height to the initial state without animation.
+    // First mount: just set the resting state, no animation.
     if (isInitial.current) {
       isInitial.current = false;
       el.style.height = open ? "auto" : "0px";
       return;
     }
 
-    let cancelled = false;
-    let rafId = 0;
+    // Cancel any in-progress animation so we can start a new one from the
+    // current rendered height (cleanest interrupt behaviour).
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = null;
+    }
 
-    // Step 1: snap to the current measured pixel height. This resolves "auto"
-    // and interrupts any in-progress transition. Even if the value is already
-    // a pixel string, writing it again primes the browser to track a transition
-    // from this exact value.
-    el.style.height = `${el.offsetHeight}px`;
+    const from = el.offsetHeight;
+    // When opening, target is the natural content height. We can read it
+    // safely because the children layout independently of the container's
+    // clip — scrollHeight always reflects natural content size.
+    const to = open ? el.scrollHeight : 0;
 
-    // Step 2: defer the target write to the NEXT animation frame so the
-    // browser paints the snap value first. Without this gap, both writes
-    // happen in the same style-mutation cycle and the transition has no
-    // distinct "from" frame to start from — the change appears abrupt.
-    rafId = requestAnimationFrame(() => {
-      if (cancelled) return;
-      if (open) {
-        el.style.height = `${el.scrollHeight}px`;
+    // No-op shortcut: already at target.
+    if (from === to) {
+      el.style.height = open ? "auto" : "0px";
+      return;
+    }
+
+    const startTime = performance.now();
+    const delta = to - from;
+
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / DURATION, 1);
+      const eased = easeOutCubic(progress);
+      el.style.height = `${from + delta * eased}px`;
+
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(step);
       } else {
-        el.style.height = "0px";
+        rafRef.current = null;
+        // On open, settle to "auto" so the panel can still grow if late images
+        // load or sub-content reflows. On close, leave at "0px".
+        el.style.height = open ? "auto" : "0px";
       }
-    });
-
-    // Step 3: when the height transition lands, settle to `auto` so the
-    // panel can grow/shrink with late-loading images or other content shifts.
-    // Bail if our effect was cleaned up before we got here.
-    const onEnd = (e: TransitionEvent) => {
-      if (e.target !== el || e.propertyName !== "height" || cancelled) return;
-      if (open) {
-        el.style.height = "auto";
-      }
-      el.removeEventListener("transitionend", onEnd);
     };
-    el.addEventListener("transitionend", onEnd);
+
+    rafRef.current = requestAnimationFrame(step);
 
     return () => {
-      cancelled = true;
-      cancelAnimationFrame(rafId);
-      el.removeEventListener("transitionend", onEnd);
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
     };
   }, [open]);
 
@@ -172,15 +169,12 @@ function DropdownBanner({
         />
       </button>
 
-      {/* Inline transition so we can be 100% sure the spec lands (and to make
-          the animation values visible at a glance right here). */}
+      {/* No CSS transition on this div — height is driven entirely by the rAF
+          loop above so the browser can't coalesce or skip frames. */}
       <div
         ref={contentRef}
         className="overflow-hidden"
-        style={{
-          height: defaultOpen ? "auto" : "0px",
-          transition: "height 500ms cubic-bezier(0.22, 1, 0.36, 1)",
-        }}
+        style={{ height: defaultOpen ? "auto" : "0px" }}
       >
         {children}
       </div>
