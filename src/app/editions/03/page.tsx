@@ -8,14 +8,17 @@ export const metadata = { title: "Édition 03 — 12 septembre 2026 — R2JC" };
  * /editions/03 — landing page for the upcoming edition.
  *
  * Configurable here (no CMS yet — R2JC edits these constants each cycle):
- *   START: doors-open datetime
- *   END:   final-night close datetime
- *   VENUE: city (full address kept private until 1 month before)
+ *   START_ISO:    doors-open datetime (drives the countdown).
  *   LINEUP_SLOTS: number of designer slots (16 by default). Fill in
- *     `lineup` with announced slugs from DESIGNERS_EDITION_03 once they exist.
+ *                 `lineup` with announced slugs from DESIGNERS_EDITION_03
+ *                 once they exist.
+ *   VENUE_KNOWN:  flip to `true` once the venue is announced — re-enables
+ *                 the GPS line and SBB link in the venue section.
+ *
+ * Note: end-of-event datetime lives in `src/app/api/edition-03.ics/route.ts`
+ * (the calendar feed cares about it; the page doesn't).
  */
 const START_ISO = "2026-09-12T18:00:00+02:00";
-const END_ISO = "2026-09-12T23:00:00+02:00";
 const LINEUP_SLOTS = 16;
 /** Toggle to `true` once the venue is announced — re-enables the GPS line and SBB link. */
 const VENUE_KNOWN = false;
