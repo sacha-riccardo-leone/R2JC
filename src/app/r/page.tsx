@@ -31,24 +31,33 @@ export default function ReworkedHome() {
 
       {/* Vertically bobbing scroll arrow. Pure SVG — thin 1.5px strokes,
           rounded caps, no fill. Aria-hidden because it's a visual cue,
-          not a target. */}
+          not a target.
+
+          Split into two wrappers on purpose: positioning (the X-centering
+          via -translate-x-1/2) lives on the outer div, animation lives on
+          the inner one. If both lived on the same element, the perpetual
+          scroll-hint keyframe's `transform: translateY(...)` would clobber
+          the `transform: translateX(-50%)` from Tailwind and the arrow
+          would jump right by half its width once the bob kicks in. */}
       <div
-        className="r-scroll-arrow absolute bottom-[7vh] left-1/2 -translate-x-1/2 text-blanc/60"
+        className="absolute bottom-[7vh] left-1/2 -translate-x-1/2"
         aria-hidden
       >
-        <svg
-          width="14"
-          height="44"
-          viewBox="0 0 14 44"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M7 2 L7 38" />
-          <path d="M1 32 L7 38 L13 32" />
-        </svg>
+        <div className="r-scroll-arrow text-blanc/60">
+          <svg
+            width="14"
+            height="44"
+            viewBox="0 0 14 44"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M7 2 L7 38" />
+            <path d="M1 32 L7 38 L13 32" />
+          </svg>
+        </div>
       </div>
     </main>
   );
