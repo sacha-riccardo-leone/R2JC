@@ -38,7 +38,7 @@ export default async function Editions() {
         variant="link"
         href="/editions/03"
         eyebrow={t.ed03.eyebrow}
-        title={`${t.ed03.title} · ${t.ed03.dateLine}`}
+        title={t.ed03.title}
         ctaLabel={t.ed03.about.eyebrow}
       />
 
@@ -46,7 +46,7 @@ export default async function Editions() {
       <EditionBanner
         variant="dropdown"
         eyebrow={t.editions.e02.bannerEyebrow}
-        title={`${t.editions.e02.titlePre} ${t.editions.e02.titleAccent}`}
+        title={t.editions.e02.bannerTitle}
         ctaLabel={t.editions.expand}
       >
         {/* Edition 02 — intro */}
@@ -209,7 +209,7 @@ export default async function Editions() {
       <EditionBanner
         variant="dropdown"
         eyebrow={t.editions.e01.bannerEyebrow}
-        title={`${t.editions.e01.titlePre} ${t.editions.e01.titleAccent}`}
+        title={t.editions.e01.bannerTitle}
         ctaLabel={t.editions.expand}
       >
         <section className="bg-noir text-blanc py-20 md:py-28">

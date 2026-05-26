@@ -101,6 +101,7 @@ const de: Dictionary = {
       titlePre: "2. Ausgabe von",
       titleAccent: "R2JC",
       bannerEyebrow: "Ausgabe 02 · 2024",
+      bannerTitle: "Ausgabe 02",
       intro:
         "Für diese Ausgabe haben wir einen deutlich größeren Veranstaltungsort gewählt, um der wachsenden Nachfrage gerecht zu werden und ein noch größeres Publikum begrüßen zu können. Die Ausgabe 2025 zeichnete sich durch eine größere Vielfalt aus – sowohl bei den Kreativen als auch bei den präsentierten Kollektionen. Wir hatten die Freude, eine noch breitere Palette an Talenten ins Licht zu rücken. Entdecken Sie jetzt die Designerinnen und Designer, die diese Ausgabe geprägt haben!",
     },
@@ -108,6 +109,7 @@ const de: Dictionary = {
     e01: {
       eyebrow: "Rückblick",
       bannerEyebrow: "Ausgabe 01 · 2023",
+      bannerTitle: "Ausgabe 01",
       titlePre: "Zurück zu unserer",
       titleAccent: "1. Ausgabe",
       coverLabel: "Ausgabe 01 — 2023",

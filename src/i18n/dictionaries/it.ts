@@ -101,6 +101,7 @@ const it: Dictionary = {
       titlePre: "2ª edizione di",
       titleAccent: "R2JC",
       bannerEyebrow: "Edizione 02 · 2024",
+      bannerTitle: "Edizione 02",
       intro:
         "Per questa edizione abbiamo scelto uno spazio molto più ampio, rispondendo alla domanda crescente e permettendo di accogliere un pubblico ancora più vasto. L'edizione 2025 si è distinta per una diversità ampliata, sia a livello di creatori che di collezioni presentate. Abbiamo avuto il piacere di mettere in luce una palette ancora più variegata di talenti. Riscopri ora i designer che hanno segnato questa edizione!",
     },
@@ -108,6 +109,7 @@ const it: Dictionary = {
     e01: {
       eyebrow: "Uno sguardo indietro",
       bannerEyebrow: "Edizione 01 · 2023",
+      bannerTitle: "Edizione 01",
       titlePre: "Torniamo alla nostra",
       titleAccent: "1ª edizione",
       coverLabel: "Edizione 01 — 2023",
