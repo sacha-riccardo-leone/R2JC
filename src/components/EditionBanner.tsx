@@ -1,20 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /**
  * EditionBanner — unified black-strip header used across /editions for each edition.
  *
- * Two variants share the same visual treatment:
- *   • variant="link"     → behaves like /editions/03 (upcoming): the entire row is
- *                          a Link that navigates to a full landing page. Right side
- *                          shows ctaLabel followed by →.
- *   • variant="dropdown" → behaves like /editions/02 + /editions/01 (past editions):
- *                          the entire row is a <button> that toggles inline-expanding
- *                          content. Right side shows ctaLabel followed by a rotating
- *                          chevron. Content lives in `children` and animates via the
- *                          grid-template-rows 0fr / 1fr trick (no JS measurement).
+ *   • variant="link"     → behaves like the upcoming-edition banner: the whole
+ *                          row is a Link to a full landing page.
+ *   • variant="dropdown" → behaves like past-edition banners: the whole row is
+ *                          a <button> that toggles inline-expanding content.
+ *
+ * Expander animation strategy (dropdown variant):
+ *   The previous version used a CSS grid 0fr → 1fr transition. That works for
+ *   lightweight content but choked badly on Édition 02's payload (16 designer
+ *   cards × ~6 look thumbnails ≈ 130 images and ~96 client components), because
+ *   the browser had to lay out the entire content tree on every frame of the
+ *   transition to figure out the interpolated row height.
+ *
+ *   We now use a measured `height` transition instead: measure scrollHeight at
+ *   click time, animate from 0 → measured (or measured → 0), then settle to
+ *   `auto` once the transition ends so content can still grow if images load
+ *   late or sub-content reflows. The transition runs on a concrete pixel value,
+ *   which the browser optimises as a paint-only animation — no layout pass per
+ *   frame. Stays smooth regardless of payload size.
  */
 
 type CommonProps = {
@@ -50,7 +59,6 @@ export function EditionBanner(props: LinkProps | DropdownProps) {
       </Link>
     );
   }
-
   return <DropdownBanner {...props} />;
 }
 
@@ -62,6 +70,44 @@ function DropdownBanner({
   defaultOpen = false,
 }: Omit<DropdownProps, "variant">) {
   const [open, setOpen] = useState(defaultOpen);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const isInitial = useRef(true);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+
+    // First mount: skip animation, just sync the inline height to the state.
+    if (isInitial.current) {
+      isInitial.current = false;
+      el.style.height = open ? "auto" : "0px";
+      return;
+    }
+
+    if (open) {
+      // Measure target height, animate from current (0) to target px.
+      const target = el.scrollHeight;
+      el.style.height = `${target}px`;
+
+      const onEnd = (e: TransitionEvent) => {
+        if (e.propertyName !== "height") return;
+        // After the open transition lands, switch to auto so the content can
+        // grow/shrink freely (lazy images, etc.) without us re-measuring.
+        el.style.height = "auto";
+        el.removeEventListener("transitionend", onEnd);
+      };
+      el.addEventListener("transitionend", onEnd);
+    } else {
+      // Closing: snap from auto to the current measured pixel height,
+      // force a reflow, then animate down to 0.
+      el.style.height = `${el.offsetHeight}px`;
+      // Force reflow so the browser registers the explicit pixel height
+      // before we kick the transition to 0.
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      el.offsetHeight;
+      el.style.height = "0px";
+    }
+  }, [open]);
 
   return (
     <div className="bg-noir border-b border-blanc/15">
@@ -86,25 +132,24 @@ function DropdownBanner({
               strokeWidth="1.5"
               aria-hidden
             >
-              <path d="M1 1l4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M1 1l4 4 4-4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           }
         />
       </button>
 
-      {/*
-        Inline expander — the classic 0fr → 1fr grid-row trick gives a smooth
-        height transition without measuring the content. The inner div needs
-        overflow-hidden so content is clipped during the animation, AND min-h-0
-        so the grid track can actually collapse to 0 (default min-height: auto
-        on grid items would otherwise hold the row open at content min-content).
-      */}
+      {/* Measured-height expander. Initial inline style is set for SSR; the
+          useEffect above takes over after mount. */}
       <div
-        className={`grid transition-[grid-template-rows] duration-700 ease-editorial ${
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        }`}
+        ref={contentRef}
+        className="overflow-hidden transition-[height] duration-500 ease-editorial"
+        style={{ height: defaultOpen ? "auto" : "0px" }}
       >
-        <div className="overflow-hidden min-h-0">{children}</div>
+        {children}
       </div>
     </div>
   );
