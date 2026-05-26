@@ -5,41 +5,57 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useT } from "@/i18n";
 import { LanguageSwitcher } from "@/i18n/LanguageSwitcher";
+import { VersionSwitcher } from "@/components/VersionSwitcher";
+import { getVersion, stripVersion, withVersion } from "@/lib/version";
 
 export function Nav() {
   const { t } = useT();
   const pathname = usePathname();
+  const version = getVersion(pathname);
+  // Canonical (un-prefixed) path — used so menu-item matching works the same
+  // way regardless of which version side the visitor is on.
+  const canonicalPath = stripVersion(pathname);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Every route. Order matters — this is the museum-index order in the takeover
-  // and the basis for the "XX / 08" wayfinding trigger.
-  const menuItems = [
-    { label: t.nav.home,     href: "/" },
-    { label: t.nav.sponsors, href: "/sponsors" },
-    { label: t.nav.editions, href: "/editions" },
-    { label: t.nav.postuler, href: "/postuler" },
-    { label: t.nav.presse,   href: "/presse" },
-    { label: t.nav.contact,  href: "/contact" },
-    { label: t.nav.faq,      href: "/faq" },
-  ];
+  // Every route. Order matters — this is the museum-index order in the
+  // takeover and the basis for the "XX / 08" wayfinding trigger. `href` is
+  // version-aware: when the visitor is on the Reworked side, every menu link
+  // keeps them on the Reworked side. Defined as canonical paths and prefixed
+  // through `withVersion` so we only maintain the list in one place.
+  const menuItems = (
+    [
+      { label: t.nav.home,     href: "/" },
+      { label: t.nav.sponsors, href: "/sponsors" },
+      { label: t.nav.editions, href: "/editions" },
+      { label: t.nav.postuler, href: "/postuler" },
+      { label: t.nav.presse,   href: "/presse" },
+      { label: t.nav.contact,  href: "/contact" },
+      { label: t.nav.faq,      href: "/faq" },
+    ] as const
+  ).map((item) => ({
+    label: item.label,
+    canonical: item.href,
+    href: withVersion(item.href, version),
+  }));
 
   // Find which item the visitor is currently viewing. Exact match wins; then
   // longest prefix wins (so /editions/03 maps to "Édition 03", not "Éditions").
-  // Root "/" only matches exactly so it doesn't gobble every sub-route.
+  // Root "/" only matches exactly so it doesn't gobble every sub-route. Match
+  // against `canonicalPath` so this works identically on both versions.
   const currentIndex = (() => {
-    const exact = menuItems.findIndex((i) => i.href === pathname);
+    const exact = menuItems.findIndex((i) => i.canonical === canonicalPath);
     if (exact !== -1) return exact;
     let best = -1;
     let bestLen = 0;
     menuItems.forEach((item, i) => {
-      if (item.href === "/") return;
+      if (item.canonical === "/") return;
       if (
-        pathname.startsWith(item.href + "/") &&
-        item.href.length > bestLen
+        canonicalPath.startsWith(item.canonical + "/") &&
+        item.canonical.length > bestLen
       ) {
         best = i;
-        bestLen = item.href.length;
+        bestLen = item.canonical.length;
       }
     });
     return best;
@@ -77,9 +93,9 @@ export function Nav() {
         }`}
       >
         <div className="flex items-center justify-between px-6 md:px-10 py-4 md:py-5">
-          {/* Logo */}
+          {/* Logo — stays inside the current version (Upgraded ↔ Reworked) */}
           <Link
-            href="/"
+            href={withVersion("/", version)}
             className="inline-flex items-center gap-2 group shrink-0"
             aria-label="R2JC"
           >
@@ -93,14 +109,18 @@ export function Nav() {
             <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
-          {/* Right cluster: language switcher + wayfinding menu trigger */}
+          {/* Right cluster: version switcher + language switcher + wayfinding
+              menu trigger. Both dropdowns hide while the takeover is open so
+              they don't fight the menu visually. */}
           <div className="flex items-center gap-5 md:gap-8">
             <div
-              className={`hidden md:block transition-opacity duration-300 ${
+              className={`hidden md:flex items-center gap-2 transition-opacity duration-300 ${
                 open ? "opacity-0 pointer-events-none" : "opacity-100"
               }`}
               aria-hidden={open}
             >
+              <VersionSwitcher variant="header" />
+              <span aria-hidden className="text-blanc/20">·</span>
               <LanguageSwitcher variant="header" />
             </div>
 
@@ -188,8 +208,11 @@ export function Nav() {
             );
           })}
 
-          {/* Language switcher inside takeover — mobile only (desktop has it in the header) */}
-          <div className="md:hidden mt-10 pt-6 border-t border-blanc/15">
+          {/* Version + language switchers inside takeover — mobile only
+              (desktop has them in the header). Stacked vertically since
+              "Reworked" + "Français" together would crowd the row. */}
+          <div className="md:hidden mt-10 pt-6 border-t border-blanc/15 flex flex-col gap-5">
+            <VersionSwitcher variant="mobile" />
             <LanguageSwitcher variant="mobile" />
           </div>
         </nav>
