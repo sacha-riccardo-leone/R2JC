@@ -11,19 +11,21 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
  *   • variant="dropdown" → behaves like past-edition banners: the whole row is
  *                          a <button> that toggles inline-expanding content.
  *
- * Expander animation strategy (dropdown variant):
- *   The previous version used a CSS grid 0fr → 1fr transition. That works for
- *   lightweight content but choked badly on Édition 02's payload (16 designer
- *   cards × ~6 look thumbnails ≈ 130 images and ~96 client components), because
- *   the browser had to lay out the entire content tree on every frame of the
- *   transition to figure out the interpolated row height.
+ * Expander animation (dropdown variant):
+ *   The content's height is animated from 0 → measured scrollHeight (open) and
+ *   measured offsetHeight → 0 (close). Both directions follow the same three
+ *   steps:
+ *     1. Snap to current measured pixel height (resolves any "auto" or any
+ *        in-progress transition).
+ *     2. Force a reflow so the browser commits that intermediate state.
+ *     3. Set the target pixel height — the CSS transition takes it from there.
+ *   On open, when the transition lands, we settle to "auto" so the panel can
+ *   still grow if a lazy image inside loads late.
  *
- *   We now use a measured `height` transition instead: measure scrollHeight at
- *   click time, animate from 0 → measured (or measured → 0), then settle to
- *   `auto` once the transition ends so content can still grow if images load
- *   late or sub-content reflows. The transition runs on a concrete pixel value,
- *   which the browser optimises as a paint-only animation — no layout pass per
- *   frame. Stays smooth regardless of payload size.
+ *   Cleanup is critical: every effect run that attaches a transitionend
+ *   listener also returns a cleanup that removes it. Without this, a leftover
+ *   open-listener fired at the end of a *close* transition and reset
+ *   height: auto — the panel snapped back open instantly. That's gone now.
  */
 
 type CommonProps = {
@@ -77,35 +79,67 @@ function DropdownBanner({
     const el = contentRef.current;
     if (!el) return;
 
-    // First mount: skip animation, just sync the inline height to the state.
+    // First mount: just sync the inline height to the initial state, no animation.
     if (isInitial.current) {
       isInitial.current = false;
       el.style.height = open ? "auto" : "0px";
       return;
     }
 
+    // Snap to current measured height — resolves "auto" and interrupts any
+    // in-progress transition cleanly. Without this, switching directions
+    // mid-animation produces glitches.
+    const current = el.offsetHeight;
+    el.style.height = `${current}px`;
+    el.style.willChange = "height";
+
+    // Force a reflow so the browser commits the snap-to-current-px state
+    // before we set the target. Otherwise the browser may coalesce the two
+    // style writes into a single change and skip the transition.
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    el.offsetHeight;
+
+    // Tracks whether THIS effect run has been superseded (state changed again
+    // before our transition finished). If true, our transitionend handler
+    // becomes a no-op.
+    let cancelled = false;
+
+    const cleanup = () => {
+      cancelled = true;
+    };
+
     if (open) {
-      // Measure target height, animate from current (0) to target px.
       const target = el.scrollHeight;
       el.style.height = `${target}px`;
 
       const onEnd = (e: TransitionEvent) => {
-        if (e.propertyName !== "height") return;
-        // After the open transition lands, switch to auto so the content can
-        // grow/shrink freely (lazy images, etc.) without us re-measuring.
+        if (e.target !== el || e.propertyName !== "height") return;
+        if (cancelled) return;
         el.style.height = "auto";
+        el.style.willChange = "";
         el.removeEventListener("transitionend", onEnd);
       };
       el.addEventListener("transitionend", onEnd);
+
+      return () => {
+        cleanup();
+        el.removeEventListener("transitionend", onEnd);
+      };
     } else {
-      // Closing: snap from auto to the current measured pixel height,
-      // force a reflow, then animate down to 0.
-      el.style.height = `${el.offsetHeight}px`;
-      // Force reflow so the browser registers the explicit pixel height
-      // before we kick the transition to 0.
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      el.offsetHeight;
       el.style.height = "0px";
+
+      const onEnd = (e: TransitionEvent) => {
+        if (e.target !== el || e.propertyName !== "height") return;
+        if (cancelled) return;
+        el.style.willChange = "";
+        el.removeEventListener("transitionend", onEnd);
+      };
+      el.addEventListener("transitionend", onEnd);
+
+      return () => {
+        cleanup();
+        el.removeEventListener("transitionend", onEnd);
+      };
     }
   }, [open]);
 
@@ -142,8 +176,6 @@ function DropdownBanner({
         />
       </button>
 
-      {/* Measured-height expander. Initial inline style is set for SSR; the
-          useEffect above takes over after mount. */}
       <div
         ref={contentRef}
         className="overflow-hidden transition-[height] duration-500 ease-editorial"
