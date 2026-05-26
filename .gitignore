@@ -42,3 +42,9 @@ next-env.d.ts
 
 # Editor temp / backup files
 *~
+
+# AI tooling / agent metadata
+.claude/
+.cursor/
+.aider*
+.copilot/
