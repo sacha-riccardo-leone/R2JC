@@ -46,6 +46,40 @@ body {
   transform-origin: center;
 }
 
+/* ─────────────────────────────────────────────────────────────
+   Reworked landing — blur-in entrance + scroll-hint bob.
+   Used by /r and ReworkPlaceholder. Namespaced `r-` so they
+   don't compete with anything on the Upgraded side.
+   ───────────────────────────────────────────────────────────── */
+@keyframes r-blur-in {
+  from { filter: blur(20px); opacity: 0; }
+  to   { filter: blur(0);    opacity: 1; }
+}
+@keyframes r-scroll-hint {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(6px); }
+}
+
+/* Single-shot blur-in. `both` fill mode applies the from-state at t=0
+   (before the delay) so the element doesn't flash crisp before fading. */
+.r-blur-in {
+  animation: r-blur-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+/* Same blur-in with a longer delay — for staggered reveals. */
+.r-blur-in-late {
+  animation: r-blur-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both;
+}
+
+/* Scroll arrow on the landing — blurs in late, then enters a perpetual
+   gentle bob. Two animations on the same element; they don't conflict
+   because one touches `filter` and the other `transform`. */
+.r-scroll-arrow {
+  animation:
+    r-blur-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.8s both,
+    r-scroll-hint 2s ease-in-out 2.2s infinite;
+}
+
 /* Scrollbar — quiet */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
