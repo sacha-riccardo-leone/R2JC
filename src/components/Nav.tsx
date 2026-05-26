@@ -92,27 +92,36 @@ export function Nav() {
             : "bg-noir text-blanc"
         }`}
       >
-        <div className="flex items-center justify-between px-6 md:px-10 py-4 md:py-5">
-          {/* Logo — stays inside the current version (Upgraded ↔ Reworked) */}
-          <Link
-            href={withVersion("/", version)}
-            className="inline-flex items-center gap-2 group shrink-0"
-            aria-label="R2JC"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo/r2jcLogo.png"
-              alt="R2JC"
-              className="h-7 md:h-8 w-auto select-none group-hover:opacity-80 transition-opacity duration-300"
-              draggable={false}
-            />
-            <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
-          </Link>
+        <div className="flex items-center px-6 md:px-10 py-4 md:py-5">
+          {/* Logo — Upgraded only. On the Reworked side the home page
+              already centers a massive "R2JC" wordmark; a small one in
+              the corner would just compete with it visually. Home access
+              on Reworked goes through the burger menu (item #1).
+
+              Layout note: dropped `justify-between` from the wrapper and
+              put `ml-auto` on the right cluster so the controls stay
+              flush right whether the logo is rendered or not. */}
+          {version === "upgraded" && (
+            <Link
+              href={withVersion("/", version)}
+              className="inline-flex items-center gap-2 group shrink-0"
+              aria-label="R2JC"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo/r2jcLogo.png"
+                alt="R2JC"
+                className="h-7 md:h-8 w-auto select-none group-hover:opacity-80 transition-opacity duration-300"
+                draggable={false}
+              />
+              <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
+            </Link>
+          )}
 
           {/* Right cluster: version switcher + language switcher + wayfinding
               menu trigger. Both dropdowns hide while the takeover is open so
               they don't fight the menu visually. */}
-          <div className="flex items-center gap-5 md:gap-8">
+          <div className="ml-auto flex items-center gap-5 md:gap-8">
             <div
               className={`hidden md:flex items-center gap-2 transition-opacity duration-300 ${
                 open ? "opacity-0 pointer-events-none" : "opacity-100"
