@@ -10,16 +10,9 @@ export function Nav() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // 3 primary items shown inline in the desktop bar — the funnels you most
-  // want visitors to hit. Everything else lives in the +Menu takeover.
-  const primaryItems = [
-    { label: t.nav.editions, href: "/editions" },
-    { label: t.nav.postuler, href: "/postuler" },
-    { label: t.ed03.title,   href: "/editions/03" },
-  ];
-
-  // Full menu shown in the takeover — every route, including the primary ones
-  // (so visitors always have one place that has everything).
+  // Every route. The header carries no inline items — visitors click + Menu
+  // to reveal the full takeover. Keeps the brand frame quiet, lets typography
+  // do the work.
   const menuItems = [
     { label: t.nav.home,     href: "/" },
     { label: t.nav.sponsors, href: "/sponsors" },
@@ -79,27 +72,10 @@ export function Nav() {
             <span className="sr-only">R2JC — Rencontre de Jeunes Créateurs</span>
           </Link>
 
-          {/* Right cluster: primary items + language + menu trigger */}
+          {/* Right cluster: language + menu trigger only */}
           <div className="flex items-center gap-5 md:gap-8">
-            {/* Primary items — desktop only, fade out when takeover is open */}
-            <nav
-              className={`hidden md:flex items-center gap-6 lg:gap-8 font-display text-[13px] font-semibold uppercase tracking-nav transition-opacity duration-300 ${
-                open ? "opacity-0 pointer-events-none" : "opacity-100"
-              }`}
-              aria-hidden={open}
-            >
-              {primaryItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="hover:text-silver transition-colors duration-300 whitespace-nowrap"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Language switcher — desktop only, also fades when takeover is open */}
+            {/* Language switcher — desktop only (mobile finds it inside the takeover).
+                Fades out when the takeover is open. */}
             <div
               className={`hidden md:block transition-opacity duration-300 ${
                 open ? "opacity-0 pointer-events-none" : "opacity-100"
