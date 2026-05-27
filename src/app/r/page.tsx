@@ -157,23 +157,33 @@ export default async function ReworkedHome() {
 
           {/* The video, clipped to the "2" glyph.
 
-              ForeignObject is intentionally shorter than the SVG
-              canvas (height 308 vs 360) so its vertical center lands
-              ON the "2"'s visual center. The "2" sits between SVG y=28
-              (its top, ≈ baseline 280 − cap-height 252) and y=280
-              (the baseline) — center y=154. ForeignObject from y=0 to
-              y=308 has center y=154 → object-fit:cover then naturally
-              parks the video's middle where the "2" wants it.
-              The clip-path still emits the full "2" outline (it's
-              defined in SVG user space, not foreignObject local
-              space), so the entire glyph is filled with video pixels.
+              The reel sourced from Instagram is portrait (540×960,
+              9:16). The foreignObject is sized to roughly bracket the
+              "2" glyph (~230×258 estimated) with a buffer, so the
+              video doesn't get scaled up to a huge canvas and then
+              cropped down to a horizontal sliver.
+
+              Geometry:
+                x=360, y=0, width=280, height=308
+                ⇒ box center at (500, 154) which matches the "2"'s
+                  visual center (baseline y=280 minus cap-height/2 ≈ 154).
+                ⇒ box aspect 0.909 vs video aspect 0.5625 — container
+                  is wider than the (portrait) video, so object-fit:
+                  cover scales the video to fit the WIDTH (280) and
+                  crops the top/bottom of the over-tall scaled height
+                  (498) symmetrically. Middle ~62% of the source video
+                  shows through.
+
+              The clip-path still emits the full "2" outline in SVG
+              user space, so every "2"-shaped pixel inside the
+              foreignObject is filled with video.
 
               Autoplay needs muted + playsInline everywhere
               (especially iOS). */}
           <foreignObject
-            x="0"
+            x="360"
             y="0"
-            width="1000"
+            width="280"
             height="308"
             clipPath="url(#r-cold-open-2)"
           >
@@ -191,7 +201,7 @@ export default async function ReworkedHome() {
               }}
             >
               <source
-                src="/media/editions/edition-02-recap.mp4"
+                src="/media/editions/edition-02-reel.mp4"
                 type="video/mp4"
               />
             </video>
