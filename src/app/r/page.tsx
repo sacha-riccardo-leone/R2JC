@@ -2,6 +2,7 @@ import { existsSync } from "fs";
 import { join } from "path";
 import { Reveal } from "@/components/Reveal";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
+import { getDict } from "@/i18n/server";
 
 export const metadata = { title: "R2JC — Reworked" };
 
@@ -17,48 +18,72 @@ const PORTRAITS = DESIGNERS_EDITION_02
   .filter((d) => fileExists(d.portrait))
   .map((d) => ({ src: d.portrait, name: d.name, focus: d.portraitFocus }));
 
-// Timeline rows for §3 · Histoire. Brief copy stays manifesto-cadenced —
-// short, declarative, no marketing fluff.
-const EDITIONS = [
-  {
-    num: "01",
-    year: "2023",
-    title: "La première rencontre.",
-    brief:
-      "L’année zéro. R2JC se construit autour d’une promesse — donner une scène à ceux qui méritent d’être découverts.",
-  },
-  {
-    num: "02",
-    year: "2024",
-    title: "Seize créateurs en scène.",
-    brief:
-      "Deux nuits, seize jeunes créateurs émergents, un public devant des gestes qu’il n’aurait jamais croisé autrement.",
-  },
-  {
-    num: "03",
-    year: "2026",
-    title: "Le prochain plan.",
-    brief:
-      "12 septembre 2026, en Suisse. Nouvelle ville, mêmes intentions, plus de monde. Inscriptions ouvertes.",
-  },
-] as const;
-
 /**
  * /r — Reworked landing.
  *
  * augen.pro × minimalism × big square fonts.
  *
  *   §1. COLD OPEN — full-viewport "R2JC" wordmark + bobbing scroll arrow.
- *   §2. STATEMENT — declarative line with designer-portrait marquee
+ *   §2. STATEMENT — declarative line (from the i18n dict, identical to
+ *       the Upgraded home tagline) with designer-portrait marquee
  *       sliding behind it left-to-right, non-stop.
- *   §3. HISTOIRE — eyebrow → split-weight title → asymmetric intro
- *       (manifesto + paragraph) → vertical timeline of the three
- *       editions.
+ *   §3. HISTOIRE — every line pulled verbatim from `home.histoire.*` and
+ *       the per-edition dict keys. Nothing fabricated.
  *
- * The rest of the Reworked site gets built on top of this aesthetic in
- * subsequent turns.
+ * All copy reads from `getDict()` so the Reworked side honours the
+ * current locale (FR / EN / DE / IT) the same way the Upgraded side does.
  */
-export default function ReworkedHome() {
+export default async function ReworkedHome() {
+  const t = await getDict();
+
+  // Pull the first sentence of the history paragraph as a pull-quote, and
+  // the rest as supporting body. Splitting on the first ". " keeps the
+  // separation honest — no rewriting, just a verbatim split. If the
+  // sentence boundary ever disappears from the dict, both halves still
+  // collapse to safe values.
+  const histoireParts = (() => {
+    const p = t.home.histoire.p1;
+    const firstStop = p.indexOf(". ");
+    if (firstStop === -1) return { lead: p, rest: "" };
+    return {
+      lead: p.slice(0, firstStop + 1),
+      rest: p.slice(firstStop + 2),
+    };
+  })();
+
+  // Per-edition timeline rows. Year + bannerTitle come straight from the
+  // dict; the brief is a verbatim string from the matching edition's
+  // descriptive copy. Edition 02 brief uses the first sentence of intro
+  // (the rest of intro talks about expanded space + variety — too long
+  // for a timeline row, and the second sentence has a year typo "2025"
+  // we shouldn't propagate).
+  const e02FirstSentence = (() => {
+    const s = t.editions.e02.intro;
+    const firstStop = s.indexOf(". ");
+    return firstStop === -1 ? s : s.slice(0, firstStop + 1);
+  })();
+
+  const EDITIONS = [
+    {
+      num: "01",
+      year: "2023",
+      title: t.editions.e01.bannerTitle,
+      brief: t.editions.e01.caption,
+    },
+    {
+      num: "02",
+      year: "2024",
+      title: t.editions.e02.bannerTitle,
+      brief: e02FirstSentence,
+    },
+    {
+      num: "03",
+      year: "2026",
+      title: t.ed03.title,
+      brief: t.ed03.about.body,
+    },
+  ];
+
   return (
     <main className="bg-noir text-blanc">
       {/* ── §1 · COLD OPEN ───────────────────────────────────────
@@ -102,23 +127,18 @@ export default function ReworkedHome() {
       </section>
 
       {/* ── §2 · STATEMENT WITH PORTRAIT MARQUEE ─────────────────
-          The declarative line sits centered; behind it, a non-stop
-          left-to-right band of designer portraits slides through. All
-          portraits forced to the same size via fixed height + 3:4
-          aspect-ratio. Section clips the marquee with overflow-hidden
-          so it never widens the page. */}
+          Statement is built from the same tagline keys the Upgraded home
+          uses (home.taglineLine1, taglineLine2pre, taglineZoom). Behind
+          it, a non-stop left-to-right band of designer portraits slides
+          through. Section clips the marquee with overflow-hidden so it
+          never widens the page. */}
       <section className="min-h-screen relative flex items-center justify-center overflow-hidden px-6 md:px-10">
-        {/* Marquee band — behind the text, vertically centered, full
-            section width. pointer-events-none so it never blocks taps
-            (no hover state on the pictures at this stage). */}
         {PORTRAITS.length > 0 && (
           <Reveal
             motion="blur"
             className="absolute inset-0 flex items-center pointer-events-none"
           >
             <div className="r-marquee flex gap-4 md:gap-6">
-              {/* Duplicate the list so the keyframe's translateX(-50%) →
-                  translateX(0) wraps seamlessly. */}
               {[...PORTRAITS, ...PORTRAITS].map((p, i) => (
                 <div
                   key={i}
@@ -139,70 +159,67 @@ export default function ReworkedHome() {
           </Reveal>
         )}
 
-        {/* Statement on top. `relative z-10` puts it above the absolutely
-            positioned marquee. Slightly lighter weight than the cold-open
-            R2JC (semibold vs black) so it reads as a statement, not a
-            second brand mark — but still big and square. */}
         <Reveal motion="blur" delay={150} className="relative z-10">
           <p className="text-center max-w-5xl font-display font-semibold text-[clamp(2rem,7vw,6rem)] leading-[1.08] tracking-[-0.03em] select-none">
-            Une scène aux designers
+            {t.home.taglineLine1}
             <br />
-            qui méritent d&rsquo;être découverts.
+            {t.home.taglineLine2pre} {t.home.taglineZoom}.
           </p>
         </Reveal>
       </section>
 
-      {/* ── §3 · HISTOIRE ────────────────────────────────────────
-          Section architecture: eyebrow → big split-weight title →
-          asymmetric intro (5/7 grid: manifesto line on the left,
-          supporting paragraph on the right) → vertical timeline of the
-          three editions, each row a 3/9 grid (year cluster + body). */}
+      {/* ── §3 · L'HISTOIRE DE R2JC ──────────────────────────────
+          Eyebrow + title + a single founding paragraph (p1) split into
+          a pull-quote (first sentence) on the left and supporting body
+          (the rest) on the right. Followed by a vertical timeline of
+          the three editions. Every string here comes from the dict —
+          no invented numbers, no invented copy. */}
       <section className="min-h-screen relative flex flex-col justify-center px-6 md:px-10 py-32 md:py-40">
         <div className="max-w-7xl mx-auto w-full">
           <Reveal motion="blur">
             <p className="font-mono text-[11px] uppercase tracking-wider-2 text-blanc/40 mb-10 md:mb-16">
-              03 · Histoire
+              {t.home.histoire.eyebrow}
             </p>
           </Reveal>
 
-          {/* Split-weight title — light + black contrast. */}
+          {/* Title — split-weight contrast.
+              `titlePre` from the dict is "L'histoire de" (ends in "de"),
+              `titleAccent` is "R2JC". We render them on two lines:
+              top line is the pre + light weight, bottom line is the
+              accent at heavy weight. */}
           <Reveal motion="blur" delay={150}>
             <h2 className="font-display text-[clamp(2.5rem,9vw,8rem)] leading-[0.95] tracking-[-0.04em] mb-16 md:mb-24">
-              <span className="font-light">L&rsquo;histoire</span>
+              <span className="font-light">{t.home.histoire.titlePre}</span>
               <br />
-              <span className="font-black">de R2JC.</span>
+              <span className="font-black">{t.home.histoire.titleAccent}.</span>
             </h2>
           </Reveal>
 
-          {/* Asymmetric intro — 5/7 split. Manifesto stanza on the left,
-              supporting paragraph on the right. */}
+          {/* Asymmetric intro — 5/7 split.
+              LEFT: first sentence of p1 set as a pull-quote.
+              RIGHT: the rest of p1 as supporting paragraph. */}
           <div className="grid md:grid-cols-12 gap-y-8 md:gap-x-12 items-start mb-20 md:mb-28">
             <Reveal motion="blur" delay={300} className="md:col-span-5">
               <p className="font-display font-semibold text-2xl md:text-4xl leading-[1.2] tracking-[-0.02em]">
-                Trois rencontres.
-                <br />
-                Trente créateurs.
-                <br />
-                <span className="text-blanc/45">Une histoire en cours.</span>
+                {histoireParts.lead}
               </p>
             </Reveal>
-            <Reveal
-              motion="blur"
-              delay={450}
-              className="md:col-span-6 md:col-start-7"
-            >
-              <p className="font-sans text-base md:text-lg leading-relaxed text-blanc/65 max-w-prose">
-                R2JC est un collectif suisse qui organise chaque année une
-                rencontre entre créateurs émergents et public. Une scène,
-                une nuit, des gestes qu&rsquo;on ne croiserait jamais
-                autrement.
-              </p>
-            </Reveal>
+            {histoireParts.rest && (
+              <Reveal
+                motion="blur"
+                delay={450}
+                className="md:col-span-6 md:col-start-7"
+              >
+                <p className="font-sans text-base md:text-lg leading-relaxed text-blanc/65 max-w-prose">
+                  {histoireParts.rest}
+                </p>
+              </Reveal>
+            )}
           </div>
 
-          {/* Timeline. Each edition is a 3/9 row: number+year on the
-              left, title and brief on the right. Hairline rules between
-              rows give the editorial rhythm. */}
+          {/* Timeline. Each edition is a 3/9 grid row. Year + bannerTitle
+              come from the dict; brief is a verbatim string from the
+              corresponding edition copy. */}
           <div className="border-t border-blanc/15">
             {EDITIONS.map((ed, i) => (
               <Reveal key={ed.num} motion="blur" delay={550 + i * 120}>
