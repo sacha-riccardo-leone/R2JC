@@ -1,5 +1,6 @@
 import { existsSync } from "fs";
 import { join } from "path";
+import Link from "next/link";
 import { Reveal } from "@/components/Reveal";
 import { DESIGNERS_EDITION_02 } from "@/data/designers";
 import { getDict } from "@/i18n/server";
@@ -171,11 +172,12 @@ export default async function ReworkedHome() {
       {/* ── §3 · L'HISTOIRE DE R2JC ──────────────────────────────
           Eyebrow + title + a single founding paragraph (p1) split into
           a pull-quote (first sentence) on the left and supporting body
-          (the rest) on the right. Followed by a vertical timeline of
-          the three editions. Every string here comes from the dict —
-          no invented numbers, no invented copy. */}
-      <section className="min-h-screen relative flex flex-col justify-center px-6 md:px-10 py-32 md:py-40">
-        <div className="max-w-7xl mx-auto w-full">
+          (the rest) on the right. Followed by three clickable edition
+          banners — Édition 03 inverted (white on black). Every string
+          here comes from the dict; nothing fabricated. */}
+      <section className="min-h-screen relative flex flex-col justify-center py-32 md:py-40">
+        {/* Intro block stays width-constrained */}
+        <div className="max-w-7xl mx-auto w-full px-6 md:px-10">
           <Reveal motion="blur">
             <p className="font-mono text-[11px] uppercase tracking-wider-2 text-blanc/40 mb-10 md:mb-16">
               {t.home.histoire.eyebrow}
@@ -216,34 +218,86 @@ export default async function ReworkedHome() {
               </Reveal>
             )}
           </div>
+        </div>
 
-          {/* Timeline. Each edition is a 3/9 grid row. Year + bannerTitle
-              come from the dict; brief is a verbatim string from the
-              corresponding edition copy. */}
-          <div className="border-t border-blanc/15">
-            {EDITIONS.map((ed, i) => (
+        {/* Edition banners — full-bleed, each Link to its /r/editions/NN
+            page. Édition 03 inverted (white banner / black text) so it
+            reads as the active call-to-action; 01 and 02 stay dark. On
+            hover, a big thick right-arrow slides in from the right edge
+            (its color follows the banner's text color via currentColor). */}
+        <div className="border-t border-blanc/15">
+          {EDITIONS.map((ed, i) => {
+            const isWhite = ed.num === "03";
+            const isLast = i === EDITIONS.length - 1;
+            return (
               <Reveal key={ed.num} motion="blur" delay={550 + i * 120}>
-                <article className="grid grid-cols-12 gap-x-4 md:gap-x-8 items-baseline py-10 md:py-14 border-b border-blanc/15">
-                  <div className="col-span-12 md:col-span-3 flex items-baseline gap-3 md:gap-4 mb-4 md:mb-0">
-                    <span className="font-mono text-xs tabular-nums text-blanc/40">
-                      {ed.num}
-                    </span>
-                    <span className="font-display font-semibold text-4xl md:text-6xl tabular-nums tracking-[-0.03em] leading-none">
-                      {ed.year}
-                    </span>
-                  </div>
-                  <div className="col-span-12 md:col-span-9">
-                    <h3 className="font-display font-medium text-2xl md:text-4xl leading-tight tracking-[-0.02em] mb-3 md:mb-4">
-                      {ed.title}
-                    </h3>
-                    <p className="font-sans text-base md:text-lg text-blanc/65 leading-relaxed max-w-2xl">
-                      {ed.brief}
-                    </p>
-                  </div>
-                </article>
+                <Link
+                  href={`/r/editions/${ed.num}`}
+                  className={`group block relative transition-colors duration-500 ease-editorial ${
+                    isWhite
+                      ? "bg-blanc text-noir hover:bg-mist"
+                      : "bg-noir text-blanc hover:bg-blanc/[0.04]"
+                  } ${!isLast ? "border-b border-blanc/15" : ""}`}
+                  aria-label={`${ed.title} · ${ed.year}`}
+                >
+                  <article className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-12 gap-x-4 md:gap-x-8 items-baseline py-12 md:py-16 relative">
+                    <div className="col-span-12 md:col-span-3 flex items-baseline gap-3 md:gap-4 mb-4 md:mb-0">
+                      <span
+                        className={`font-mono text-xs tabular-nums ${
+                          isWhite ? "text-noir/40" : "text-blanc/40"
+                        }`}
+                      >
+                        {ed.num}
+                      </span>
+                      <span className="font-display font-semibold text-4xl md:text-6xl tabular-nums tracking-[-0.03em] leading-none">
+                        {ed.year}
+                      </span>
+                    </div>
+                    <div className="col-span-12 md:col-span-9 md:pr-32 lg:pr-48">
+                      <h3 className="font-display font-medium text-2xl md:text-4xl leading-tight tracking-[-0.02em] mb-3 md:mb-4">
+                        {ed.title}
+                      </h3>
+                      <p
+                        className={`font-sans text-base md:text-lg leading-relaxed max-w-2xl ${
+                          isWhite ? "text-noir/70" : "text-blanc/65"
+                        }`}
+                      >
+                        {ed.brief}
+                      </p>
+                    </div>
+
+                    {/* Hover arrow — big and thick, pointing right.
+                        Positioning lives on the outer div (absolute +
+                        -translate-y-1/2), animation on the inner one
+                        (opacity + translate-x) — same split pattern as
+                        the §1 scroll arrow, for the same reason: keep
+                        the hover transform from clobbering the vertical
+                        centering. */}
+                    <div
+                      className="hidden md:block absolute right-6 md:right-10 top-1/2 -translate-y-1/2 pointer-events-none"
+                      aria-hidden
+                    >
+                      <div className="opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-editorial">
+                        <svg
+                          width="100"
+                          height="40"
+                          viewBox="0 0 100 40"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 20 L88 20" />
+                          <path d="M72 5 L92 20 L72 35" />
+                        </svg>
+                      </div>
+                    </div>
+                  </article>
+                </Link>
               </Reveal>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
     </main>
