@@ -111,12 +111,11 @@ export default async function ReworkedHome() {
           role="img"
         >
           <defs>
-            {/* Clip-path that defines the "2" glyph as the reveal window.
-                Same text element as the visible layer but with R and JC
-                made invisible via tspan visibility:hidden — keeps the
-                layout identical so the "2" sits in exactly the same
-                place in both layers. The clipPath emits only the "2"
-                outline. */}
+            {/* Clip-path = the "2" glyph as the reveal window.
+                Rendered as ITS OWN text element, anchored "middle" at
+                x=500 — so the "2" is *deterministically* centered at
+                the SVG horizontal center, independent of any other
+                glyphs' widths. */}
             <clipPath id="r-cold-open-2">
               <text
                 x="500"
@@ -127,22 +126,48 @@ export default async function ReworkedHome() {
                 style={{
                   fontFamily:
                     "var(--font-display), Montserrat, sans-serif",
-                  letterSpacing: "-0.05em",
                 }}
               >
-                <tspan style={{ visibility: "hidden" }}>R</tspan>2
-                <tspan style={{ visibility: "hidden" }}>JC</tspan>
+                2
               </text>
             </clipPath>
           </defs>
 
-          {/* Visible white R___JC. The "2" is hidden but still occupies
-              its glyph width so R and JC sit exactly where they would
-              in a normal "R2JC" rendering. */}
+          {/*
+            Visible white letters around the "2".
+
+            Why split into three text elements instead of one
+            "R<hidden>2</hidden>JC":
+              With a single text-anchor=middle text element, the whole
+              STRING centers at x=500 — but the "2" glyph itself lands
+              at ~x=434 because R, 2, J, C all have different advance
+              widths and R pushes 2 leftward. The foreignObject (at
+              x=500) was then 66 px off from the actual "2" center.
+              Rendering the "2" by itself with text-anchor=middle at
+              x=500 makes its center deterministic. R and JC are then
+              positioned by their own anchors around that fixed center
+              to mimic the appearance of "R2JC" with letter-spacing
+              -0.05em (R right edge at x≈405, JC left edge at x≈595 —
+              numbers derived from Montserrat 900 advance widths).
+          */}
           <text
-            x="500"
+            x="405"
             y="280"
-            textAnchor="middle"
+            textAnchor="end"
+            fontWeight="900"
+            fontSize="360"
+            fill="white"
+            style={{
+              fontFamily:
+                "var(--font-display), Montserrat, sans-serif",
+            }}
+          >
+            R
+          </text>
+          <text
+            x="595"
+            y="280"
+            textAnchor="start"
             fontWeight="900"
             fontSize="360"
             fill="white"
@@ -152,7 +177,7 @@ export default async function ReworkedHome() {
               letterSpacing: "-0.05em",
             }}
           >
-            R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
+            JC
           </text>
 
           {/* The video, clipped to the "2" glyph.
