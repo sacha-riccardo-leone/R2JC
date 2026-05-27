@@ -155,15 +155,26 @@ export default async function ReworkedHome() {
             R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
           </text>
 
-          {/* The video, clipped to the "2" glyph. ForeignObject covers
-              the full SVG canvas; the clipPath narrows the visible
-              pixels to the "2" outline. Autoplay needs muted + playsInline
-              everywhere (especially iOS). */}
+          {/* The video, clipped to the "2" glyph.
+
+              ForeignObject is intentionally shorter than the SVG
+              canvas (height 308 vs 360) so its vertical center lands
+              ON the "2"'s visual center. The "2" sits between SVG y=28
+              (its top, ≈ baseline 280 − cap-height 252) and y=280
+              (the baseline) — center y=154. ForeignObject from y=0 to
+              y=308 has center y=154 → object-fit:cover then naturally
+              parks the video's middle where the "2" wants it.
+              The clip-path still emits the full "2" outline (it's
+              defined in SVG user space, not foreignObject local
+              space), so the entire glyph is filled with video pixels.
+
+              Autoplay needs muted + playsInline everywhere
+              (especially iOS). */}
           <foreignObject
             x="0"
             y="0"
             width="1000"
-            height="360"
+            height="308"
             clipPath="url(#r-cold-open-2)"
           >
             <video
