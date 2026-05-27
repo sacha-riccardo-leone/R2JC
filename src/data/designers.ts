@@ -293,7 +293,13 @@ export const DESIGNERS_EDITION_02: Designer[] = [
     instagram: "bippy.bippy",
     portrait: "/media/designers/tchango%20etshotineportrait.jpg",
     logo: "/media/designers/tchangoetshotinelogo.png",
-    looks: ["IMG_2182.jpeg", "IMG_2302.jpeg", "IMG_2243.jpeg", "IMG_1916.jpeg"],
+    looks: [
+      "IMG_5504.jpeg",
+      "IMG_2182.jpeg",
+      "IMG_2302.jpeg",
+      "IMG_2243.jpeg",
+      "IMG_1916.jpeg",
+    ],
     edition: "02",
   },
   {
