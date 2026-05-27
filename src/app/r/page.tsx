@@ -90,15 +90,102 @@ export default async function ReworkedHome() {
       {/* ── §1 · COLD OPEN ───────────────────────────────────────
           Full viewport. "R2JC" text (not the logo) dead-center, set in
           Montserrat 900 — the squarest weight the family offers — at
-          display scale with tight negative tracking and leading
-          collapsed so the four letters read as one solid block. */}
-      <section className="min-h-screen relative overflow-hidden flex items-center justify-center">
-        <h1
-          className="r-blur-in font-display font-black text-[clamp(5rem,22vw,26rem)] leading-[0.9] tracking-[-0.05em] select-none"
+          display scale with tight negative tracking.
+
+          The "2" is a clipping mask over the Édition 02 recap video:
+          one SVG renders all four letters, but the "2" position is a
+          <foreignObject> holding the <video>, clip-pathed to the shape
+          of the "2" glyph drawn into a <clipPath>. The R/JC are normal
+          white text. */}
+      <section className="min-h-screen relative overflow-hidden flex items-center justify-center px-6">
+        <svg
+          viewBox="0 0 1000 360"
+          preserveAspectRatio="xMidYMid meet"
+          className="r-blur-in font-display select-none"
+          style={{
+            height: "clamp(5rem, 22vw, 26rem)",
+            width: "auto",
+            maxWidth: "100%",
+          }}
           aria-label="R2JC"
+          role="img"
         >
-          R2JC
-        </h1>
+          <defs>
+            {/* Clip-path that defines the "2" glyph as the reveal window.
+                Same text element as the visible layer but with R and JC
+                made invisible via tspan visibility:hidden — keeps the
+                layout identical so the "2" sits in exactly the same
+                place in both layers. The clipPath emits only the "2"
+                outline. */}
+            <clipPath id="r-cold-open-2">
+              <text
+                x="500"
+                y="280"
+                textAnchor="middle"
+                fontWeight="900"
+                fontSize="360"
+                style={{
+                  fontFamily:
+                    "var(--font-display), Montserrat, sans-serif",
+                  letterSpacing: "-0.05em",
+                }}
+              >
+                <tspan style={{ visibility: "hidden" }}>R</tspan>2
+                <tspan style={{ visibility: "hidden" }}>JC</tspan>
+              </text>
+            </clipPath>
+          </defs>
+
+          {/* Visible white R___JC. The "2" is hidden but still occupies
+              its glyph width so R and JC sit exactly where they would
+              in a normal "R2JC" rendering. */}
+          <text
+            x="500"
+            y="280"
+            textAnchor="middle"
+            fontWeight="900"
+            fontSize="360"
+            fill="white"
+            style={{
+              fontFamily:
+                "var(--font-display), Montserrat, sans-serif",
+              letterSpacing: "-0.05em",
+            }}
+          >
+            R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
+          </text>
+
+          {/* The video, clipped to the "2" glyph. ForeignObject covers
+              the full SVG canvas; the clipPath narrows the visible
+              pixels to the "2" outline. Autoplay needs muted + playsInline
+              everywhere (especially iOS). */}
+          <foreignObject
+            x="0"
+            y="0"
+            width="1000"
+            height="360"
+            clipPath="url(#r-cold-open-2)"
+          >
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                display: "block",
+              }}
+            >
+              <source
+                src="/media/editions/edition-02-recap.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </foreignObject>
+        </svg>
 
         {/* Vertically bobbing scroll arrow.
             Positioning lives on the outer div, animation on the inner
