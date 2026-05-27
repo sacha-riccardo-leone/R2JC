@@ -141,15 +141,33 @@ export function EditionMagazine({
               draggable={false}
             />
           ) : (
-            // Truly empty inside. The corner markers below identify *which*
-            // edition's cover is missing without dressing the placeholder up
-            // as a finished design.
-            <div className="w-full h-full flex flex-col justify-between p-4 pointer-events-none">
-              <span className="font-mono text-[9px] uppercase tracking-wider-2 text-noir/25">
+            // Placeholder content. Reads as "this is where the official
+            // cover (the visual R2JC posts on Instagram for each edition)
+            // will live" — so when the team reviews the demo they
+            // recognize the slot waiting for their artwork.
+            //   • Top:    quiet `R2JC · YEAR` chrome marker.
+            //   • Middle: "Couverture NN" — the slot label, prominent
+            //             enough to read as the placeholder's purpose
+            //             but unstyled enough that it can't be mistaken
+            //             for the finished cover design.
+            //   • Bottom: "Image officielle à venir" caption confirming
+            //             intent.
+            <div className="w-full h-full flex flex-col justify-between items-center p-4 pointer-events-none text-center">
+              <span className="self-start font-mono text-[9px] uppercase tracking-wider-2 text-noir/25">
                 R2JC · {year}
               </span>
-              <span className="self-end font-mono text-[9px] uppercase tracking-wider-2 text-noir/25 tabular-nums">
-                {number}
+
+              <div>
+                <p className="font-display text-sm md:text-base font-medium uppercase tracking-wider-2 text-noir/40">
+                  Couverture
+                </p>
+                <p className="mt-1 font-display text-5xl md:text-6xl font-black tabular-nums leading-none text-noir/50">
+                  {number}
+                </p>
+              </div>
+
+              <span className="font-mono text-[9px] uppercase tracking-wider-2 text-noir/25">
+                Image officielle à venir
               </span>
             </div>
           )}
