@@ -238,18 +238,25 @@ export default async function ReworkedHome() {
           aria-hidden
         >
           <div className="r-scroll-arrow text-blanc/60">
+            {/* Down-pointing chevron only — same wayfinding-style
+                diagonal lines used on the §3 edition banners (sharp
+                miter apex, square-capped ends, no horizontal shaft).
+                Rotated 90° from the banner's right-pointing version:
+                apex at (50, 50), arms going up-left and up-right.
+                ViewBox is 100×65 (not 100×100) to crop the empty
+                upper area — the chevron only occupies the lower
+                portion of a square box. */}
             <svg
-              width="14"
-              height="44"
-              viewBox="0 0 14 44"
+              width="60"
+              height="39"
+              viewBox="0 0 100 65"
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              strokeWidth="10"
+              strokeLinecap="square"
+              strokeMiterlimit="10"
             >
-              <path d="M7 2 L7 38" />
-              <path d="M1 32 L7 38 L13 32" />
+              <polyline points="22 22 50 50 78 22" />
             </svg>
           </div>
         </div>
