@@ -253,7 +253,7 @@ export default async function ReworkedHome() {
                         {ed.year}
                       </span>
                     </div>
-                    <div className="col-span-12 md:col-span-9 md:pr-32 lg:pr-48">
+                    <div className="col-span-12 md:col-span-9 md:pr-40 lg:pr-56">
                       <h3 className="font-display font-medium text-2xl md:text-4xl leading-tight tracking-[-0.02em] mb-3 md:mb-4">
                         {ed.title}
                       </h3>
@@ -266,7 +266,12 @@ export default async function ReworkedHome() {
                       </p>
                     </div>
 
-                    {/* Hover arrow — big and thick, pointing right.
+                    {/* Hover arrow — IKEA-style: a solid filled block
+                        with a chunky arrowhead wider than the bar. No
+                        stroke; `fill="currentColor"` so the shape
+                        follows the banner's text color (black on the
+                        white banner, white on the dark ones).
+
                         Positioning lives on the outer div (absolute +
                         -translate-y-1/2), animation on the inner one
                         (opacity + translate-x) — same split pattern as
@@ -279,17 +284,26 @@ export default async function ReworkedHome() {
                     >
                       <div className="opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-editorial">
                         <svg
-                          width="100"
-                          height="40"
-                          viewBox="0 0 100 40"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
+                          width="120"
+                          height="48"
+                          viewBox="0 0 120 48"
+                          fill="currentColor"
+                          stroke="none"
                         >
-                          <path d="M5 20 L88 20" />
-                          <path d="M72 5 L92 20 L72 35" />
+                          {/*
+                            Single closed path:
+                              M 0 16   top-left of the bar
+                              L 62 16  top-right of the bar
+                              L 62 4   top of arrowhead base (above bar)
+                              L 118 24 arrowhead tip
+                              L 62 44  bottom of arrowhead base (below bar)
+                              L 62 32  back down to bar bottom-right
+                              L 0 32   back to bar bottom-left
+                              Z        close
+                            Bar height 16, arrowhead height 40 — head
+                            juts 12px above and below the bar.
+                          */}
+                          <path d="M0 16 L62 16 L62 4 L118 24 L62 44 L62 32 L0 32 Z" />
                         </svg>
                       </div>
                     </div>
