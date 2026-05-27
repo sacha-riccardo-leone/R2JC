@@ -80,6 +80,24 @@ body {
     r-scroll-hint 2s ease-in-out 2.2s infinite;
 }
 
+/* Seamless horizontal marquee — the conveyor of designer portraits
+   behind the §2 statement on /r.
+   The DOM holds the list twice in a row. We animate the row from
+   translateX(-50%) → translateX(0), so:
+     • t=0   the *second* half is on screen (rightward portion of the row)
+     • t=N   the *first* half is on screen (leftward portion of the row)
+   Both halves are identical, so the wrap is visually invisible.
+   Pictures appear to slide rightward across the viewport. */
+@keyframes r-marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.r-marquee {
+  animation: r-marquee-right 60s linear infinite;
+  width: max-content;
+  will-change: transform;
+}
+
 /* Scrollbar — quiet */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
