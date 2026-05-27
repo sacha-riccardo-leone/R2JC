@@ -266,19 +266,18 @@ export default async function ReworkedHome() {
                       </p>
                     </div>
 
-                    {/* Hover arrow — IKEA-style.
-                        Anatomy from the user's reference photos:
-                          • a thick rectangular shaft (one stroke)
-                          • a chevron arrowhead made of two angled bars
-                            meeting at a sharp mitered point
-                          • open at the apex, not a filled triangle
-                          • butt-capped ends (square, not rounded)
-                        Both shapes use the same stroke-width 14 so they
-                        read as one chunky painted-floor arrow. The
-                        chevron's apex sits 30+ px past where the shaft
-                        ends, so the V juts out beyond the bar.
+                    {/* Hover arrow — wayfinding style.
+                        Reference: London Underground / Shanghai Metro
+                        signage (per user's reference image). Anatomy:
+                          • Rectangular shaft (constant thickness)
+                          • Two triangular wings tapering to a sharp
+                            single-point apex
+                          • Diagonal back-cuts where each wing ends,
+                            roughly perpendicular to the wing's axis
+                          • Single continuous filled shape — no strokes,
+                            no separate pieces
 
-                        `currentColor` so the arrow follows the banner's
+                        `currentColor` so the fill follows the banner's
                         text color: black on the white Édition 03
                         banner, white on the dark 01/02 banners.
 
@@ -297,24 +296,34 @@ export default async function ReworkedHome() {
                           width="140"
                           height="48"
                           viewBox="0 0 140 48"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="14"
-                          strokeLinecap="butt"
-                          strokeLinejoin="miter"
+                          fill="currentColor"
+                          stroke="none"
                         >
-                          {/* Shaft: horizontal stroke, x=0 to x=78.
-                              Slightly past where the chevron arms start
-                              (x=65) so the two shapes visually fuse. */}
-                          <path d="M0 24 L78 24" />
-                          {/* Chevron: single path with two segments
-                              meeting at the apex (112,24). Stroke ends
-                              at (65,8) and (65,40); miter join at the
-                              apex gives a sharp pointed tip that
-                              extends to ~x=132 thanks to the ~42°
-                              inner angle. ViewBox is 140 wide so the
-                              tip doesn't get clipped. */}
-                          <path d="M65 8 L112 24 L65 40" />
+                          {/*
+                            Single closed polygon, clockwise from upper-
+                            back of shaft:
+
+                              M 0 17    upper-back of shaft (y=17 = top
+                                        of the 14px-thick shaft)
+                              L 88 17   shaft top runs to where the
+                                        upper wing's back-cut begins
+                              L 95 4    back-outer corner of upper wing
+                                        (above and just past the shaft)
+                              L 130 24  apex — sharp single point
+                              L 95 44   back-outer corner of lower wing
+                              L 88 31   shaft bottom, mirror of (88,17)
+                              L 0 31    lower-back of shaft
+                              Z         close
+
+                            The two short diagonal cuts (88,17)→(95,4)
+                            and (88,31)→(95,44) are the wayfinding back-
+                            cuts ~62° from horizontal, close to
+                            perpendicular to the wing axes (~30° from
+                            horizontal). The wing tapers from full
+                            thickness at the back to zero at the apex,
+                            giving the sharp pointed tip.
+                          */}
+                          <path d="M0 17 L88 17 L95 4 L130 24 L95 44 L88 31 L0 31 Z" />
                         </svg>
                       </div>
                     </div>
