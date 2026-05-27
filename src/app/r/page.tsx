@@ -137,28 +137,13 @@ export default async function ReworkedHome() {
             </clipPath>
           </defs>
 
-          {/* Visible white R___JC. One text element, text-anchor=middle
-              at x=500 → string is centered at the SVG horizontal
-              center (the natural, expected position). The "2" tspan is
-              visibility:hidden so it still occupies its glyph width
-              (R and JC sit exactly where they would in the full
-              "R2JC") but paints nothing — the video below fills that
-              gap via the clipPath. */}
-          <text
-            x="500"
-            y="280"
-            textAnchor="middle"
-            fontWeight="900"
-            fontSize="360"
-            fill="white"
-            style={{
-              fontFamily:
-                "var(--font-display), Montserrat, sans-serif",
-              letterSpacing: "-0.05em",
-            }}
-          >
-            R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
-          </text>
+          {/* Render order: the video sits BEHIND the letters.
+              SVG paints children in document order, so anything later
+              in the JSX paints on top. We render the foreignObject
+              first, then the white text — so where the "2" shape
+              extends slightly into the R/J glyphs (negative
+              letter-spacing -0.05em causes a small overlap), the
+              letters win and cover the video edges cleanly. */}
 
           {/* The video, clipped to the "2" glyph.
 
@@ -218,6 +203,29 @@ export default async function ReworkedHome() {
               />
             </video>
           </foreignObject>
+
+          {/* Visible white R___JC, painted LAST so it sits on top of
+              the video. One text element, text-anchor=middle at
+              x=500 → string is centered at the SVG horizontal center.
+              The "2" tspan is visibility:hidden so it still occupies
+              its glyph width (R and JC sit exactly where they would
+              in the full "R2JC") but paints nothing — the video
+              behind shows through that gap via the clipPath. */}
+          <text
+            x="500"
+            y="280"
+            textAnchor="middle"
+            fontWeight="900"
+            fontSize="360"
+            fill="white"
+            style={{
+              fontFamily:
+                "var(--font-display), Montserrat, sans-serif",
+              letterSpacing: "-0.05em",
+            }}
+          >
+            R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
+          </text>
         </svg>
 
         {/* Vertically bobbing scroll arrow.
