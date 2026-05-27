@@ -266,64 +266,53 @@ export default async function ReworkedHome() {
                       </p>
                     </div>
 
-                    {/* Hover arrow — wayfinding style.
-                        Reference: London Underground / Shanghai Metro
-                        signage (per user's reference image). Anatomy:
-                          • Rectangular shaft (constant thickness)
-                          • Two triangular wings tapering to a sharp
-                            single-point apex
-                          • Diagonal back-cuts where each wing ends,
-                            roughly perpendicular to the wing's axis
-                          • Single continuous filled shape — no strokes,
-                            no separate pieces
+                    {/* Hover arrow — wayfinding style (Ionicons "arrow-
+                        back-sharp", reflected to point right).
 
-                        `currentColor` so the fill follows the banner's
-                        text color: black on the white Édition 03
-                        banner, white on the dark 01/02 banners.
+                        The reference SVG the user supplied uses:
+                          • TWO separate strokes (polyline + line), not a
+                            filled polygon — wings have constant thickness
+                          • strokeLinecap="square" — caps extend past the
+                            endpoint by stroke-width/2, giving the
+                            characteristic "extended end" look (NOT butt
+                            caps, which I had wrong twice)
+                          • 45° arms — the chevron's vertical extent
+                            equals its horizontal extent, so the arrow
+                            is fundamentally a square-proportioned shape
+                          • Default miter join at the apex with
+                            miterlimit 10 = sharp point
 
-                        Positioning lives on the outer div (absolute +
-                        -translate-y-1/2), animation on the inner one
-                        (opacity + translate-x) — same split pattern as
-                        the §1 scroll arrow, for the same reason: keep
-                        the hover transform from clobbering the vertical
-                        centering. */}
+                        Proportions copied from the reference (viewBox
+                        512, stroke 48, apex at 80.5% of width, shaft
+                        57% of width) and scaled to a 100×100 viewBox
+                        for clean integers.
+
+                        `currentColor` so the stroke follows the banner's
+                        text color. Positioning split onto outer/inner
+                        wrappers, same pattern as the §1 scroll arrow,
+                        for the same reason. */}
                     <div
                       className="hidden md:block absolute right-6 md:right-10 top-1/2 -translate-y-1/2 pointer-events-none"
                       aria-hidden
                     >
                       <div className="opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-editorial">
                         <svg
-                          width="140"
-                          height="48"
-                          viewBox="0 0 140 48"
-                          fill="currentColor"
-                          stroke="none"
+                          width="120"
+                          height="120"
+                          viewBox="0 0 100 100"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="10"
+                          strokeLinecap="square"
+                          strokeMiterlimit="10"
                         >
-                          {/*
-                            Single closed polygon, clockwise from upper-
-                            back of shaft:
-
-                              M 0 17    upper-back of shaft (y=17 = top
-                                        of the 14px-thick shaft)
-                              L 88 17   shaft top runs to where the
-                                        upper wing's back-cut begins
-                              L 95 4    back-outer corner of upper wing
-                                        (above and just past the shaft)
-                              L 130 24  apex — sharp single point
-                              L 95 44   back-outer corner of lower wing
-                              L 88 31   shaft bottom, mirror of (88,17)
-                              L 0 31    lower-back of shaft
-                              Z         close
-
-                            The two short diagonal cuts (88,17)→(95,4)
-                            and (88,31)→(95,44) are the wayfinding back-
-                            cuts ~62° from horizontal, close to
-                            perpendicular to the wing axes (~30° from
-                            horizontal). The wing tapers from full
-                            thickness at the back to zero at the apex,
-                            giving the sharp pointed tip.
-                          */}
-                          <path d="M0 17 L88 17 L95 4 L130 24 L95 44 L88 31 L0 31 Z" />
+                          {/* Chevron: upper-back → apex → lower-back.
+                              45° arms, miter at the apex = sharp tip. */}
+                          <polyline points="52 22 80 50 52 78" />
+                          {/* Shaft: horizontal, ends 4px short of apex
+                              so the square cap on the right blends into
+                              the chevron's interior cleanly. */}
+                          <line x1="20" y1="50" x2="76" y2="50" />
                         </svg>
                       </div>
                     </div>
