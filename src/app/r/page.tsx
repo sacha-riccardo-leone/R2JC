@@ -201,6 +201,14 @@ export default async function ReworkedHome() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
+                // objectPosition vertical < 50% slides the source frame
+                // downward inside the "2" — i.e. exposes more of the
+                // TOP of the source. Helps when models in the reel are
+                // tall enough that their heads get cropped at the
+                // default 50% (center) anchor. Tunable: smaller = even
+                // more of the top revealed; larger = back toward
+                // center; > 50% would reveal more of the bottom.
+                objectPosition: "50% 30%",
                 display: "block",
               }}
             >
