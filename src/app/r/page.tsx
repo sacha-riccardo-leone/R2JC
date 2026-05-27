@@ -253,7 +253,7 @@ export default async function ReworkedHome() {
                         {ed.year}
                       </span>
                     </div>
-                    <div className="col-span-12 md:col-span-9 md:pr-40 lg:pr-56">
+                    <div className="col-span-12 md:col-span-9 md:pr-44 lg:pr-56">
                       <h3 className="font-display font-medium text-2xl md:text-4xl leading-tight tracking-[-0.02em] mb-3 md:mb-4">
                         {ed.title}
                       </h3>
@@ -266,11 +266,21 @@ export default async function ReworkedHome() {
                       </p>
                     </div>
 
-                    {/* Hover arrow — IKEA-style: a solid filled block
-                        with a chunky arrowhead wider than the bar. No
-                        stroke; `fill="currentColor"` so the shape
-                        follows the banner's text color (black on the
-                        white banner, white on the dark ones).
+                    {/* Hover arrow — IKEA-style.
+                        Anatomy from the user's reference photos:
+                          • a thick rectangular shaft (one stroke)
+                          • a chevron arrowhead made of two angled bars
+                            meeting at a sharp mitered point
+                          • open at the apex, not a filled triangle
+                          • butt-capped ends (square, not rounded)
+                        Both shapes use the same stroke-width 14 so they
+                        read as one chunky painted-floor arrow. The
+                        chevron's apex sits 30+ px past where the shaft
+                        ends, so the V juts out beyond the bar.
+
+                        `currentColor` so the arrow follows the banner's
+                        text color: black on the white Édition 03
+                        banner, white on the dark 01/02 banners.
 
                         Positioning lives on the outer div (absolute +
                         -translate-y-1/2), animation on the inner one
@@ -284,26 +294,27 @@ export default async function ReworkedHome() {
                     >
                       <div className="opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-editorial">
                         <svg
-                          width="120"
+                          width="140"
                           height="48"
-                          viewBox="0 0 120 48"
-                          fill="currentColor"
-                          stroke="none"
+                          viewBox="0 0 140 48"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="14"
+                          strokeLinecap="butt"
+                          strokeLinejoin="miter"
                         >
-                          {/*
-                            Single closed path:
-                              M 0 16   top-left of the bar
-                              L 62 16  top-right of the bar
-                              L 62 4   top of arrowhead base (above bar)
-                              L 118 24 arrowhead tip
-                              L 62 44  bottom of arrowhead base (below bar)
-                              L 62 32  back down to bar bottom-right
-                              L 0 32   back to bar bottom-left
-                              Z        close
-                            Bar height 16, arrowhead height 40 — head
-                            juts 12px above and below the bar.
-                          */}
-                          <path d="M0 16 L62 16 L62 4 L118 24 L62 44 L62 32 L0 32 Z" />
+                          {/* Shaft: horizontal stroke, x=0 to x=78.
+                              Slightly past where the chevron arms start
+                              (x=65) so the two shapes visually fuse. */}
+                          <path d="M0 24 L78 24" />
+                          {/* Chevron: single path with two segments
+                              meeting at the apex (112,24). Stroke ends
+                              at (65,8) and (65,40); miter join at the
+                              apex gives a sharp pointed tip that
+                              extends to ~x=132 thanks to the ~42°
+                              inner angle. ViewBox is 140 wide so the
+                              tip doesn't get clipped. */}
+                          <path d="M65 8 L112 24 L65 40" />
                         </svg>
                       </div>
                     </div>
