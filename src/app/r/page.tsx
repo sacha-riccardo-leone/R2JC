@@ -111,11 +111,13 @@ export default async function ReworkedHome() {
           role="img"
         >
           <defs>
-            {/* Clip-path = the "2" glyph as the reveal window.
-                Rendered as ITS OWN text element, anchored "middle" at
-                x=500 — so the "2" is *deterministically* centered at
-                the SVG horizontal center, independent of any other
-                glyphs' widths. */}
+            {/* Clip-path that emits the "2" glyph as the reveal window.
+                Uses the SAME single-text-element layout as the visible
+                layer below, with R and JC hidden via tspan — so the
+                "2" lands in EXACTLY the same x position in both the
+                visible text and the clip mask. The natural "R2JC"
+                centering at x=500 is preserved; we move the
+                foreignObject (not the text) to align the video. */}
             <clipPath id="r-cold-open-2">
               <text
                 x="500"
@@ -126,48 +128,26 @@ export default async function ReworkedHome() {
                 style={{
                   fontFamily:
                     "var(--font-display), Montserrat, sans-serif",
+                  letterSpacing: "-0.05em",
                 }}
               >
-                2
+                <tspan style={{ visibility: "hidden" }}>R</tspan>2
+                <tspan style={{ visibility: "hidden" }}>JC</tspan>
               </text>
             </clipPath>
           </defs>
 
-          {/*
-            Visible white letters around the "2".
-
-            Why split into three text elements instead of one
-            "R<hidden>2</hidden>JC":
-              With a single text-anchor=middle text element, the whole
-              STRING centers at x=500 — but the "2" glyph itself lands
-              at ~x=434 because R, 2, J, C all have different advance
-              widths and R pushes 2 leftward. The foreignObject (at
-              x=500) was then 66 px off from the actual "2" center.
-              Rendering the "2" by itself with text-anchor=middle at
-              x=500 makes its center deterministic. R and JC are then
-              positioned by their own anchors around that fixed center
-              to mimic the appearance of "R2JC" with letter-spacing
-              -0.05em (R right edge at x≈405, JC left edge at x≈595 —
-              numbers derived from Montserrat 900 advance widths).
-          */}
+          {/* Visible white R___JC. One text element, text-anchor=middle
+              at x=500 → string is centered at the SVG horizontal
+              center (the natural, expected position). The "2" tspan is
+              visibility:hidden so it still occupies its glyph width
+              (R and JC sit exactly where they would in the full
+              "R2JC") but paints nothing — the video below fills that
+              gap via the clipPath. */}
           <text
-            x="405"
+            x="500"
             y="280"
-            textAnchor="end"
-            fontWeight="900"
-            fontSize="360"
-            fill="white"
-            style={{
-              fontFamily:
-                "var(--font-display), Montserrat, sans-serif",
-            }}
-          >
-            R
-          </text>
-          <text
-            x="595"
-            y="280"
-            textAnchor="start"
+            textAnchor="middle"
             fontWeight="900"
             fontSize="360"
             fill="white"
@@ -177,36 +157,35 @@ export default async function ReworkedHome() {
               letterSpacing: "-0.05em",
             }}
           >
-            JC
+            R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
           </text>
 
           {/* The video, clipped to the "2" glyph.
 
-              The reel sourced from Instagram is portrait (540×960,
-              9:16). The foreignObject is sized to roughly bracket the
-              "2" glyph (~230×258 estimated) with a buffer, so the
-              video doesn't get scaled up to a huge canvas and then
-              cropped down to a horizontal sliver.
+              Where the "2" actually sits in "R2JC":
+                Total advance of "R2JC" at font-size 360 with
+                Montserrat 900 metrics (R≈257, 2≈221, J≈157, C≈251)
+                and letter-spacing -0.05em (= -18 between each pair):
+                  257 - 18 + 221 - 18 + 157 - 18 + 251 ≈ 832
+                String origin at x = 500 − 832/2 = 84.
+                "2" left edge: 84 + 257 − 18 = 323.
+                "2" center: 323 + 221/2 ≈ 434.
+                So the "2" glyph center lands ~66 px LEFT of x=500.
 
-              Geometry:
-                x=360, y=0, width=280, height=308
-                ⇒ box center at (500, 154) which matches the "2"'s
-                  visual center (baseline y=280 minus cap-height/2 ≈ 154).
-                ⇒ box aspect 0.909 vs video aspect 0.5625 — container
-                  is wider than the (portrait) video, so object-fit:
+              ForeignObject geometry:
+                x=294, y=0, width=280, height=308
+                ⇒ box center at (434, 154) — matches the "2"'s actual
+                  visual center.
+                ⇒ aspect 0.909 vs portrait video 0.5625: object-fit:
                   cover scales the video to fit the WIDTH (280) and
-                  crops the top/bottom of the over-tall scaled height
-                  (498) symmetrically. Middle ~62% of the source video
-                  shows through.
+                  crops top/bottom symmetrically, showing the middle
+                  ~62% of the source reel.
 
-              The clip-path still emits the full "2" outline in SVG
-              user space, so every "2"-shaped pixel inside the
-              foreignObject is filled with video.
-
-              Autoplay needs muted + playsInline everywhere
-              (especially iOS). */}
+              Numbers depend on font metric estimates. If alignment
+              still looks visibly off, just nudge `x` a few units left
+              or right — `294` is the only dial. */}
           <foreignObject
-            x="360"
+            x="294"
             y="0"
             width="280"
             height="308"
