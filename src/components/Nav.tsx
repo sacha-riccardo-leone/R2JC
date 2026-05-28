@@ -134,15 +134,16 @@ export function Nav() {
             </div>
 
             {/* Classic three-line burger that morphs into an X when open.
-                Three absolutely-positioned bars on a square button; CSS
-                transforms handle the open / closed states with a 500ms
-                editorial ease. */}
+                Mobile only — on desktop the persistent inline nav (the
+                second header row) covers the same routes, so showing
+                both would be redundant. Mobile keeps the burger as the
+                primary nav since the inline row is hidden < md. */}
             <button
               type="button"
               onClick={() => setOpen((o) => !o)}
               aria-expanded={open}
               aria-label={open ? t.nav.close : t.nav.menu}
-              className="relative w-8 h-8 flex items-center justify-center hover:text-silver transition-colors duration-300"
+              className="md:hidden relative w-8 h-8 flex items-center justify-center hover:text-silver transition-colors duration-300"
             >
               <span
                 aria-hidden
