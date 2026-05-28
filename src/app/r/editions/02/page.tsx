@@ -147,32 +147,32 @@ export default async function ReworkedEdition02() {
                     </h2>
 
                     {hasLogo && (
-                      // White specimen-card frame for each designer's
-                      // brand logo. Previously every logo got an
-                      // `invert brightness-200` CSS filter — that
-                      // worked for pure black-on-transparent marks but
-                      // mangled colored logos and washed out anything
-                      // that was already light. Putting them on a
-                      // white panel restores their natural environment
-                      // regardless of original color or contrast.
-                      //
-                      // Small "Logo" corner marker (mono, noir/35)
-                      // sits inside the card so the panel reads as an
-                      // intentional editorial frame rather than a
-                      // background patch.
-                      <div className="mt-10 inline-block">
-                        <div className="relative bg-blanc px-6 py-5 md:px-8 md:py-7 w-[260px] md:w-[300px] min-h-[110px] md:min-h-[130px] flex items-center">
-                          <span className="absolute top-3 right-3 md:top-4 md:right-4 font-mono text-[9px] uppercase tracking-wider-2 text-noir/35">
-                            Logo
-                          </span>
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={d.logo}
-                            alt={`${d.name} — logo`}
-                            className="h-12 md:h-14 w-auto max-w-[80%] object-contain object-left"
-                          />
-                        </div>
-                      </div>
+                      // White card removed per user request. Instead we
+                      // CSS-invert each logo and keep the page bg-noir.
+                      // Why invert (not mask-image):
+                      //   - PNGs with alpha (most designers): black ink
+                      //     on transparent → invert makes it white ink
+                      //     on transparent → reads on bg-noir.
+                      //   - JPEGs with white bg (Alison, Katia, etc.):
+                      //     invert flips the white rectangle to pure
+                      //     black, which blends seamlessly into the
+                      //     page; black text inverts to visible white.
+                      //   - Colored logos do invert to their complement
+                      //     (the unavoidable compromise) but most R2JC
+                      //     marks are monochrome wordmarks so this
+                      //     remains visually clean.
+                      // Size bumped from h-12 → h-20/24 so wordmark
+                      // logos that the user flagged as too small (e.g.
+                      // Rosemary, Tchango, Loric, Raphaël, Denervaud)
+                      // get more visual presence. brightness(1.1)
+                      // gently lifts near-black grays to white.
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={d.logo}
+                        alt={`${d.name} — logo`}
+                        className="h-20 md:h-24 w-auto max-w-[320px] mt-10 object-contain object-left"
+                        style={{ filter: "invert(1) brightness(1.1)" }}
+                      />
                     )}
 
                     {d.bio[locale] && (
