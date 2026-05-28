@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Montserrat, Poppins, Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import { BackToTop } from "@/components/BackToTop";
 import { Nav } from "@/components/Nav";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -78,6 +79,7 @@ export default async function RootLayout({
           <ScrollProgress />
           <Nav />
           <main>{children}</main>
+          <BackToTop />
         </LangProvider>
       </body>
     </html>

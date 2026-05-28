@@ -171,6 +171,43 @@ export function Nav() {
             </button>
           </div>
         </div>
+
+        {/* PERSISTENT DESKTOP NAV (md: and up)
+            A second header row with all 7 routes as inline links. Saves
+            visitors the burger-tap-and-wait for every navigation. The
+            takeover stays mounted as the mobile primary nav AND as a
+            secondary editorial "wide view" on desktop.
+
+            Hides while the takeover is open so it doesn't compete with
+            the museum-index in the overlay. */}
+        <nav
+          className={`hidden md:block border-t border-blanc/15 transition-opacity duration-300 ${
+            open ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+          aria-hidden={open}
+          aria-label={t.nav.menu}
+        >
+          <ul className="flex items-center flex-wrap gap-x-7 lg:gap-x-10 gap-y-1 px-6 md:px-10 py-3">
+            {menuItems.map((item, i) => {
+              const isActive = i === currentIndex;
+              return (
+                <li key={item.canonical}>
+                  <Link
+                    href={item.href}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`inline-block font-mono text-[10px] lg:text-[11px] uppercase tracking-wider-2 transition-colors duration-300 border-b pb-1 ${
+                      isActive
+                        ? "text-blanc border-blanc"
+                        : "text-blanc/55 border-transparent hover:text-blanc hover:border-blanc/40"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
       </header>
 
       {/* ── FULL-SCREEN TAKEOVER ────────────────────────────────────────
