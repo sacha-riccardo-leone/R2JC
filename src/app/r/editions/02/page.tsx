@@ -44,12 +44,14 @@ export default async function ReworkedEdition02() {
             </h1>
           </Reveal>
 
-          {/* Asymmetric 5/7: roster count callout on the left, intro
-              paragraph on the right. */}
+          {/* Asymmetric 5/7: designer-count callout on the left, intro
+              paragraph on the right. "Sélection" replaces an earlier
+              English "Roster" so the eyebrow matches the rest of the
+              page's French register. */}
           <div className="grid md:grid-cols-12 gap-y-8 md:gap-x-12 items-start">
             <Reveal motion="blur" delay={300} className="md:col-span-5">
               <p className="font-mono text-[11px] uppercase tracking-wider-2 text-blanc/40 mb-4">
-                Roster
+                Sélection
               </p>
               <p className="font-display text-5xl md:text-7xl font-black tabular-nums tracking-[-0.04em] leading-none">
                 {total}
