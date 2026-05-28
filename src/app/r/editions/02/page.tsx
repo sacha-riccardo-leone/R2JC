@@ -147,12 +147,32 @@ export default async function ReworkedEdition02() {
                     </h2>
 
                     {hasLogo && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={d.logo}
-                        alt={`${d.name} — logo`}
-                        className="h-16 md:h-20 w-auto max-w-[260px] mt-8 object-contain object-left invert brightness-200"
-                      />
+                      // White specimen-card frame for each designer's
+                      // brand logo. Previously every logo got an
+                      // `invert brightness-200` CSS filter — that
+                      // worked for pure black-on-transparent marks but
+                      // mangled colored logos and washed out anything
+                      // that was already light. Putting them on a
+                      // white panel restores their natural environment
+                      // regardless of original color or contrast.
+                      //
+                      // Small "Logo" corner marker (mono, noir/35)
+                      // sits inside the card so the panel reads as an
+                      // intentional editorial frame rather than a
+                      // background patch.
+                      <div className="mt-10 inline-block">
+                        <div className="relative bg-blanc px-6 py-5 md:px-8 md:py-7 w-[260px] md:w-[300px] min-h-[110px] md:min-h-[130px] flex items-center">
+                          <span className="absolute top-3 right-3 md:top-4 md:right-4 font-mono text-[9px] uppercase tracking-wider-2 text-noir/35">
+                            Logo
+                          </span>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={d.logo}
+                            alt={`${d.name} — logo`}
+                            className="h-12 md:h-14 w-auto max-w-[80%] object-contain object-left"
+                          />
+                        </div>
+                      </div>
                     )}
 
                     {d.bio[locale] && (
