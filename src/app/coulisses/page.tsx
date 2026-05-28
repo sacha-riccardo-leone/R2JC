@@ -48,7 +48,7 @@ const SECTIONS: Section[] = [
     bullets: [
       "Liens Instagram mis à jour pour les comptes dont les URLs étaient cassées (Lumea Tribe et plusieurs autres).",
       "Sites web ajoutés quand disponibles, par exemple denervaud.co pour Tim Dénervaud.",
-      "Look manquant restauré chez Tchango & Shotine — votre site en avait 5, la démo n'en montrait que 4. Le fichier IMG_5504 a été retrouvé dans l'archive et remis en première position selon l'ordre original.",
+      "Look manquant chez Tchango & Shotine — votre site en présente 5, la démo n'en montrait que 4. Le fichier IMG_5504 avait été oublié à l'import des looks du designer ; il a été ajouté en première position selon l'ordre original.",
       "Portraits et logos chargés pour tous les designers, avec un fallback typographique propre si un fichier manque.",
     ],
   },
