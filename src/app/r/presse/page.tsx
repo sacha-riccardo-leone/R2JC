@@ -109,14 +109,21 @@ export default async function ReworkedPresse() {
             </p>
           </Reveal>
           <Reveal motion="blur" delay={150} className="md:col-span-6 md:col-start-7">
-            <div className="bg-blanc text-noir p-8 md:p-12 flex flex-col items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo/r2jcLogo.png"
-                alt="R2JC logo"
-                className="h-20 md:h-28 w-auto object-contain mb-8"
-              />
-              <p className="font-mono text-[10px] uppercase tracking-wider-2 text-noir/50 mb-6">
+            {/* The R2JC logo file is white-on-transparent (designed for
+                the dark Nav header). On a white card it would disappear,
+                so we nest a dark inset inside the white asset card and
+                show the logo on its native black background — what the
+                press team will actually receive when they download. */}
+            <div className="bg-blanc text-noir p-6 md:p-8 flex flex-col items-center">
+              <div className="w-full bg-noir flex items-center justify-center py-10 md:py-14 mb-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/logo/r2jcLogo.png"
+                  alt="R2JC logo"
+                  className="h-16 md:h-24 w-auto object-contain"
+                />
+              </div>
+              <p className="font-mono text-[10px] uppercase tracking-wider-2 text-noir/50 mb-4">
                 {p.assets.logo}
               </p>
               <a
