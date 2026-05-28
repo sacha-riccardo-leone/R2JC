@@ -307,16 +307,25 @@ export default function Coulisses() {
         </div>
       </section>
 
-      {/* STILL NEEDED — white banner to flag what R2JC owes */}
+      {/* POUR LA SUITE — white banner reframed from "what R2JC owes"
+          to "this was a 3-day demo, here's what would be needed IF you
+          want to continue, but no pressure either way". Captures four
+          messages the demo's author wants R2JC to hear:
+            1. The demo is three days of work, offered freely.
+            2. Here's what would be needed to finalize this version.
+            3. Starting from scratch / changing direction is ok too.
+            4. Staying in touch + meeting whoever they pick for AD. */}
       <section className="border-t border-blanc/15">
         <div className="bg-blanc text-noir">
           <div className="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28 grid md:grid-cols-12 gap-y-8 md:gap-x-12">
             <Reveal motion="blur" className="md:col-span-5">
               <p className="font-mono text-[11px] uppercase tracking-wider-2 text-noir/40 mb-6">
-                À fournir · de votre côté
+                Pour la suite
               </p>
-              <h2 className="font-display text-3xl md:text-5xl font-semibold leading-[1.1] tracking-[-0.03em]">
-                Ce qu&rsquo;il manque pour finaliser.
+              <h2 className="font-display text-3xl md:text-5xl leading-[1.1] tracking-[-0.03em]">
+                <span className="font-light">La suite,</span>
+                <br />
+                <span className="font-black">à vous.</span>
               </h2>
             </Reveal>
             <Reveal
@@ -324,7 +333,16 @@ export default function Coulisses() {
               delay={150}
               className="md:col-span-6 md:col-start-7"
             >
-              <ul className="space-y-4">
+              <p className="font-sans text-base md:text-lg leading-relaxed text-noir/80 max-w-prose">
+                Cette démo représente trois jours de travail. Elle vous
+                est offerte, sans engagement de votre part.
+              </p>
+
+              <p className="mt-8 font-sans text-base md:text-lg leading-relaxed text-noir/80 max-w-prose">
+                Si vous voulez la finaliser, voici ce qu&rsquo;il
+                faudrait recevoir de votre côté :
+              </p>
+              <ul className="mt-5 space-y-4">
                 {STILL_NEEDED.map((s, i) => (
                   <li
                     key={i}
@@ -338,6 +356,16 @@ export default function Coulisses() {
                   </li>
                 ))}
               </ul>
+
+              <p className="mt-10 font-sans text-base md:text-lg leading-relaxed text-noir/80 max-w-prose">
+                Si vous préférez partir dans une autre direction —
+                repartir de zéro, ajuster certaines choses, ou
+                travailler avec une autre équipe — c&rsquo;est tout
+                aussi ok. Quoi qu&rsquo;il en soit, je serais heureux
+                de rester en contact, d&rsquo;échanger des idées, et
+                de rencontrer la personne ou l&rsquo;équipe que vous
+                choisirez pour la direction artistique du site final.
+              </p>
             </Reveal>
           </div>
         </div>
