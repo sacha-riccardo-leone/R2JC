@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -153,6 +154,35 @@ export function VersionSwitcher({
               </li>
             );
           })}
+
+          {/* Divider — separates the two real "version" picks from the
+              third item which is a page jump, not a version switch.
+              The visual gap signals that "Coulisses" isn't a third
+              variant of the site, it's a destination. */}
+          <li aria-hidden className="mx-4 my-1 border-t border-blanc/15" />
+
+          {/* Coulisses — project notes / behind-the-scenes page. Always
+              navigates to /coulisses regardless of current version, since
+              the page is meta-content about both Upgraded and Reworked. */}
+          <li>
+            <Link
+              href="/coulisses"
+              onClick={() => setOpen(false)}
+              className={`block px-4 py-3 transition-colors duration-200 flex flex-col gap-0.5 ${
+                pathname === "/coulisses"
+                  ? "text-blanc bg-blanc/[0.06]"
+                  : "text-mist/80 hover:text-blanc hover:bg-blanc/[0.04]"
+              }`}
+            >
+              <span className="font-display text-[13px] uppercase tracking-nav flex justify-between items-baseline">
+                <span>Coulisses</span>
+                <span className="font-mono text-[10px] opacity-50">↗</span>
+              </span>
+              <span className="font-mono text-[10px] uppercase tracking-wider-2 opacity-50">
+                Notes de production
+              </span>
+            </Link>
+          </li>
         </ul>
       )}
     </div>
