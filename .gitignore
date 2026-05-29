@@ -43,6 +43,11 @@ next-env.d.ts
 # Editor temp / backup files
 *~
 
+# Krita autosaves (the design-source .kra files themselves stay tracked
+# if anyone wants to commit them, but the *-autosave.kra scratch files
+# get re-created on every open and would clutter the repo)
+*-autosave.kra
+
 # AI tooling / agent metadata
 .claude/
 .cursor/
