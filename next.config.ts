@@ -89,9 +89,14 @@ const securityHeaders = [
   {
     // Disable browser features the app doesn't use. Anything not
     // explicitly listed defaults to disallowed.
+    // `browsing-topics=()` opts the site out of Chrome's Topics API
+    // (behavioral-advertising signal). Replaces the older
+    // `interest-cohort=()` (FLoC), which Chrome removed in v115 and
+    // modern browsers no longer recognize — it just logged a console
+    // warning without doing anything.
     key: "Permissions-Policy",
     value:
-      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
   },
 ];
 
