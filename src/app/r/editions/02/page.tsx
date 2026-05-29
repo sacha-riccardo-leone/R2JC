@@ -98,12 +98,17 @@ export default async function ReworkedEdition02() {
                   </div>
                 </Reveal>
 
-                {/* Two-column block: portrait + text */}
+                {/* Portrait + text + looks all fade in together under
+                    ONE Reveal trigger, so the runway models don't lag
+                    behind the designer info. Previously each had its
+                    own Reveal (delays 120/240/360 ms) and the looks
+                    grid was on a separate IntersectionObserver, which
+                    meant it triggered independently when scrolled into
+                    view — out of sync with the rest of the plate. */}
+                <Reveal motion="blur" delay={120}>
                 <div className="grid md:grid-cols-12 gap-y-10 md:gap-x-12 items-start">
                   {/* Portrait */}
-                  <Reveal
-                    motion="blur"
-                    delay={120}
+                  <div
                     className={`md:col-span-5 ${
                       portraitOnLeft ? "" : "md:col-start-8 md:row-start-1"
                     }`}
@@ -132,12 +137,10 @@ export default async function ReworkedEdition02() {
                         Éd. 02
                       </span>
                     </div>
-                  </Reveal>
+                  </div>
 
                   {/* Text column */}
-                  <Reveal
-                    motion="blur"
-                    delay={240}
+                  <div
                     className={`md:col-span-7 ${
                       portraitOnLeft ? "" : "md:col-start-1 md:row-start-1"
                     }`}
@@ -213,12 +216,13 @@ export default async function ReworkedEdition02() {
                         )}
                       </div>
                     )}
-                  </Reveal>
+                  </div>
                 </div>
 
-                {/* Runway looks — full-width grid below */}
+                {/* Runway looks — full-width grid below, inside the same
+                    Reveal as portrait + text so they all fade together. */}
                 {d.looks.length > 0 && (
-                  <Reveal motion="blur" delay={360}>
+                  <div>
                     <div className="border-t border-blanc/15 mt-16 md:mt-20 pt-10">
                       <div className="flex justify-between items-baseline mb-6 font-mono text-[10px] uppercase tracking-wider-2 text-blanc/40">
                         <span>
@@ -243,8 +247,9 @@ export default async function ReworkedEdition02() {
                         ))}
                       </div>
                     </div>
-                  </Reveal>
+                  </div>
                 )}
+                </Reveal>
               </div>
             </article>
           );
