@@ -33,12 +33,16 @@ export default async function Home() {
   return (
     <>
       {/* ── I — HERO ───────────────────────────────────────────────── */}
-      {/* pt-32 md:pt-40 reserves vertical space for the fixed header.
-          With the persistent desktop nav row added later the header is
-          now ~100 px tall (vs ~70 before); without this padding the
-          flex-centered content drifted up under the nav on shorter
-          desktop viewports and hid the eyebrow. */}
-      <section className="relative min-h-screen bg-noir text-blanc overflow-hidden flex items-center pt-32 md:pt-40">
+      {/* Vertical padding reserves space at both ends of the section:
+            pt-32 md:pt-40 → clears the fixed header (logo row + nav row
+              ≈ 100 px tall) so the eyebrow doesn't drift up under it.
+            pb-24 md:pb-32 → clears the absolutely-positioned bottom
+              strip (hairline + "Défiler" / "Édition 03" labels ≈ 60 px)
+              so the CTA buttons don't collide with it on shorter
+              desktop viewports.
+          flex items-center then centers the content within the
+          remaining space, giving clearance at both ends. */}
+      <section className="relative min-h-screen bg-noir text-blanc overflow-hidden flex items-center pt-32 md:pt-40 pb-24 md:pb-32">
         <HeroVideo />
         <div
           aria-hidden
