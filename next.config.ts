@@ -1,17 +1,56 @@
 import type { NextConfig } from "next";
 
 /**
+ * Content Security Policy.
+ *
+ * Pragmatic baseline, not strict CSP. Strict CSP requires per-request
+ * nonces injected via middleware (because Next 15 hydration inlines
+ * scripts), which is doable but adds complexity. This policy still
+ * does meaningful work: it locks every resource fetch to same-origin
+ * (no external script/font/image hosts can ever be added without an
+ * explicit allow-list update), bans framing entirely, locks form
+ * submission targets, and forces https for subresources.
+ *
+ * What 'unsafe-inline' permits today that a future nonce-based
+ * policy would forbid:
+ *   - script-src: Next's hydration scripts (__NEXT_DATA__, etc.)
+ *   - style-src: inline style={{...}} props in components +
+ *     next/font's runtime injected <style> tags
+ * Both are first-party — so the residual XSS surface is "inline
+ * script/style injected by an attacker into our HTML", not "remote
+ * script loaded from attacker.com". The latter is fully blocked.
+ *
+ * If a future change adds an external script (e.g. Vercel Analytics,
+ * a YouTube embed, a Stripe Checkout), its origin needs adding to
+ * the matching directive here, not anywhere else.
+ */
+const csp = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "media-src 'self'",
+  "connect-src 'self'",
+  "frame-src 'none'",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "form-action 'self' mailto:",
+  "object-src 'none'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+/**
  * Security headers applied to every route. Vercel adds a few defaults
  * but explicit headers are stronger, deterministic, and easier to
  * audit later.
- *
- * Not added here (intentionally, would need testing first):
- *   Content-Security-Policy — Next's hydration uses inline scripts;
- *     a strict CSP without nonces would break it, and a CSP with
- *     'unsafe-inline' barely improves on the baseline. To be added
- *     in a separate change with proper nonce/hash plumbing.
  */
 const securityHeaders = [
+  {
+    // The CSP above — see comment block for the policy rationale.
+    key: "Content-Security-Policy",
+    value: csp,
+  },
   {
     // Force HTTPS for ~2 years and include subdomains. `preload`
     // signals readiness for the browser HSTS preload list, but the
@@ -26,11 +65,11 @@ const securityHeaders = [
     value: "nosniff",
   },
   {
-    // Disallow framing on other origins to prevent clickjacking.
-    // (CSP `frame-ancestors` supersedes this for modern browsers,
-    // but the header is harmless and provides defence in depth.)
+    // CSP frame-ancestors 'none' already covers this for modern
+    // browsers; XFO DENY mirrors it for any browser that doesn't
+    // fully implement CSP frame-ancestors. The two cumulative.
     key: "X-Frame-Options",
-    value: "SAMEORIGIN",
+    value: "DENY",
   },
   {
     // Limit how much of the referring URL is sent to third parties.
