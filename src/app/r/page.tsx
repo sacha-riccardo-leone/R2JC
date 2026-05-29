@@ -89,144 +89,147 @@ export default async function ReworkedHome() {
     <main className="bg-noir text-blanc">
       {/* ── §1 · COLD OPEN ───────────────────────────────────────
           Full viewport. "R2JC" text (not the logo) dead-center, set in
-          Montserrat 900 — the squarest weight the family offers — at
-          display scale with tight negative tracking.
+          Montserrat 900 at display scale with tight negative tracking.
 
-          The "2" is a clipping mask over the Édition 02 recap video:
-          one SVG renders all four letters, but the "2" position is a
-          <foreignObject> holding the <video>, clip-pathed to the shape
-          of the "2" glyph drawn into a <clipPath>. The R/JC are normal
-          white text. */}
+          The "2" is a clipping mask over the Édition 02 recap video.
+          Implementation note (after a Safari/iOS bug report): the
+          previous version put the <video> inside an SVG <foreignObject>
+          with a clip-path — that combination is broken on Safari, the
+          clip-path doesn't apply and the video either renders
+          unclipped or not at all.
+
+          New architecture avoids foreignObject entirely:
+            1. Container div sized to the wordmark area.
+            2. HTML5 <video> positioned absolutely at the "2"'s glyph
+               box (left 29.4%, width 28% of container = where the
+               "2" lives in centered "R2JC"). Regular HTML element,
+               Safari handles it natively.
+            3. SVG overlay on top with a BLACK <rect> masked to have
+               a "2"-shaped HOLE in it (via SVG <mask> — standard,
+               well-supported in Safari). The video shows through the
+               hole; everything else is covered.
+            4. White R and JC text on top of the rect.
+
+          Result: identical visual on Chrome/Firefox/Safari/iOS. */}
       <section className="min-h-screen relative overflow-hidden flex items-center justify-center px-6">
-        <svg
-          viewBox="0 0 1000 360"
-          preserveAspectRatio="xMidYMid meet"
-          className="r-blur-in font-display select-none"
+        <div
+          className="r-blur-in relative select-none"
           style={{
             height: "clamp(5rem, 22vw, 26rem)",
-            width: "auto",
+            // 1000/360 viewBox aspect — matches the SVG below so
+            // absolute % positioning lines up with SVG coordinates.
+            aspectRatio: "1000 / 360",
             maxWidth: "100%",
           }}
           aria-label="R2JC"
           role="img"
         >
-          <defs>
-            {/* Clip-path that emits the "2" glyph as the reveal window.
-                Uses the SAME single-text-element layout as the visible
-                layer below, with R and JC hidden via tspan — so the
-                "2" lands in EXACTLY the same x position in both the
-                visible text and the clip mask. The natural "R2JC"
-                centering at x=500 is preserved; we move the
-                foreignObject (not the text) to align the video. */}
-            <clipPath id="r-cold-open-2">
-              <text
-                x="500"
-                y="280"
-                textAnchor="middle"
-                fontWeight="900"
-                fontSize="360"
-                style={{
-                  fontFamily:
-                    "var(--font-display), Montserrat, sans-serif",
-                  letterSpacing: "-0.05em",
-                }}
-              >
-                <tspan style={{ visibility: "hidden" }}>R</tspan>2
-                <tspan style={{ visibility: "hidden" }}>JC</tspan>
-              </text>
-            </clipPath>
-          </defs>
-
-          {/* Render order: the video sits BEHIND the letters.
-              SVG paints children in document order, so anything later
-              in the JSX paints on top. We render the foreignObject
-              first, then the white text — so where the "2" shape
-              extends slightly into the R/J glyphs (negative
-              letter-spacing -0.05em causes a small overlap), the
-              letters win and cover the video edges cleanly. */}
-
-          {/* The video, clipped to the "2" glyph.
-
-              Where the "2" actually sits in "R2JC":
-                Total advance of "R2JC" at font-size 360 with
-                Montserrat 900 metrics (R≈257, 2≈221, J≈157, C≈251)
-                and letter-spacing -0.05em (= -18 between each pair):
-                  257 - 18 + 221 - 18 + 157 - 18 + 251 ≈ 832
-                String origin at x = 500 − 832/2 = 84.
-                "2" left edge: 84 + 257 − 18 = 323.
-                "2" center: 323 + 221/2 ≈ 434.
-                So the "2" glyph center lands ~66 px LEFT of x=500.
-
-              ForeignObject geometry:
-                x=294, y=0, width=280, height=308
-                ⇒ box center at (434, 154) — matches the "2"'s actual
-                  visual center.
-                ⇒ aspect 0.909 vs portrait video 0.5625: object-fit:
-                  cover scales the video to fit the WIDTH (280) and
-                  crops top/bottom symmetrically, showing the middle
-                  ~62% of the source reel.
-
-              Numbers depend on font metric estimates. If alignment
-              still looks visibly off, just nudge `x` a few units left
-              or right — `294` is the only dial. */}
-          <foreignObject
-            x="294"
-            y="0"
-            width="280"
-            height="308"
-            clipPath="url(#r-cold-open-2)"
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                // objectPosition vertical < 50% slides the source frame
-                // downward inside the "2" — i.e. exposes more of the
-                // TOP of the source. Helps when models in the reel are
-                // tall enough that their heads get cropped at the
-                // default 50% (center) anchor. Tunable: smaller = even
-                // more of the top revealed; larger = back toward
-                // center; > 50% would reveal more of the bottom.
-                objectPosition: "50% 30%",
-                display: "block",
-              }}
-            >
-              <source
-                src="/media/editions/edition-02-reel.mp4"
-                type="video/mp4"
-              />
-            </video>
-          </foreignObject>
-
-          {/* Visible white R___JC, painted LAST so it sits on top of
-              the video. One text element, text-anchor=middle at
-              x=500 → string is centered at the SVG horizontal center.
-              The "2" tspan is visibility:hidden so it still occupies
-              its glyph width (R and JC sit exactly where they would
-              in the full "R2JC") but paints nothing — the video
-              behind shows through that gap via the clipPath. */}
-          <text
-            x="500"
-            y="280"
-            textAnchor="middle"
-            fontWeight="900"
-            fontSize="360"
-            fill="white"
+          {/* HTML5 video — base layer. Sized to where the "2" glyph
+              actually sits inside "R2JC" centered at x=500:
+                R advance ≈ 257, letter-spacing -18 → "2" starts at
+                x ≈ 323, ends at x ≈ 544, centered at x ≈ 434.
+                "2" vertically: y ≈ 28 → 280 (cap-height ≈ 252,
+                center ≈ y=154).
+              In percentages of the 1000×360 container:
+                left = 294/1000 = 29.4%
+                width = 280/1000 = 28%
+                top = 0%
+                height = 308/360 ≈ 85.56%
+              Container aspect at this size is ≈ 0.909, video aspect
+              is 0.5625 (portrait 9:16). object-fit: cover scales the
+              video to fit the WIDTH and crops top/bottom symmetric-
+              ally, showing the middle ~62% of the source reel.
+              objectPosition vertical 30% lowers the visible window
+              so the tall models' heads stay in frame. */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            className="absolute"
             style={{
-              fontFamily:
-                "var(--font-display), Montserrat, sans-serif",
-              letterSpacing: "-0.05em",
+              left: "29.4%",
+              top: "0%",
+              width: "28%",
+              height: "85.56%",
+              objectFit: "cover",
+              objectPosition: "50% 30%",
+              display: "block",
             }}
           >
-            R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
-          </text>
-        </svg>
+            <source
+              src="/media/editions/edition-02-reel.mp4"
+              type="video/mp4"
+            />
+          </video>
+
+          {/* SVG overlay — black rect with "2"-shaped hole + R/JC
+              text. Sits on top of the video, fills the container. */}
+          <svg
+            viewBox="0 0 1000 360"
+            preserveAspectRatio="xMidYMid meet"
+            className="absolute inset-0 w-full h-full font-display"
+          >
+            <defs>
+              {/* SVG mask: white pixels = rect is visible there,
+                  black pixels = rect is transparent. Fill the mask
+                  with white, then paint the "2" in BLACK to carve a
+                  "2"-shaped hole. Same text element as the visible
+                  layer below (text-anchor=middle at x=500, same font/
+                  size/letter-spacing) — R and JC are
+                  visibility:hidden so they still take their glyph
+                  width but don't paint into the mask. */}
+              <mask id="r-cold-open-cutout">
+                <rect x="0" y="0" width="1000" height="360" fill="white" />
+                <text
+                  x="500"
+                  y="280"
+                  textAnchor="middle"
+                  fontWeight="900"
+                  fontSize="360"
+                  fill="black"
+                  style={{
+                    fontFamily:
+                      "var(--font-display), Montserrat, sans-serif",
+                    letterSpacing: "-0.05em",
+                  }}
+                >
+                  <tspan style={{ visibility: "hidden" }}>R</tspan>2
+                  <tspan style={{ visibility: "hidden" }}>JC</tspan>
+                </text>
+              </mask>
+            </defs>
+
+            {/* Black overlay covering the video, with the "2"-shaped
+                hole punched out by the mask. */}
+            <rect
+              x="0"
+              y="0"
+              width="1000"
+              height="360"
+              fill="#000"
+              mask="url(#r-cold-open-cutout)"
+            />
+
+            {/* Visible white R___JC on top. */}
+            <text
+              x="500"
+              y="280"
+              textAnchor="middle"
+              fontWeight="900"
+              fontSize="360"
+              fill="white"
+              style={{
+                fontFamily:
+                  "var(--font-display), Montserrat, sans-serif",
+                letterSpacing: "-0.05em",
+              }}
+            >
+              R<tspan style={{ visibility: "hidden" }}>2</tspan>JC
+            </text>
+          </svg>
+        </div>
 
         {/* Vertically bobbing scroll arrow.
             Positioning lives on the outer div, animation on the inner
