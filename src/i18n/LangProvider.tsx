@@ -33,9 +33,18 @@ export function LangProvider({
   const setLocale = useCallback(
     (next: Locale) => {
       if (next === initialLocale) return;
-      // Set cookie for 1 year, site-wide
+      // Set cookie for 1 year, site-wide.
+      // Append `Secure` when we're on HTTPS so the cookie is only
+      // sent on secure connections. Runtime check (rather than
+      // build-time NODE_ENV) so localhost (http://) keeps working in
+      // dev — Secure cookies aren't set on plain http: in some
+      // browsers, which would silently break locale switching.
       const oneYear = 60 * 60 * 24 * 365;
-      document.cookie = `${LOCALE_COOKIE}=${next}; path=/; max-age=${oneYear}; samesite=lax`;
+      const isSecure =
+        typeof window !== "undefined" && window.location.protocol === "https:";
+      document.cookie =
+        `${LOCALE_COOKIE}=${next}; path=/; max-age=${oneYear}; samesite=lax` +
+        (isSecure ? "; secure" : "");
       // Re-render server components with the new cookie value
       router.refresh();
     },
