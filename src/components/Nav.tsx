@@ -93,14 +93,13 @@ export function Nav() {
         }`}
       >
         <div className="flex items-center px-6 md:px-10 py-4 md:py-5">
-          {/* Logo — version-aware variant.
-                Upgraded: r2jcLogo.png (original, mixed-tone). Reads
-                  fine on the dark header.
-                Reworked: r2jcLogo_fullwhite.png — solid white, matches
-                  the Reworked aesthetic (pure noir+blanc, no grey).
-              Both link home (within the current version).
-              Layout: `ml-auto` on the right cluster handles centering
-              regardless of whether the logo is present. */}
+          {/* Logo — solid white variant on both Upgraded and Reworked.
+              The header is always dark (bg-noir), so r2jcLogo_fullwhite
+              reads cleanly across both versions with no per-side
+              variant logic. Links home within the current version
+              (withVersion preserves /r if the visitor is on Reworked).
+              Layout: `ml-auto` on the right cluster keeps the controls
+              flush right whether or not the logo is rendered. */}
           <Link
             href={withVersion("/", version)}
             className="inline-flex items-center gap-2 group shrink-0"
@@ -108,11 +107,7 @@ export function Nav() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={
-                version === "reworked"
-                  ? "/logo/r2jcLogo_fullwhite.png"
-                  : "/logo/r2jcLogo.png"
-              }
+              src="/logo/r2jcLogo_fullwhite.png"
               alt="R2JC"
               className="h-7 md:h-8 w-auto select-none group-hover:opacity-80 transition-opacity duration-300"
               draggable={false}
