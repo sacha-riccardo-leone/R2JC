@@ -33,7 +33,12 @@ export default async function Home() {
   return (
     <>
       {/* ── I — HERO ───────────────────────────────────────────────── */}
-      <section className="relative min-h-screen bg-noir text-blanc overflow-hidden flex items-center">
+      {/* pt-32 md:pt-40 reserves vertical space for the fixed header.
+          With the persistent desktop nav row added later the header is
+          now ~100 px tall (vs ~70 before); without this padding the
+          flex-centered content drifted up under the nav on shorter
+          desktop viewports and hid the eyebrow. */}
+      <section className="relative min-h-screen bg-noir text-blanc overflow-hidden flex items-center pt-32 md:pt-40">
         <HeroVideo />
         <div
           aria-hidden
