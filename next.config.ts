@@ -24,15 +24,24 @@ import type { NextConfig } from "next";
  * a YouTube embed, a Stripe Checkout), its origin needs adding to
  * the matching directive here, not anywhere else.
  */
+// Vercel injects a preview-only feedback toolbar from vercel.live so
+// reviewers can drop inline comments on every preview deployment. It
+// doesn't run in production. Allow its origins on preview builds only
+// — production CSP stays minimal. Read VERCEL_ENV at config time:
+// each environment (preview vs production) gets its own build with
+// its own baked-in CSP value.
+const isPreview = process.env.VERCEL_ENV === "preview";
+const vlive = isPreview ? " https://vercel.live" : "";
+
 const csp = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline'",
-  "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  `script-src 'self' 'unsafe-inline'${vlive}`,
+  `style-src 'self' 'unsafe-inline'${vlive}`,
+  `img-src 'self' data: blob:${vlive}`,
   "font-src 'self' data:",
   "media-src 'self'",
-  "connect-src 'self'",
-  "frame-src 'none'",
+  `connect-src 'self'${vlive}`,
+  isPreview ? "frame-src https://vercel.live" : "frame-src 'none'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self' mailto:",
@@ -80,9 +89,14 @@ const securityHeaders = [
   {
     // Disable browser features the app doesn't use. Anything not
     // explicitly listed defaults to disallowed.
+    // `browsing-topics=()` opts the site out of Chrome's Topics API
+    // (behavioral-advertising signal). Replaces the older
+    // `interest-cohort=()` (FLoC), which Chrome removed in v115 and
+    // modern browsers no longer recognize — it just logged a console
+    // warning without doing anything.
     key: "Permissions-Policy",
     value:
-      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()",
+      "camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()",
   },
 ];
 
