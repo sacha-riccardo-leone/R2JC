@@ -141,12 +141,22 @@ export default async function ReworkedHome() {
               ally, showing the middle ~62% of the source reel.
               objectPosition vertical 30% lowers the visible window
               so the tall models' heads stay in frame. */}
+          {/* Poster = first frame of the reel as a 28KB JPEG. Browsers
+              paint the poster IMMEDIATELY into the <video> element
+              while the actual video bytes (~3.7 MB) download in the
+              background. Without this the video element was empty/
+              black for ~2 s after page load, so the "2" hole showed
+              black while R/JC were already visible — visually jarring.
+              With the poster, the "2" hole fills the moment the page
+              renders, and the transition poster → playing video is
+              seamless because the poster IS the video's first frame. */}
           <video
             autoPlay
             muted
             loop
             playsInline
             preload="auto"
+            poster="/media/editions/edition-02-reel-poster.jpg"
             className="absolute"
             style={{
               left: "29.4%",
